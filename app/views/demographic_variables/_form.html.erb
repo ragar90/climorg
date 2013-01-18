@@ -1,0 +1,33 @@
+<%= form_for(@demographic_variable) do |f| %>
+  <% if @demographic_variable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@demographic_variable.errors.count, "error") %> prohibited this demographic_variable from being saved:</h2>
+
+      <ul>
+      <% @demographic_variable.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :is_default %><br />
+    <%= f.check_box :is_default %>
+  </div>
+  <div class="field">
+    <%= f.label :display_values %><br />
+    <%= f.text_field :display_values %>
+  </div>
+  <div class="field">
+    <%= f.label :demographic_type_id %><br />
+    <%= f.number_field :demographic_type_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

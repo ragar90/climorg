@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @demographic_variable.name %>
+</p>
+
+<p>
+  <b>Is default:</b>
+  <%= @demographic_variable.is_default %>
+</p>
+
+<p>
+  <b>Display values:</b>
+  <%= @demographic_variable.display_values %>
+</p>
+
+<p>
+  <b>Demographic type:</b>
+  <%= @demographic_variable.demographic_type_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_demographic_variable_path(@demographic_variable) %> |
+<%= link_to 'Back', demographic_variables_path %>
