@@ -1,25 +1,27 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = DemographicVariable -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
 
-<p>
-  <b>Name:</b>
-  <%= @demographic_variable.name %>
-</p>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @demographic_variable.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:is_default) %>:</strong></dt>
+  <dd><%= @demographic_variable.is_default %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:display_values) %>:</strong></dt>
+  <dd><%= @demographic_variable.display_values %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:accepted_value) %>:</strong></dt>
+  <dd><%= @demographic_variable.accepted_value %></dd>
+</dl>
 
-<p>
-  <b>Is default:</b>
-  <%= @demographic_variable.is_default %>
-</p>
-
-<p>
-  <b>Display values:</b>
-  <%= @demographic_variable.display_values %>
-</p>
-
-<p>
-  <b>Demographic type:</b>
-  <%= @demographic_variable.demographic_type_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_demographic_variable_path(@demographic_variable) %> |
-<%= link_to 'Back', demographic_variables_path %>
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              demographic_variables_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_demographic_variable_path(@demographic_variable), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              demographic_variable_path(@demographic_variable),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>

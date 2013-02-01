@@ -4,8 +4,7 @@ class CreateDemographicVariables < ActiveRecord::Migration
       t.string :name
       t.boolean :is_default
       t.string :display_values
-      t.integer :demographic_type_id
-
+      t.string :accepted_value
       t.timestamps
     end
   end

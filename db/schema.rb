@@ -28,13 +28,6 @@ ActiveRecord::Schema.define(:version => 20130118070951) do
     t.datetime "updated_at",              :null => false
   end
 
-  create_table "demographic_types", :force => true do |t|
-    t.string   "name"
-    t.string   "acsepted_values"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
   create_table "demographic_values", :force => true do |t|
     t.integer  "demographi_variable_id"
     t.string   "result_id"
@@ -47,9 +40,9 @@ ActiveRecord::Schema.define(:version => 20130118070951) do
     t.string   "name"
     t.boolean  "is_default"
     t.string   "display_values"
-    t.integer  "demographic_type_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.string   "accepted_value"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "dimension_settings", :force => true do |t|

@@ -1,33 +1,51 @@
-<%= form_for(@demographic_variable) do |f| %>
-  <% if @demographic_variable.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@demographic_variable.errors.count, "error") %> prohibited this demographic_variable from being saved:</h2>
-
-      <ul>
-      <% @demographic_variable.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for @demographic_variable, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field' %>
     </div>
-  <% end %>
+  </div>
+  <div class="control-group">
+    <%= f.label :is_default, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :is_default, :class => 'check_box' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :accepted_value, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select :accepted_value,DemographicVariable.demographic_types.collect{|k,v| [v,k]}, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :display_values, :class => 'control-label' %>
+    <%=f.hidden_field :display_values%>
+    
+    <div id = "boolean-display" class="controls admin-dsiplay-values selected">
+      <input type="text" id="display_values_boolean_true" name="display_values_boolean_true" class="boolean-field"> | <input type="text" id="display_values_boolean_false" name="display_values_boolean_false" class="boolean-field">
+    </div>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <div id = "integer-display"  class="controls admin-dsiplay-values">
+      <%= number_field_tag "display_values_integer",nil,:class=>"number-field"%>
+    </div>
+
+    <div id = "float-display" class="controls admin-dsiplay-values">
+      <%= number_field_tag "display_values_float",nil,:class=>"number-field" %>
+    </div>
+
+    <div id = "range-display" class="controls admin-dsiplay-values">
+      <%= number_field_tag "display_values_min_rage",nil,:class=>"number-field"%> - 
+      <%= number_field_tag "display_values_max_rage",nil,:class=>"number-field"%>
+    </div>
+
+    <div id = "hash-display" class="controls admin-dsiplay-values">
+      <input type="text" name="display_values_hash", class="text_field">
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :is_default %><br />
-    <%= f.check_box :is_default %>
-  </div>
-  <div class="field">
-    <%= f.label :display_values %><br />
-    <%= f.text_field :display_values %>
-  </div>
-  <div class="field">
-    <%= f.label :demographic_type_id %><br />
-    <%= f.number_field :demographic_type_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                demographic_variables_path, :class => 'btn' %>
   </div>
 <% end %>

@@ -1,4 +1,6 @@
 ClimaOrg::Application.routes.draw do
+  get "home/index"
+
   resources :researches
 
 
@@ -9,9 +11,6 @@ ClimaOrg::Application.routes.draw do
 
 
   resources :demographic_variables
-
-
-  resources :demographic_types
 
 
   # The priority is based upon order of creation:
@@ -63,7 +62,7 @@ ClimaOrg::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
+  root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 

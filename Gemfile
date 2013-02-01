@@ -5,7 +5,8 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'execjs'
-gem 'therubyracer'
+gem "therubyracer"
+gem "twitter-bootstrap-rails"
 gem 'mysql2'
 
 
