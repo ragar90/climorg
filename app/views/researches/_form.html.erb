@@ -1,3 +1,6 @@
+<%content_for :error_messages do  %> 
+  <%= error_messages! @research%>
+<%end%>
 <%= form_for @research, :html => { :class => 'form-horizontal' } do |f| %>
   <div class="control-group">
     <%= f.label :company_name, :class => 'control-label' %>
@@ -8,13 +11,13 @@
   <div class="control-group">
     <%= f.label :start_date, :class => 'control-label' %>
     <div class="controls">
-      <%= f.datetime_select :start_date, :class => 'datetime_select' %>
+      <%= f.text_field :start_date, :class => 'datetime_select' %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :end_date, :class => 'control-label' %>
     <div class="controls">
-      <%= f.datetime_select :end_date, :class => 'datetime_select' %>
+      <%= f.text_field :end_date, :class => 'datetime_select' %>
     </div>
   </div>
 

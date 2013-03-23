@@ -41,7 +41,6 @@ class ResearchesController < ApplicationController
   # POST /researches.json
   def create
     @research = Research.new(params[:research])
-
     respond_to do |format|
       if @research.save
         format.html { redirect_to @research, notice: 'Research was successfully created.' }

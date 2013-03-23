@@ -1,4 +1,8 @@
-<%= form_for @demographic_variable, :html => { :class => 'form-horizontal' } do |f| %>
+<%edit||=false%>
+<%content_for :error_messages do  %> 
+  <%= error_messages! @demographic_variable%>
+<%end%>
+<%= form_for @demographic_variable, :html => { :class => 'form-horizontal', :id=>"#{edit ? "edit_demographic_variable" : "new_demographic_variable"}" } do |f| %>
   <div class="control-group">
     <%= f.label :name, :class => 'control-label' %>
     <div class="controls">
@@ -20,27 +24,7 @@
   <div class="control-group">
     <%= f.label :display_values, :class => 'control-label' %>
     <%=f.hidden_field :display_values%>
-    
-    <div id = "boolean-display" class="controls admin-dsiplay-values selected">
-      <input type="text" id="display_values_boolean_true" name="display_values_boolean_true" class="boolean-field"> | <input type="text" id="display_values_boolean_false" name="display_values_boolean_false" class="boolean-field">
-    </div>
-
-    <div id = "integer-display"  class="controls admin-dsiplay-values">
-      <%= number_field_tag "display_values_integer",nil,:class=>"number-field"%>
-    </div>
-
-    <div id = "float-display" class="controls admin-dsiplay-values">
-      <%= number_field_tag "display_values_float",nil,:class=>"number-field" %>
-    </div>
-
-    <div id = "range-display" class="controls admin-dsiplay-values">
-      <%= number_field_tag "display_values_min_rage",nil,:class=>"number-field"%> - 
-      <%= number_field_tag "display_values_max_rage",nil,:class=>"number-field"%>
-    </div>
-
-    <div id = "hash-display" class="controls admin-dsiplay-values">
-      <input type="text" name="display_values_hash", class="text_field">
-    </div>
+    <%= render :partial=> "display_values_inputs", :locals=>{:demographic_type=>@demographic_variable.accepted_value}%>
   </div>
 
   <div class="form-actions">
