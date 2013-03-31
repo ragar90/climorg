@@ -27,7 +27,7 @@ class DemographicVariablesController < ApplicationController
     @demographic_variable = DemographicVariable.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout=>@layout }
       format.json { render json: @demographic_variable }
     end
   end
@@ -41,14 +41,13 @@ class DemographicVariablesController < ApplicationController
   # POST /demographic_variables.json
   def create
     @demographic_variable = DemographicVariable.new(params[:demographic_variable])
-
     respond_to do |format|
       if @demographic_variable.save
         format.html { redirect_to @demographic_variable, notice: 'Demographic variable was successfully created.' }
         format.json { render json: @demographic_variable, status: :created, location: @demographic_variable }
       else
-        format.html { render action: "new" }
-        format.json { render json: @demographic_variable.errors, status: :unprocessable_entity }
+        format.html { render action: "new", :layout=>@layout  }
+        format.json { render :json=> {:errors=>@demographic_variable.errors}.to_json, status: :created }
       end
     end
   end

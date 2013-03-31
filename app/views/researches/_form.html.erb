@@ -11,15 +11,18 @@
   <div class="control-group">
     <%= f.label :start_date, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :start_date, :class => 'datetime_select' %>
+      <%= f.text_field :start_date, :class => 'datetime_select', :value=>(!@research.start_date.nil? ? @research.start_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :end_date, :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_field :end_date, :class => 'datetime_select' %>
+      <%= f.text_field :end_date, :class => 'datetime_select',:data=>{:"date-format"=>"dd-mm-yyyy"}, :value=>(!@research.end_date.nil? ? @research.end_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
     </div>
   </div>
+
+
+  <%=render "settings_form", f:f%>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>

@@ -48,8 +48,8 @@ class DemographicTypeFormatValidator < ActiveModel::EachValidator
   end
 
   def hash_validator(object, attribute, value)#
-  	unless value =~ /^(\w+\|(\w+|\s)+,*)+\z$/
-  		object.errors[attribute] << (options[:message] || "No se encuentra con el formato adecuado para una lista de valores") 
+  	unless value =~ /^("\w+":"(\w+|\s)*",*\s?)+\z$/
+      object.errors[attribute] << (options[:message] || "No se encuentra con el formato adecuado para una lista de valores, el formato debe ser una lista pares separada por \",\" los pares deben de ingresarse de la forma \"llave\":\"valor\" Ejemplo \"llave1\":\"valor1\",\"llave2\":valor2\"")   
   	end
   end
 

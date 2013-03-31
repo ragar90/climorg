@@ -13,7 +13,6 @@
     <![endif]-->
 
     <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= javascript_include_tag "application" %>
 
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <!-- Size should be 144 x 144 pixels -->
@@ -46,7 +45,7 @@
             <%= yield(:error_messages) %>
             <%= yield %>
           </div>
-          <div class="span3">
+           <div class="span3">
             <div class="well sidebar-nav">
               <h3>Sidebar</h3>
               <ul class="nav nav-list">
@@ -62,12 +61,12 @@
       <footer>
         <p>&copy; Company 2012</p>
       </footer>
-
+      <div id="modalView" class="modal hide fade"></div>
     </div> <!-- /container -->
 
     <!-- Javascripts
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-
+    <%= javascript_include_tag "application" %>
   </body>
 </html>

@@ -2,34 +2,41 @@
 <%content_for :error_messages do  %> 
   <%= error_messages! @demographic_variable%>
 <%end%>
-<%= form_for @demographic_variable, :html => { :class => 'form-horizontal', :id=>"#{edit ? "edit_demographic_variable" : "new_demographic_variable"}" } do |f| %>
-  <div class="control-group">
-    <%= f.label :name, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :name, :class => 'text_field' %>
+<%url ||=demographic_variables_path%>
+<%= form_for @demographic_variable, :url=>url,:html => { :class => "form-horizontal #{!@layout ? "demographic_modal_form" :""}", :id=>"#{edit ? "edit_demographic_variable" : "new_demographic_variable"}" }, :remote=>!@layout do |f| %>
+  <div class="<%=@layout ? "form" : "modal" %>-body">
+    <%if !@layout %>
+      <div id = 'modal_errors'></div>
+    <%end%>
+    <div class="control-group">
+      <%= f.label :name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :name, :class => 'text_field' %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :is_default, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.check_box :is_default, :class => 'check_box' %>
+    <div class="control-group">
+      <%= f.label :is_default, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.check_box :is_default, :class => 'check_box' %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :accepted_value, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.select :accepted_value,DemographicVariable.demographic_types.collect{|k,v| [v,k]}, :class => 'text_field' %>
+    <div class="control-group">
+      <%= f.label :accepted_value, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.select :accepted_value,DemographicVariable.demographic_types.collect{|k,v| [v,k]}, :class => 'text_field' %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :display_values, :class => 'control-label' %>
-    <%=f.hidden_field :display_values%>
-    <%= render :partial=> "display_values_inputs", :locals=>{:demographic_type=>@demographic_variable.accepted_value}%>
-  </div>
 
-  <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                demographic_variables_path, :class => 'btn' %>
+    <div class="control-group">
+      <%= f.label :display_values, :class => 'control-label' %>
+      <%=f.hidden_field :display_values%>
+      <%= render :partial=> "display_values_inputs", :locals=>{:demographic_type=>@demographic_variable.accepted_value}%>
+    </div>
   </div>
+  <%if @layout%>
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),demographic_variables_path, :class => 'btn' %>
+    </div>
+  <%end%>
 <% end %>

@@ -3,4 +3,4 @@
   <h1><%=t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
                                    :default => "Edit #{model_class.model_name.human}") %></h1>
 </div>
-<%= render :partial => 'form', :locals=>{:edit=>true}%>
+<%= render :partial => 'form', :locals=>{:url=>demographic_variable_path(:id=> @demographic_variable.id)}%>

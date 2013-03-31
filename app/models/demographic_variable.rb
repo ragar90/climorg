@@ -49,4 +49,8 @@ class DemographicVariable < ActiveRecord::Base
   def hash_value
   	accepted_value == "hash" ? display_values : nil
   end
+
+  def hash_value_parsed
+    accepted_value == "hash" ? JSON.parse("{#{display_values}}") : nil
+  end
 end

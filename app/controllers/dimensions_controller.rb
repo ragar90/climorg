@@ -27,7 +27,7 @@ class DimensionsController < ApplicationController
     @dimension = Dimension.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout=>@layout } # new.html.erb
       format.json { render json: @dimension }
     end
   end
@@ -47,7 +47,7 @@ class DimensionsController < ApplicationController
         format.html { redirect_to @dimension, notice: 'Dimension was successfully created.' }
         format.json { render json: @dimension, status: :created, location: @dimension }
       else
-        format.html { render action: "new" }
+        format.html { render action: "new",:layout=>@layout  }
         format.json { render json: @dimension.errors, status: :unprocessable_entity }
       end
     end

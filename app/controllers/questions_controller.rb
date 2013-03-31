@@ -27,7 +27,7 @@ class QuestionsController < ApplicationController
     @question = Question.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render :layout=>@layout }# new.html.erb
       format.json { render json: @question }
     end
   end
@@ -47,7 +47,7 @@ class QuestionsController < ApplicationController
         format.html { redirect_to @question, notice: 'Question was successfully created.' }
         format.json { render json: @question, status: :created, location: @question }
       else
-        format.html { render action: "new" }
+        format.html { render action: "new", :layout=>@layout  }
         format.json { render json: @question.errors, status: :unprocessable_entity }
       end
     end
