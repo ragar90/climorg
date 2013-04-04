@@ -25,7 +25,7 @@ class DemographicVariablesController < ApplicationController
   # GET /demographic_variables/new.json
   def new
     @demographic_variable = DemographicVariable.new
-
+    @demographic_variable.is_default=true
     respond_to do |format|
       format.html { render :layout=>@layout }
       format.json { render json: @demographic_variable }
@@ -41,10 +41,12 @@ class DemographicVariablesController < ApplicationController
   # POST /demographic_variables.json
   def create
     @demographic_variable = DemographicVariable.new(params[:demographic_variable])
+    
     respond_to do |format|
       if @demographic_variable.save
-        format.html { redirect_to @demographic_variable, notice: 'Demographic variable was successfully created.' }
-        format.json { render json: @demographic_variable, status: :created, location: @demographic_variable }
+        json_object = params[:modal]=="true" ?  {:value=>@demographic_variable.id,:display_value=>@demographic_variable.name, :class=>"demographic_variable"} : @demographic_variable
+        format.html { redirect_to @demographic_variable, notice: 'Demographic variable was successfully created.' } 
+        format.json { render :json=> json_object.to_json, status: :created, location: @demographic_variable }
       else
         format.html { render action: "new", :layout=>@layout  }
         format.json { render :json=> {:errors=>@demographic_variable.errors}.to_json, status: :created }

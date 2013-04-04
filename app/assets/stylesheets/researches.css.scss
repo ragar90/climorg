@@ -1,19 +1,11 @@
 // Place all the styles related to the Researches controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-.multiselect {
-    width:20em;
-    height:15em;
-    border:solid 1px #c0c0c0;
-    overflow:auto;
+button.multiselect{
+	width: auto;
+	height: auto;
 }
- 
-.multiselect label {
-    display:block;
+.multiselect-group {
+	font-weight: bold;
+	text-decoration: underline;
 }
- 
-.multiselect-on {
-    color:#ffffff;
-    background-color:#39F;
-} 

@@ -1,5 +1,5 @@
 class Research < ActiveRecord::Base
-  attr_accessible :company_name, :end_date, :start_date,:demographic_variable_ids, :dimension_ids, :question_ids
+  attr_accessible :company_name, :end_date, :start_date,:demographic_variable_ids, :dimension_ids, :question_ids, :state
   has_many :results
   has_many :demographic_settings
   has_many :demographic_variables, :through => :demographic_settings
@@ -14,5 +14,18 @@ class Research < ActiveRecord::Base
     	errors.add(:start_date, "No puede ser despues de la fecha de finalizacion")
     	errors.add(:end_date, "No puede ser antes de la fecha de inicio")
     end
+  end
+  
+  def is_draft?
+    !self.state
+  end
+
+  def state_label
+    self.state ? "Confirmado" : "Borrador"
+  end
+
+  def confirm!
+    self.state = true
+    self.save
   end
 end

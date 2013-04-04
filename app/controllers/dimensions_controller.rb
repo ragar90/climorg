@@ -25,7 +25,7 @@ class DimensionsController < ApplicationController
   # GET /dimensions/new.json
   def new
     @dimension = Dimension.new
-
+    @dimension.is_default=true
     respond_to do |format|
       format.html { render :layout=>@layout } # new.html.erb
       format.json { render json: @dimension }
@@ -44,11 +44,12 @@ class DimensionsController < ApplicationController
 
     respond_to do |format|
       if @dimension.save
+        json_object = params[:modal]=="true" ?  {:value=>@dimension.id,:display_value=>@dimension.name, :class=>"dimension"} : @dimension
         format.html { redirect_to @dimension, notice: 'Dimension was successfully created.' }
-        format.json { render json: @dimension, status: :created, location: @dimension }
+        format.json { render :json=> json_object.to_json, status: :created, location: @dimension }
       else
         format.html { render action: "new",:layout=>@layout  }
-        format.json { render json: @dimension.errors, status: :unprocessable_entity }
+        format.json { render :json=> {:errors=>@dimension.errors}.to_json, status: :created }
       end
     end
   end

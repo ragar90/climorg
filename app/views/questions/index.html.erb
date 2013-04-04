@@ -19,7 +19,7 @@
         <td><%= link_to question.id, question_path(question) %></td>
         <td><%= question.description %></td>
         <td><%= question.is_default %></td>
-        <td><%= question.dimension_id %></td>
+        <td><%= question.dimension.name.titleize %></td>
         <td><%=l question.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),

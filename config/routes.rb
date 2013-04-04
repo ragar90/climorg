@@ -1,7 +1,11 @@
 ClimaOrg::Application.routes.draw do
   get "home/index"
 
-  resources :researches
+  resources :researches do
+    member do
+      put 'confirm'
+    end
+  end
 
 
   resources :questions

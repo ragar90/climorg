@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118070951) do
+ActiveRecord::Schema.define(:version => 20130404203304) do
 
   create_table "answers", :force => true do |t|
     t.integer  "result_id"
@@ -78,8 +78,9 @@ ActiveRecord::Schema.define(:version => 20130118070951) do
     t.string   "company_name"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.boolean  "state",        :default => false
   end
 
   create_table "results", :force => true do |t|

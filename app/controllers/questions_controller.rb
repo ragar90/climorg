@@ -2,10 +2,21 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    filtered = !params[:dimensions].nil?
+    if filtered
+      @research = Research.find(params[:research_id])
+      @dimensions = Dimension.where(:id=>params[:dimensions])
+      @questions = Question.where(:dimension_id=>params[:dimensions])
+    else
+      @questions = Question.all
+    end
 
     respond_to do |format|
-      format.html # index.html.erb
+      if filtered
+        format.html{ render :partial=>"multiselect_for_questions", :layout=>false}
+      else
+        format.html # index.html.erb
+      end
       format.json { render json: @questions }
     end
   end
@@ -25,7 +36,7 @@ class QuestionsController < ApplicationController
   # GET /questions/new.json
   def new
     @question = Question.new
-
+    @question.is_default = true
     respond_to do |format|
       format.html { render :layout=>@layout }# new.html.erb
       format.json { render json: @question }

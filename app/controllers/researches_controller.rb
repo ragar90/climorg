@@ -1,4 +1,5 @@
 class ResearchesController < ApplicationController
+  before_filter :load_change_state
   # GET /researches
   # GET /researches.json
   def index
@@ -68,6 +69,20 @@ class ResearchesController < ApplicationController
     end
   end
 
+  def confirm
+    @research = Research.find(params[:id])
+    
+    respond_to do |format|
+      if @research.confirm!
+        format.html { redirect_to researches_path, notice: 'Research was successfully confirmed.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit", flash: "El Estudio no pudo confirmarse adecuadamente" }
+        format.json { render json: @research.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /researches/1
   # DELETE /researches/1.json
   def destroy
@@ -79,4 +94,9 @@ class ResearchesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  private 
+
+  def load_change_state
+    @change_state = params[:change_state] == "true"
+  end 
 end

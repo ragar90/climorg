@@ -2,31 +2,63 @@
   <%= error_messages! @research%>
 <%end%>
 <%= form_for @research, :html => { :class => 'form-horizontal' } do |f| %>
-  <div class="control-group">
-    <%= f.label :company_name, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :company_name, :class => 'text_field' %>
+  <%=f.hidden_field :id%>
+  <%unless @change_state%>
+  <fieldset>
+    <legend>Información General</legend>
+    <div class="control-group">
+      <%= f.label :company_name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :company_name, :class => 'text_field' %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :start_date, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :start_date, :class => 'datetime_select', :value=>(!@research.start_date.nil? ? @research.start_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+    <div class="control-group">
+      <%= f.label :start_date, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :start_date, :class => 'datetime_select', :value=>(!@research.start_date.nil? ? @research.start_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :end_date, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :end_date, :class => 'datetime_select',:data=>{:"date-format"=>"dd-mm-yyyy"}, :value=>(!@research.end_date.nil? ? @research.end_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+    <div class="control-group">
+      <%= f.label :end_date, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :end_date, :class => 'datetime_select',:data=>{:"date-format"=>"dd-mm-yyyy"}, :value=>(!@research.end_date.nil? ? @research.end_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+      </div>
     </div>
-  </div>
+  </fieldset>
+  <%end%>
+  <%if !@research.new_record?%>
+    <fieldset>
+      <legend>Configuracion de Variables</legend>
+      <div class="control-group">
+        <%= f.label :demographic_variables, :class => 'control-label' %>
+        <div class="controls">
+          <%=f.collection_select :demographic_variable_ids, DemographicVariable.where(:is_default=>true), :id, :name, {}, {:multiple=>true,:name=>"research[demographic_variable_ids][]"}%></br>
+          <%=link_to "Agregar nueva Variable Demografica", new_demographic_variable_path(:layout=>false), :class=>"new_setting_link"  %>
+        </div>
+      </div>
 
+      <div class="control-group">
+        <%= f.label :dimensions, :class => 'control-label' %>
+        <div class="controls">
+          <%=f.collection_select :dimension_ids, Dimension.where(:is_default=>true), :id, :camelize_name, {}, {:multiple=>true,:name=>"research[dimension_ids][]"}%></br>
+          <%=link_to "Agregar nueva Dimension", new_dimension_path(:layout=>false), :class=>"new_setting_link"  %>
+        </div>
+      </div>
 
-  <%=render "settings_form", f:f%>
+      <div class="control-group">
+        <%= f.label :questions, :class => 'control-label' %>
+        <div id = "questions-control" class="controls">
+          <%if @research.dimensions.length > 0 %>
+            <%=f.grouped_collection_select :question_ids, @research.dimensions, :questions,:camelize_name,:id, :description, {}, {:multiple=>true,:name=>"research[question_ids][]"}%></br>
+            <%#=link_to "Agregar nueva variable", new_question_path(:layout=>false), :class=>"new_setting_link"  %>
+          <%end%>
+        </div>
+      </div>
+    </fieldset>
+  <%end%>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                researches_path, :class => 'btn' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),researches_path, :class => 'btn' %>
   </div>
 <% end %>
