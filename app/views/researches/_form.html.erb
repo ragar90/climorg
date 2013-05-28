@@ -45,17 +45,15 @@
         </div>
       </div>
 
-      <div class="control-group">
-        <%= f.label :questions, :class => 'control-label' %>
-        <div id = "questions-control" class="controls">
-          <%if @research.dimensions.length > 0 %>
-            <%=f.grouped_collection_select :question_ids, @research.dimensions, :questions,:camelize_name,:id, :description, {}, {:multiple=>true,:name=>"research[question_ids][]"}%></br>
-            <%#=link_to "Agregar nueva variable", new_question_path(:layout=>false), :class=>"new_setting_link"  %>
-          <%end%>
-        </div>
-      </div>
+      
     </fieldset>
   <%end%>
+  <fieldset>
+    <legend>Preguntas</legend>
+    <%= f.fields_for :questions do |builder| %>
+      <%= render :partial=>'questions_fields', :locals=>{f: builder} %>
+    <% end %>
+  </fieldset>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
