@@ -9,85 +9,85 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130528035951) do
+ActiveRecord::Schema.define(version: 20130529000258) do
 
-  create_table "answers", :force => true do |t|
+  create_table "answers", force: true do |t|
     t.integer  "result_id"
     t.integer  "question_id"
     t.integer  "value"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "demographic_settings", :force => true do |t|
+  create_table "demographic_settings", force: true do |t|
     t.integer  "research_id"
     t.integer  "demographic_variable_id"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "demographic_values", :force => true do |t|
+  create_table "demographic_values", force: true do |t|
     t.integer  "demographi_variable_id"
     t.string   "result_id"
     t.string   "value"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "demographic_variables", :force => true do |t|
+  create_table "demographic_variables", force: true do |t|
     t.string   "name"
     t.boolean  "is_default"
     t.string   "display_values"
     t.string   "accepted_value"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "dimension_settings", :force => true do |t|
+  create_table "dimension_settings", force: true do |t|
     t.integer  "research_id"
     t.integer  "dimension_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "dimensions", :force => true do |t|
+  create_table "dimensions", force: true do |t|
     t.string   "name"
     t.boolean  "is_default"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "question_settings", :force => true do |t|
+  create_table "question_settings", force: true do |t|
     t.integer  "research_id"
     t.integer  "question_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "questions", :force => true do |t|
+  create_table "questions", force: true do |t|
     t.string   "description"
     t.boolean  "is_default"
     t.integer  "dimension_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "research_id"
   end
 
-  create_table "researches", :force => true do |t|
+  create_table "researches", force: true do |t|
     t.string   "company_name"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.boolean  "state",        :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "state",        default: 0
   end
 
-  create_table "results", :force => true do |t|
+  create_table "results", force: true do |t|
     t.integer  "research_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

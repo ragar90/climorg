@@ -5,4 +5,8 @@ class ApplicationController < ActionController::Base
   def load_layout
   	@layout = (params[:layout].nil? or params[:layout]==true) ? true : false
   end
+  
+  def permited_params(resource)
+    params.require(resource.to_sym).permit!
+  end
 end

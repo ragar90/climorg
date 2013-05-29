@@ -36,15 +36,17 @@ class ResearchesController < ApplicationController
   # GET /researches/1/edit
   def edit
     @research = Research.find(params[:id])
+    @current_state = @research.state || 0
+    @research.state += 1 if  @research.state < 2
   end
 
   # POST /researches
   # POST /researches.json
   def create
-    @research = Research.new(params[:research])
+    @research = Research.new(permited_params(:research).permit!)
     respond_to do |format|
       if @research.save
-        format.html { redirect_to @research, notice: 'Research was successfully created.' }
+        format.html { redirect_to edit_research_path(id: @research.id), notice: 'Research was successfully created.' }
         format.json { render json: @research, status: :created, location: @research }
       else
         format.html { render action: "new" }
@@ -59,7 +61,7 @@ class ResearchesController < ApplicationController
     @research = Research.find(params[:id])
 
     respond_to do |format|
-      if @research.update_attributes(params[:research])
+      if @research.update_attributes(permited_params(:research).permit!)
         format.html { redirect_to @research, notice: 'Research was successfully updated.' }
         format.json { head :no_content }
       else

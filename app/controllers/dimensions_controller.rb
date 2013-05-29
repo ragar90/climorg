@@ -40,7 +40,7 @@ class DimensionsController < ApplicationController
   # POST /dimensions
   # POST /dimensions.json
   def create
-    @dimension = Dimension.new(params[:dimension])
+    @dimension = Dimension.new(permited_params(:dimension))
 
     respond_to do |format|
       if @dimension.save
@@ -60,7 +60,7 @@ class DimensionsController < ApplicationController
     @dimension = Dimension.find(params[:id])
 
     respond_to do |format|
-      if @dimension.update_attributes(params[:dimension])
+      if @dimension.update_attributes(permited_params(:dimension))
         format.html { redirect_to @dimension, notice: 'Dimension was successfully updated.' }
         format.json { head :no_content }
       else

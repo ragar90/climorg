@@ -3,30 +3,32 @@
 <%end%>
 <%= form_for @research, :html => { :class => 'form-horizontal' } do |f| %>
   <%=f.hidden_field :id%>
-  <%unless @change_state%>
-  <fieldset>
-    <legend>Información General</legend>
-    <div class="control-group">
-      <%= f.label :company_name, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :company_name, :class => 'text_field' %>
+  <%=f.hidden_field :state%>
+  <% if @current_state == 0 %>
+    <fieldset>
+      <legend>Información General</legend>
+      <div class="control-group">
+        <%= f.label :company_name, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :company_name, :class => 'text_field' %>
+        </div>
       </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :start_date, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :start_date, :class => 'datetime_select', :value=>(!@research.start_date.nil? ? @research.start_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+      <div class="control-group">
+        <%= f.label :start_date, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :start_date, :class => 'datetime_select', :value=>(!@research.start_date.nil? ? @research.start_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+        </div>
       </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :end_date, :class => 'control-label' %>
-      <div class="controls">
-        <%= f.text_field :end_date, :class => 'datetime_select',:data=>{:"date-format"=>"dd-mm-yyyy"}, :value=>(!@research.end_date.nil? ? @research.end_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+      <div class="control-group">
+        <%= f.label :end_date, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :end_date, :class => 'datetime_select',:data=>{:"date-format"=>"dd-mm-yyyy"}, :value=>(!@research.end_date.nil? ? @research.end_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+        </div>
       </div>
-    </div>
-  </fieldset>
-  <%end%>
-  <%if !@research.new_record?%>
+    </fieldset>
+  <% end %>
+
+  <%if  @current_state >= 1%>
     <fieldset>
       <legend>Configuracion de Variables</legend>
       <div class="control-group">
@@ -43,17 +45,18 @@
           <%=f.collection_select :dimension_ids, Dimension.where(:is_default=>true), :id, :camelize_name, {}, {:multiple=>true,:name=>"research[dimension_ids][]"}%></br>
           <%=link_to "Agregar nueva Dimension", new_dimension_path(:layout=>false), :class=>"new_setting_link"  %>
         </div>
-      </div>
-
-      
+      </div>      
     </fieldset>
   <%end%>
-  <fieldset>
-    <legend>Preguntas</legend>
-    <%= f.fields_for :questions do |builder| %>
-      <%= render :partial=>'questions_fields', :locals=>{f: builder} %>
-    <% end %>
-  </fieldset>
+  
+  <% if @current_state >= 2%>
+    <fieldset>
+      <legend>Preguntas</legend>
+      <%= f.fields_for :questions do |builder| %>
+        <%= render :partial=>'questions_fields', :locals=>{f: builder} %>
+      <% end %>
+    </fieldset>
+  <% end %>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>

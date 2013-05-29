@@ -1,6 +1,4 @@
 class Research < ActiveRecord::Base
-  attr_accessible :company_name, :end_date, :start_date,:demographic_variable_ids, 
-                  :dimension_ids, :question_ids, :state,:questions_attributes
   has_many :results
   has_many :demographic_settings
   has_many :demographic_variables, :through => :demographic_settings
@@ -19,15 +17,38 @@ class Research < ActiveRecord::Base
   end
   
   def is_draft?
-    !self.state
+    self.state!=3
   end
-
+  #0=>creado
+  #1=>configurado
+  #2=>con cuestionario
+  #3=>confirmado
   def state_label
-    self.state ? "Confirmado" : "Borrador"
+    self.state == 3 ? "Confirmado" : "Borrador"
   end
 
   def confirm!
-    self.state = true
+    self.state = 3
     self.save
   end
+  
+  def next_step?
+     state_label(self.is_draft? ? self.state + 1 : nil)
+  end
+
+  def current_state
+    state_label(self.state)
+  end
+  
+  def state_label(state)
+    case state
+      when 0 then "Creado"
+      when 1 then "Configurado"
+      when 2 then "Con Cuestionario"
+      when 3 then "Confirmado"
+      else 
+        "Ninguno"
+    end
+  end
+  
 end

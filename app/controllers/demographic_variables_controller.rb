@@ -40,7 +40,7 @@ class DemographicVariablesController < ApplicationController
   # POST /demographic_variables
   # POST /demographic_variables.json
   def create
-    @demographic_variable = DemographicVariable.new(params[:demographic_variable])
+    @demographic_variable = DemographicVariable.new(permited_params(:demographic_variable))
     
     respond_to do |format|
       if @demographic_variable.save
@@ -60,7 +60,7 @@ class DemographicVariablesController < ApplicationController
     @demographic_variable = DemographicVariable.find(params[:id])
 
     respond_to do |format|
-      if @demographic_variable.update_attributes(params[:demographic_variable])
+      if @demographic_variable.update_attributes(permited_params(:demographic_variable))
         format.html { redirect_to @demographic_variable, notice: 'Demographic variable was successfully updated.' }
         format.json { head :no_content }
       else

@@ -16,6 +16,8 @@
   select_option = "<option value='"+value+"'>"+display_value+"</option>"
   $("#research_"+select+"_ids").append(select_option)
   $("#research_"+select+"_ids").multiselect('rebuild')
+  if select is "dimension"
+    $(".dq_select").append(select_option)
 
 @multiselect_options_text = (options) ->
   if options.length is 0
@@ -28,27 +30,25 @@
       selected += $(this).text() + ", "
     selected.substr(0, selected.length - 2) + " <b class=\"caret\"></b>"
 jQuery ->
-	$(".datetime_select").datepicker(format: "dd/mm/yyyy")
+  $(".datetime_select").datepicker(format: "dd/mm/yyyy")
 
-	$("#research_dimension_ids").multiselect
+  $("#research_dimension_ids").multiselect
     buttonClass: "btn"
     buttonWidth: "auto"
     buttonContainer: "<div class=\"btn-group\" />"
     maxHeight: 150
     buttonText: multiselect_options_text
     onChange: (element, checked)->
-      $("#questions-control").html("")
-      params = { "dimensions" : $("#research_dimension_ids").val(), "research_id" : $("#research_id").val() }
-      params = jQuery.param(params)
-      $("#questions-control").load("/questions?"+ params)
+      $(".dq_select").html("")
+      d = $("#research_dimension_ids option[selected='selected']")
+      options =  ""
+      i = 0
+      while i < d.length
+        options = options + "<option value=" + $(d[i]).val() + ">" + $(d[i]).text() + "</option>"
+        i++
+      $(".dq_select").append(options)
       return true
 
-  $("#research_question_ids").multiselect
-    buttonClass: "btn"
-    buttonWidth: "auto"
-    buttonContainer: "<div class=\"btn-group\" />"
-    maxHeight: 150
-    buttonText: multiselect_options_text
 
   $("#research_demographic_variable_ids").multiselect
     buttonClass: "btn"
@@ -57,16 +57,17 @@ jQuery ->
     maxHeight: 150
     buttonText: multiselect_options_text
 
-	$("#modalView").on "hidden", ->
-		$(@).html("")
-	$(".new_setting_link").live "click", (e) ->
-		remote_url = $(@).attr("href")
-		$("#modalView").load(remote_url)
-		$("#modalView").modal
-		$("#modalView").modal("show")
-		e.preventDefault()
+  $("#modalView").on "hidden", ->
+    $(@).html("")
+  $(document).on "click",".new_setting_link", (e) ->
+    remote_url = $(@).attr("href")
+    $("#modalView").load(remote_url)
+    $("#modalView").modal
+    $("#modalView").modal("show")
+    $("a[data-toggle=tooltip]").tooltip(placement:"right")
+    e.preventDefault()
 
-	$(".modal_form").live "ajax:success", (evt, data, status, xhr) -> 
+  $(document).on "ajax:success", ".modal_form", (evt, data, status, xhr) -> 
     errors = data["errors"]
     if errors isnt `undefined` or errors?
       display_errors(errors)
@@ -74,11 +75,12 @@ jQuery ->
       console.log "before setting new options"
       add_option_to_select(data.class, data.value,data.display_value)
       $("#modalView").modal("hide")
-  $("#submit_modal_form_btn").live "click", (e) ->
+
+  $(document).on "click","#submit_modal_form_btn", (e) ->
     set_display_values()
     $(".modal_form").trigger("submit.rails");
     e.preventDefault()
-  
-  $("#cancel_modal_form_btn").live "click", (e) ->
+
+  $(document).on "click","#cancel_modal_form_btn", (e) ->
     $("#modalView").modal('hide')
     e.preventDefault()

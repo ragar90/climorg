@@ -40,10 +40,10 @@
 
 #call hash setter
 binders = ->
-  $(".demographic_modal_form").live "ajax:before", select_displayable_field
-  $("#new_demographic_variable").live "submit", set_display_values
-  $("#edit_demographic_variable").live "submit", set_display_values
-  $("#demographic_variable_accepted_value").live "change", select_displayable_field
+  $(document).on "ajax:before", ".demographic_modal_form",select_displayable_field
+  $(document).on "submit", "#new_demographic_variable", set_display_values
+  $(document).on "submit","#edit_demographic_variable", set_display_values
+  $(document).on "change","#demographic_variable_accepted_value", select_displayable_field
   
 
   

@@ -1,7 +1,8 @@
 <%demographic_type||="boolean"%>
 <div id = "boolean-display" class="controls admin-dsiplay-values <%="selected" if demographic_type == "boolean"%>">
 	<%=text_field_tag("display_values_boolean_true", @demographic_variable.true_boolean_value, :class => "boolean-field")%> |
-	<%=text_field_tag("display_values_boolean_false", @demographic_variable.false_boolean_value, :class => "boolean-field")%>
+	<%=text_field_tag("display_values_boolean_false", @demographic_variable.false_boolean_value, :class => "boolean-field")%><br/>
+	  <p class = "example-field">Ej:Maculino-Femenino</p>
 </div>
 
 <div id = "integer-display"  class="controls admin-dsiplay-values <%="selected" if demographic_type == "integer"%>">
@@ -14,9 +15,11 @@
 
 <div id = "range-display" class="controls admin-dsiplay-values <%="selected" if demographic_type == "range"%>">
 	  <%= number_field_tag "display_values_min_range",@demographic_variable.min_range_value,:class=>"number-field"%> - 
-	  <%= number_field_tag "display_values_max_range",@demographic_variable.max_range_value,:class=>"number-field"%>
+	  <%= number_field_tag "display_values_max_range",@demographic_variable.max_range_value,:class=>"number-field"%><br/>
+	  <p class = "example-field">Ej:3-5</p>
 </div>
 
 <div id = "hash-display" class="controls admin-dsiplay-values <%="selected" if demographic_type == "hash"%>">
-	<%=text_field_tag("display_values_hash", @demographic_variable.hash_value, :class => "hash-field")%>
+	<%=text_field_tag("display_values_hash", @demographic_variable.hash_value, :class => "hash-field")%><br/>
+	<p class = "example-field">Ej: "RRHH":"Recursos Humanos","AUI":"Auditoria Interna"</p>
 </div>
