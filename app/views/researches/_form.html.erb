@@ -1,7 +1,7 @@
 <%content_for :error_messages do  %> 
   <%= error_messages! @research%>
 <%end%>
-<%= form_for @research, :html => { :class => 'form-horizontal' } do |f| %>
+<%= form_for @research, :html => { :class => 'research_form form-horizontal' } do |f| %>
   <%=f.hidden_field :id%>
   <%=f.hidden_field :state%>
   <% if @current_state == 0 %>
@@ -52,9 +52,10 @@
   <% if @current_state >= 2%>
     <fieldset>
       <legend>Preguntas</legend>
-      <%= f.fields_for :questions do |builder| %>
-        <%= render :partial=>'questions_fields', :locals=>{f: builder} %>
+      <%= f.fields_for(:questions) do |builder| %>
+        <%= render :partial=>'question_fields', :locals=>{f: builder} %>
       <% end %>
+      <%= link_to_add_fields "Agregar Pregunta", f, :questions %>  
     </fieldset>
   <% end %>
 

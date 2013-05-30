@@ -36,6 +36,10 @@ class ResearchesController < ApplicationController
   # GET /researches/1/edit
   def edit
     @research = Research.find(params[:id])
+    if @research.is_confirmed?
+      redirect_to researches_path, notice: 'Este estudio ya fue confirmado por lo que no se puede editar.'
+      return
+    end
     @current_state = @research.state || 0
     @research.state += 1 if  @research.state < 2
   end
@@ -59,7 +63,10 @@ class ResearchesController < ApplicationController
   # PUT /researches/1.json
   def update
     @research = Research.find(params[:id])
-
+    if @research.is_confirmed?
+      redirect_to researches_path, notice: 'Este estudio ya fue confirmado por lo que no se puede editar.'
+      return
+    end
     respond_to do |format|
       if @research.update_attributes(permited_params(:research).permit!)
         format.html { redirect_to @research, notice: 'Research was successfully updated.' }
@@ -96,6 +103,21 @@ class ResearchesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def survey
+    @research = Research.find(params[:id])
+    respond_to do |format|
+      format.html { render "survey", :layout=>"pdf"}
+      format.pdf do
+        render  :pdf=>"#{@research.company_name}_cuestionario",
+                :template => "researches/survey.pdf.erb",
+                :layout => "pdf.html",
+                :page_size => "Letter",
+                :wkhtmltopdf => "#{Rails.root}/lib/bin/wkhtmltopdf"
+      end
+    end
+  end
+  
   private 
 
   def load_change_state

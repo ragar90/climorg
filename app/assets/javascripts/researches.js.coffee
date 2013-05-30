@@ -12,12 +12,27 @@
   $("#modal_errors .errors-list").html(msg_list)
   $("#modal_errors .alert").show("slow")
 
+@load_dimension_values = (element) ->
+  values = []
+  if $(element).length > 1
+    $(element).each( (i,e) -> 
+      values.push($(e).val()) )
+  $(element).html("")
+  d = $("#research_dimension_ids option[selected='selected']")
+  options =  ""
+  i = 0
+  while i < d.length
+    options = options + "<option value=" + $(d[i]).val() + ">" + $(d[i]).text() + "</option>"
+    i++
+  $(element).append(options)
+  $(element).each( (i,e) -> 
+      $(e).val(values[i]) )
+  return true
+
 @add_option_to_select = (select, value, display_value) =>
   select_option = "<option value='"+value+"'>"+display_value+"</option>"
   $("#research_"+select+"_ids").append(select_option)
   $("#research_"+select+"_ids").multiselect('rebuild')
-  if select is "dimension"
-    $(".dq_select").append(select_option)
 
 @multiselect_options_text = (options) ->
   if options.length is 0
@@ -30,6 +45,18 @@
       selected += $(this).text() + ", "
     selected.substr(0, selected.length - 2) + " <b class=\"caret\"></b>"
 jQuery ->
+  $('.research_form').on 'click', '.remove_fields', (event) ->
+    $(this).prev('input[type=hidden]').val('1')
+    $(this).closest('.question-form').hide()
+    event.preventDefault()
+
+  $('.research_form').on 'click', '.add_fields', (event) ->
+    time = new Date().getTime()
+    regexp = new RegExp($(this).data('id'), 'g')
+    $(this).before($(this).data('fields').replace(regexp, time))
+    load_dimension_values($(".dq_select").last())
+    event.preventDefault()
+
   $(".datetime_select").datepicker(format: "dd/mm/yyyy")
 
   $("#research_dimension_ids").multiselect
@@ -39,16 +66,7 @@ jQuery ->
     maxHeight: 150
     buttonText: multiselect_options_text
     onChange: (element, checked)->
-      $(".dq_select").html("")
-      d = $("#research_dimension_ids option[selected='selected']")
-      options =  ""
-      i = 0
-      while i < d.length
-        options = options + "<option value=" + $(d[i]).val() + ">" + $(d[i]).text() + "</option>"
-        i++
-      $(".dq_select").append(options)
-      return true
-
+      load_dimension_values(".dq_select")
 
   $("#research_demographic_variable_ids").multiselect
     buttonClass: "btn"

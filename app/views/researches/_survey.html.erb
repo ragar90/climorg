@@ -1,0 +1,10 @@
+<% @research.questions.shuffle.each do |question|%>
+  <%= question.description %>
+    <ul class="answers">
+      <li class= "option">Muy Malo <div class = "checkbox"></div></li>
+      <li class= "option">Malo  <div class = "checkbox"></div></li>
+      <li class= "option">Bueno  <div class = "checkbox"></div></li>
+      <li class= "option">Muy Bueno  <div class = "checkbox"></div></li>
+      <li class= "option">Indiferente  <div class = "checkbox"></div></li>
+    </ul>
+<% end %>

@@ -4,6 +4,7 @@ ClimaOrg::Application.routes.draw do
   resources :researches do
     member do
       put 'confirm'
+      get "survey"
     end
   end
 
