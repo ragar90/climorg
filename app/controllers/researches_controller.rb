@@ -109,11 +109,8 @@ class ResearchesController < ApplicationController
     respond_to do |format|
       format.html { render "survey", :layout=>"pdf"}
       format.pdf do
-        render  :pdf=>"#{@research.company_name}_cuestionario",
-                :template => "researches/survey.pdf.erb",
-                :layout => "pdf.html",
-                :page_size => "Letter",
-                :wkhtmltopdf => "#{Rails.root}/lib/bin/wkhtmltopdf"
+        pdf = SurveyPdf.new(@research, view_context)
+        send_data pdf.render,filename: "#{@research.company_name}_cuestionario",type: "application/pdf",disposition: "inline"
       end
     end
   end
