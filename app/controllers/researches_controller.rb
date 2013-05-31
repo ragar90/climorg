@@ -115,6 +115,19 @@ class ResearchesController < ApplicationController
     end
   end
   
+  def add_answers
+    @research = Research.find(params[:id])
+    @result = Result.new
+    @result.research_id = @research.id
+  end
+  
+  def save_answers
+    respond_to do |format|
+      format.html{ redirect_to add_answers_research_path(:id=>params[:id]) }
+    end
+    
+  end
+  
   private 
 
   def load_change_state

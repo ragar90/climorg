@@ -27,8 +27,25 @@ class Research < ActiveRecord::Base
   end
 
   def confirm!
-    self.state = 3
-    self.save
+    saved = true
+    self.transaction do
+      begin
+        self.state = 3
+        i = 1
+        self.questions.shuffle.each do |question|
+          question.ordinal=i
+          saved = saved && question.save  
+          i+=1
+          break if !saved
+        end
+        saved = saved && self.save 
+        raise ActiveRecord::Rollback if !saved
+      rescue
+        ActiveRecord::Rollback
+        saved = false
+      end
+    end
+    return saved
   end
   
   def is_confirmed?
@@ -54,4 +71,8 @@ class Research < ActiveRecord::Base
     end
   end
   
+  def survey
+    self.questions.order(:ordinal)
+  end
+
 end

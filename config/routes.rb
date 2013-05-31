@@ -5,6 +5,8 @@ ClimaOrg::Application.routes.draw do
     member do
       put 'confirm'
       get "survey"
+      get "add_answers"=>"researches#add_answers", :as=>:add_answers
+      post "save_answers"=>"researches#save_answers", :as=>:save_answers
     end
   end
 
