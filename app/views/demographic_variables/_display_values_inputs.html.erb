@@ -14,8 +14,8 @@
 </div>
 
 <div id = "range-display" class="controls admin-dsiplay-values <%="selected" if demographic_type == "range"%>">
-	  <%= number_field_tag "display_values_min_range",@demographic_variable.min_range_value,:class=>"number-field"%> - 
-	  <%= number_field_tag "display_values_max_range",@demographic_variable.max_range_value,:class=>"number-field"%><br/>
+	  <%= number_field_tag "display_values_min_range",@demographic_variable.min_range_value,:class=>"number-field", :min=>0%> - 
+	  <%= number_field_tag "display_values_max_range",@demographic_variable.max_range_value,:class=>"number-field", :min=>0%><br/>
 	  <p class = "example-field">Ej:3-5</p>
 </div>
 

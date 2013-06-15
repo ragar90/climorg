@@ -9,3 +9,16 @@ button.multiselect{
 	font-weight: bold;
 	text-decoration: underline;
 }
+.demographic_field{
+	.variable_control{
+		.boolean_field{
+			vertical-align: top;
+		}
+	}
+}
+
+.survey{
+	input[type="radio"], input[type="checkbox"]{
+		margin-left: 20%;
+	}
+}

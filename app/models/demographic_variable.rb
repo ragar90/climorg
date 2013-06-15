@@ -38,11 +38,11 @@ class DemographicVariable < ActiveRecord::Base
   end
 
   def min_range_value
-  	accepted_value == "range" ? display_values.split("-")[0] : nil
+  	accepted_value == "range" ? display_values.split("-")[0].to_f : nil
   end
 
   def max_range_value
-  	accepted_value == "range" ? display_values.split("-")[1] : nil
+  	accepted_value == "range" ? display_values.split("-")[1].to_f : nil
   end
 
   def hash_value

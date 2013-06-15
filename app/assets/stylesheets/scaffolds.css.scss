@@ -17,8 +17,12 @@ pre {
   padding: 10px;
   font-size: 11px;
 }
-
-
+.number_field{
+	width: 65px;
+}
+.select_field{
+	width: 175px;
+}
 
 div {
   &.field, &.actions {

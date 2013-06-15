@@ -6,7 +6,7 @@ class SurveyPdf < Prawn::Document
   end
   
   def generate_document
-    @research.questions.each do |question|
+    @research.survey.each do |question|
       render_question(question)
     end
   end

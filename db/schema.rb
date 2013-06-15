@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130531215559) do
+ActiveRecord::Schema.define(version: 20130606010657) do
 
   create_table "answers", force: true do |t|
     t.integer  "result_id"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20130531215559) do
   end
 
   create_table "demographic_values", force: true do |t|
-    t.integer  "demographi_variable_id"
+    t.integer  "demographic_variable_id"
     t.string   "result_id"
     t.string   "value"
     t.datetime "created_at"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20130531215559) do
     t.integer  "research_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "correlative"
   end
 
 end

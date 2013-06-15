@@ -26,7 +26,8 @@ class ResearchesController < ApplicationController
   # GET /researches/new.json
   def new
     @research = Research.new
-
+    @current_state = @research.state || 0
+    @research.state += 1 if  @research.state < 2
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @research }
@@ -69,7 +70,7 @@ class ResearchesController < ApplicationController
     end
     respond_to do |format|
       if @research.update_attributes(permited_params(:research).permit!)
-        format.html { redirect_to @research, notice: 'Research was successfully updated.' }
+        format.html { redirect_to edit_research_path(id: @research.id), notice: 'Research was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -113,19 +114,6 @@ class ResearchesController < ApplicationController
         send_data pdf.render,filename: "#{@research.company_name}_cuestionario",type: "application/pdf",disposition: "inline"
       end
     end
-  end
-  
-  def add_answers
-    @research = Research.find(params[:id])
-    @result = Result.new
-    @result.research_id = @research.id
-  end
-  
-  def save_answers
-    respond_to do |format|
-      format.html{ redirect_to add_answers_research_path(:id=>params[:id]) }
-    end
-    
   end
   
   private 

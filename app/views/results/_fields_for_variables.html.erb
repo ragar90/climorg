@@ -1,0 +1,23 @@
+<%#=error_messages_for_demographic_values(variables_settigs) %>
+<div class = "span3">
+  <div class = "demographic_field">
+    <div class = "variable_name">
+      <%= f.hidden_field :demographic_variable_id %>
+      <%= f.label :value,  f.object.variable.name.titleize %>
+    </div>
+    <div class = "variable_control">
+      <% if f.object.variable.is_boolean? %>
+        <%= f.radio_button :value, 1,:class=>"boolean_field true_boolean_field" %> <span><%= f.object.variable.true_boolean_value %></span>
+        <%= f.radio_button :value, 0,:class=>"boolean_field false_boolean_field" %> <span><%= f.object.variable.false_boolean_value %></span>
+      <% elsif f.object.variable.is_integer?%>
+        <%= f.number_field :value, :min=>0, :step=>1, :class=>"number_field integer_field"%>
+      <% elsif f.object.variable.is_float? %>
+        <%= f.number_field :value, :min=>0, :step=>0.01,:class=>"number_field float_field"%>
+      <% elsif f.object.variable.is_range? %>
+        <%= f.number_field :value, :min=>f.object.variable.min_range_value, :max=>f.object.variable.max_range_value, :step=>1, :class=>"number_field range_field"%>
+      <% elsif f.object.variable.is_hash? %>
+        <%= f.select :value, f.object.variable.hash_value_parsed.collect { |k,v| [v,k]}, {:prompt => 'Seleccione Uno'}, :class=>"select_field"%>
+      <% end %>
+    </div>
+  </div>
+</div>

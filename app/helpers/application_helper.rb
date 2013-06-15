@@ -17,4 +17,25 @@ module ApplicationHelper
 		HTML
     html.html_safe
   end
+  
+  def error_messages_for_demographic_values(resources)
+    messages = ""
+    errors_count = 0
+    resources.each do |resource|
+      next if resource.errors.messages.empty?
+      errors_count += resource.errors.count
+      errors = content_tag(:ul,resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join)
+      messages += content_tag(:li, "Errors for #{resource.demographic_variable.name} #{errors}")
+    end
+    return "" if errors_count == 0
+    html = <<-HTML
+			<div class= "alert alert-error fade in">
+			<a class="close" data-dismiss="alert" href="#">×</a>
+			<h2>Ocurrieron #{errors_count} errores</h2>
+			<ul>#{messages}</ul>
+			</div>
+		HTML
+    html.html_safe
+    
+  end
 end

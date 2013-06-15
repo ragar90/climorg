@@ -12,6 +12,7 @@ module ClimaOrg
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{Rails.root}/lib)
+    config.autoload_paths += %W(#{Rails.root}/lib/ext)
     config.autoload_paths += %W(#{Rails.root}/app/pdfs)
 
     # Only load the plugins named here, in the order given (default is alphabetical).

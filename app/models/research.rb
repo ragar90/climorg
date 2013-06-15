@@ -27,25 +27,29 @@ class Research < ActiveRecord::Base
   end
 
   def confirm!
-    saved = true
-    self.transaction do
-      begin
-        self.state = 3
-        i = 1
-        self.questions.shuffle.each do |question|
-          question.ordinal=i
-          saved = saved && question.save  
-          i+=1
-          break if !saved
+    unless self.questions.length == 0
+      saved = true
+      self.transaction do
+        begin
+          self.state = 3
+          i = 1
+          self.questions.shuffle.each do |question|
+            question.ordinal=i
+            saved = saved && question.save  
+            i+=1
+            break if !saved
+          end
+          saved = saved && self.save 
+          raise ActiveRecord::Rollback if !saved
+        rescue
+          ActiveRecord::Rollback
+          saved = false
         end
-        saved = saved && self.save 
-        raise ActiveRecord::Rollback if !saved
-      rescue
-        ActiveRecord::Rollback
-        saved = false
       end
+      return saved
+    else
+      return false
     end
-    return saved
   end
   
   def is_confirmed?
