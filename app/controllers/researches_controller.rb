@@ -15,7 +15,7 @@ class ResearchesController < ApplicationController
   # GET /researches/1.json
   def show
     @research = Research.find(params[:id])
-
+    @dimensions_reports = @research.filter_by_dimensions
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @research }
