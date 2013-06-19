@@ -1,0 +1,11 @@
+<%=grouped_collection_select :research, :question_ids, @dimensions, :questions,:camelize_name,:id, :description, {}, {:multiple=>true,:name=>"research[question_ids][]"}%></br>
+<%#=link_to "Agregar nueva variable", new_question_path(:layout=>false), :class=>"new_setting_link"  %>
+<script>
+	$("#research_question_ids").multiselect({
+      buttonClass: "btn",
+      buttonWidth: "auto",
+      buttonContainer: "<div class=\"btn-group\" />",
+      maxHeight: 150,
+      buttonText: multiselect_options_text
+    });
+</script>

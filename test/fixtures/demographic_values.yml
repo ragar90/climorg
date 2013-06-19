@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  demographi_variable_id: 1
+  result_id: MyString
+  value: MyString
+
+two:
+  demographi_variable_id: 1
+  result_id: MyString
+  value: MyString

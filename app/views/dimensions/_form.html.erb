@@ -1,0 +1,31 @@
+<%content_for :error_messages do  %> 
+  <%= error_messages! @dimension%>
+<%end%>
+<%edit||=false%>
+<%url ||=dimensions_path%>
+<%= form_for @dimension, :url=>url,:html => { :class => "form-horizontal #{!@layout ? "modal_form" :""}", :id=>"#{edit ? "edit_dimension" : "new_dimension"}" }, :remote=>!@layout do |f| %>
+  <div class="<%=@layout ? "form" : "modal" %>-body">
+    <%if !@layout %>
+      <div id = 'modal_errors'></div>
+    <%end%>
+    <div class="control-group">
+      <%= f.label :name, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :name, :class => 'text_field' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :is_default, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.check_box :is_default, :class => 'check_box' %>
+      </div>
+    </div>
+    <%= hidden_field_tag("modal", true) if !@layout%>
+    <%if @layout%>
+      <div class="form-actions">
+        <%= f.submit nil, :class => 'btn btn-primary' %>
+        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),dimensions_path, :class => 'btn' %>
+      </div>
+    <%end%>
+  </div>
+<% end %>

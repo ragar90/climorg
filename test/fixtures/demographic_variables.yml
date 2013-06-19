@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  is_default: false
+  display_values: MyString
+  demographic_type_id: 1
+
+two:
+  name: MyString
+  is_default: false
+  display_values: MyString
+  demographic_type_id: 1

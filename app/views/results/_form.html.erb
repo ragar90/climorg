@@ -1,0 +1,41 @@
+<%= form_for [@research, @result] do |f| %>
+  <%= f.hidden_field :research_id %>
+  <fieldset class="demographic_variables" class="">
+    <legend>Datos personales</legend>
+    <div class="row">
+      <%= f.fields_for :demographic_values do |b|%>
+        <%= render "fields_for_variables", f: b %>
+      <% end %>
+    </div>
+  </fieldset>
+  <fieldset class = "results">
+    <legend>Resultados</legend>
+    <table class="table survey">
+      <thead>
+        <tr>
+          <th>Pregunta</th>
+          <th>Muy Malo</th>
+          <th>Malo</th>
+          <th>Bueno</th>
+          <th>Muy Bueno</th>
+          <th>Indiferente</th>
+        </tr>
+      </thead>
+      <%= f.fields_for :answers do |b| %>
+        <%= b.hidden_field :question_id %>
+        <tr>
+          <td><%= b.object.question.description %></td>
+          <td><%= b.radio_button :value, 1,:class=>"survey_answer"%></td>
+          <td><%= b.radio_button :value, 2,:class=>"survey_answer"%></td>
+          <td><%= b.radio_button :value, 3,:class=>"survey_answer"%></td>
+          <td><%= b.radio_button :value, 4,:class=>"survey_answer"%></td>
+          <td><%= b.radio_button :value, 0,:class=>"survey_answer"%></td>
+        </tr>
+      <% end %>
+    </table>
+  </fieldset>
+  <div class="form-actions">
+    <%= submit_tag "Guardar resultados", :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),researches_path, :class => 'btn' %>
+  </div>
+<% end %>

@@ -1,0 +1,42 @@
+<%- model_class = DemographicVariable -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:is_default) %></th>
+      <th><%= model_class.human_attribute_name(:display_values) %></th>
+      <th><%= model_class.human_attribute_name(:accepted_value) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @demographic_variables.each do |demographic_variable| %>
+      <tr>
+        <td><%= link_to demographic_variable.id, demographic_variable_path(demographic_variable) %></td>
+        <td><%= demographic_variable.name %></td>
+        <td><%= demographic_variable.is_default %></td>
+        <td><%= demographic_variable.display_values %></td>
+        <td><%= demographic_variable.accepted_value %></td>
+        <td><%=l demographic_variable.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_demographic_variable_path(demographic_variable), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      demographic_variable_path(demographic_variable),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_demographic_variable_path,
+            :class => 'btn btn-primary' %>

@@ -1,0 +1,19 @@
+<%- model_class = DemographicVariable -%>
+<%if @layout%>
+	<div class="page-header">
+  	<h1><%=t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human, :default => "New #{model_class.model_name.human}") %></h1>
+	</div>
+
+	<%= render :partial => 'form' %>
+<%else%>
+	<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3><%=t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human, :default => "New #{model_class.model_name.human}") %></h3>
+  </div> 
+	<%= render :partial => 'form', :locals=>{:url=>demographic_variables_path(:format=>:json)} %>
+	<div class="modal-footer">
+		<%=link_to "Create Variable", "" , :class=>"btn btn-primary", :id=>"submit_modal_form_btn"%>
+		<%= link_to t('.cancel', :default => t("helpers.links.cancel")),"", :class => 'btn', :id=>"cancel_modal_form_btn" %>
+	</div>
+<%end%>
+

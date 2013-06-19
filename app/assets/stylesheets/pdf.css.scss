@@ -1,0 +1,14 @@
+.document {
+  height: 297mm - 23mm;
+  width: 210mm -21mm;
+	.answers{
+		list-style: none;
+		padding-left: 10px;
+		.checkbox{
+			width: 10px;
+			height: 10px;
+			border: 1px solid;
+			display: inline-block;
+		}
+	}
+}

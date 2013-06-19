@@ -1,0 +1,24 @@
+// Place all the styles related to the Researches controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+button.multiselect{
+	width: auto;
+	height: auto;
+}
+.multiselect-group {
+	font-weight: bold;
+	text-decoration: underline;
+}
+.demographic_field{
+	.variable_control{
+		.boolean_field{
+			vertical-align: top;
+		}
+	}
+}
+
+.survey{
+	input[type="radio"], input[type="checkbox"]{
+		margin-left: 20%;
+	}
+}

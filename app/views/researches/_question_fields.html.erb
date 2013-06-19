@@ -1,0 +1,22 @@
+<div class = "question-form">
+  <div class="control-group">
+  <%= f.label :dimension_id, :class => 'control-label' %>
+  <div class="controls">
+    <%=f.collection_select :dimension_id, @research.dimensions, :id, :camelize_name, {}, :class=>"dq_select" %>
+  </div>
+</div>
+<div class="control-group">
+  <%= f.label :description, :class => 'control-label' %>
+  <div class="controls">
+    <%= f.text_field :description, :class => 'text_field' %>
+  </div>
+</div>
+<div class="control-group">
+  <%= f.label :is_default, :class => 'control-label' %>
+  <div class="controls">
+    <%= f.check_box :is_default, :class => 'check_box' %><br/>
+  <%= f.hidden_field :_destroy %>
+  <%= link_to "Eliminar", '#', :class=> "remove_fields" %>
+  </div>
+</div>
+</div>
