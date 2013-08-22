@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   end
   
   def permited_params(resource)
-    params.require(resource.to_sym).permit!
+    klass = resource.to_s.classify.constantize
+    params.require(resource.to_sym).permit(klass.whitelist_attributes)
   end
 end

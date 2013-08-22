@@ -48,7 +48,7 @@ class ResearchesController < ApplicationController
   # POST /researches
   # POST /researches.json
   def create
-    @research = Research.new(permited_params(:research).permit!)
+    @research = Research.new(permited_params(:research))
     respond_to do |format|
       if @research.save
         format.html { redirect_to edit_research_path(id: @research.id), notice: 'Research was successfully created.' }
@@ -107,6 +107,7 @@ class ResearchesController < ApplicationController
   
   def survey
     @research = Research.find(params[:id])
+    copies = params[:copies] || 10
     respond_to do |format|
       format.html { render "survey", :layout=>"pdf"}
       format.pdf do

@@ -6,8 +6,43 @@ class SurveyPdf < Prawn::Document
   end
   
   def generate_document
+    render_survey
+  end
+  
+  def render_survey
+    text @research.company_name.titleize, :align => :center,:style => :bold, :size=>16
+    move_down 20
+    text "Encuesta de Clima Organizacional", :align => :center,:style => :bold, :size=>16
+    text @research.start_date.strftime("%B %Y"), :align => :center,:style => :bold, :size=>16
+    move_down 5
+    text "Cuestionario #<color rgb='FFFFFF'>999999999999999</color>", :size=>11,:align => :right,:inline_format => true
+    render_indications_header
+    render_questions
+  end
+  
+  def render_indications_header
+    instructions = "Marque con una “X” la opción que mejor describe su preferencia respecto a cada una de las afirmaciones. Únicamente marque una opción para cada afirmación."
+    data = [ [instructions, "1", "2", "3","4", "No Aplica"] ]
+    table(data,:cell_style => { :size => 10 }) do
+      column(0).width = 250
+      column(1..5).style(:align => :justify, :valign => :center)
+      column(1..5).width = 50                                  
+      column(1..5).style(:align => :center, :valign => :center)
+      row(0).border_width = 1
+      row(0).font_style = :bold
+    end
+  end
+  
+  def render_questions
+    move_down 20
+    data = [ ]
     @research.survey.each do |question|
-      render_question(question)
+      data << ["<font size='9.5'>#{question.description}</font>", "Nada", "Poco", "Bastante","Muchisimo", "No Aplica"]
+    end
+    table(data,:cell_style => { :inline_format => true }) do
+      column(0).width = 250
+      column(1..5).width = 50
+      column(1..5).style(:align => :center, :valign => :center, :size=>7)
     end
   end
   
