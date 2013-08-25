@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  report_id: 1
+  research_id: 1
+  filtrable_type: MyString
+  filtrable_id: 1
+
+two:
+  report_id: 1
+  research_id: 1
+  filtrable_type: MyString
+  filtrable_id: 1

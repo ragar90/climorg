@@ -5,6 +5,8 @@ class Research < ActiveRecord::Base
   has_many :questions
   has_many :dimension_settings
   has_many :dimensions, :through => :dimension_settings
+  has_many :reports
+  has_many :report_filters
   validates :company_name,:start_date, :presence => true
   validate :start_and_end_date_consistency 
   accepts_nested_attributes_for :questions, allow_destroy: true
@@ -85,8 +87,8 @@ class Research < ActiveRecord::Base
   end
 
   def filter_by_dimensions(dimensions_ids = self.dimension_ids)
-    _dimensions = dimensions.where(:id=>self.dimension_ids).group_by{|d| d.id}
-    _results = self.results.joins(:answers=>:question).where("questions.dimension_id in (?)", dimensions_ids).group("questions.dimension_id, answers.value").select("dimension_id,value, count(value) as total_likeable, results.id").order("questions.dimension_id, answers.value").group_by{|result| result.dimension_id}
+    _dimensions = dimensions.group_by{|d| d.id}
+    _results = self.results.joins(:answers=>:question).where("questions.dimension_id in (?)", dimension_ids).group("questions.dimension_id, answers.value").select("dimension_id,value as value, count(value) as total_likeable, results.id").order("questions.dimension_id, answers.value").group_by{|result| result.dimension_id}
     _results.each_key do |key|
       _results[key] = {:dimension=>_dimensions[key].first,:results=>likeable_results(_results[key])}
     end

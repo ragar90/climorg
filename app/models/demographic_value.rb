@@ -43,5 +43,9 @@ class DemographicValue < ActiveRecord::Base
     end
   end
 
+  def to_s
+    demographic_variable.name
+  end
+  
   
 end

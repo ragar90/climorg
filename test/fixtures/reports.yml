@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  legend: MyString
+  research_id: 1
+  chart_type: MyString
+
+two:
+  legend: MyString
+  research_id: 1
+  chart_type: MyString

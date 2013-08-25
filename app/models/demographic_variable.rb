@@ -3,6 +3,7 @@ class DemographicVariable < ActiveRecord::Base
   has_many :results, :through => :demographic_values
   has_many :demographic_settings
   has_many :researches, :through => :demographic_settings
+  has_many :report_filters, as: :filtrable
   validates :display_values, :presence => true, :demographic_type_format => true
 
   def self.demographic_types

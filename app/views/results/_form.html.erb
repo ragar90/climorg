@@ -1,3 +1,6 @@
+<%content_for :error_messages do  %> 
+  <%= error_messages! @result%>
+<%end%> 
 <%= form_for [@research, @result] do |f| %>
   <%= f.hidden_field :research_id %>
   <fieldset class="demographic_variables" class="">
@@ -14,11 +17,11 @@
       <thead>
         <tr>
           <th>Pregunta</th>
-          <th>Muy Malo</th>
-          <th>Malo</th>
-          <th>Bueno</th>
-          <th>Muy Bueno</th>
-          <th>Indiferente</th>
+          <th>Nada</th>
+          <th>Poco</th>
+          <th>Bastante</th>
+          <th>Muchisimio</th>
+          <th>No Aplica</th>
         </tr>
       </thead>
       <%= f.fields_for :answers do |b| %>

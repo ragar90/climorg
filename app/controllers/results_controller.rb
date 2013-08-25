@@ -1,11 +1,12 @@
 class ResultsController < ApplicationController
   before_filter :load_research
   def index
-    @results = Result.filtered(@research.id).by_correlative
+    @results = Result.filtered(@research.id).by_correlative.includes(:answers)
   end
 
   def new
     @result =   Result.new(research_id: @research.id)
+    @result.research = @research
     @result.init_values
   end
 
@@ -16,6 +17,11 @@ class ResultsController < ApplicationController
       if @result.save
         format.html{ redirect_to new_research_result_path(:research_id=>@research.id), notice: "Resultado guardado exitosamente" }
       else
+        qids = @result.answers.collect{|a| a.question_id}
+        questions =  Question.where(:id=>qids).group_by(&:id)
+        @result.answers.each do |ans|
+          ans.question = questions[ans.question_id].first
+        end
         format.html{ render action: "new", alert: "Hubo un problema al guardar el resultado anterior verifique los datos proporcionados" }
       end
     end
@@ -39,10 +45,12 @@ class ResultsController < ApplicationController
 
   def destroy
     @result = Result.find(params[:id])
+    @result.destroy
+    redirect_to research_results_path(:research_id=>@research.id)
   end
   
   private
   def load_research
-    @research = Research.find(params[:research_id])
+    @research = Research.where(id: params[:research_id]).includes(:dimensions).first
   end
 end

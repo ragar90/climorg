@@ -10,6 +10,7 @@
       $(".report-chart").each(function(index,element){
         // Create the data table.
         var data = $(element).data("env")
+        console.log(data)
         var data_table = new google.visualization.DataTable();
         data_table.addColumn('string', 'Perception');
         data_table.addColumn('number', 'Percent');
