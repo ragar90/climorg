@@ -10,7 +10,10 @@ class Research < ActiveRecord::Base
   validates :company_name,:start_date, :presence => true
   validate :start_and_end_date_consistency 
   accepts_nested_attributes_for :questions, allow_destroy: true
+  
   scope :results_group_by_answer, -> { results.joins(:answers).group("answers.value").select("count(value) as total_likeable, value")}
+  
+  
   def start_and_end_date_consistency 
     unless (!start_date.nil? and !end_date.nil?) and start_date < end_date
     	errors.add(:start_date, "No puede ser despues de la fecha de finalizacion")
@@ -82,15 +85,41 @@ class Research < ActiveRecord::Base
     self.questions.order(:ordinal)
   end
 
-  def total_perception
-    @total_perception ||= likeable_results(self.results.joins(:answers).group("answers.value").select("count(value) as total_likeable, value"))
+  # Global data
+  
+  def report(demographic_variable_id)
+    demographic_variable_id ||=  self.demographic_variable_ids.first
+    results.joins(answers: {question: :dimension}, demographic_values: :demographic_variable).select("results.research_id as research_id,results.id as result_id,results.correlative as result_correlative,answers.question_id as question_id,questions.description as question_description,answers.id as answer_id,answers.value as answer_value,questions.ordinal as question_ordinal,questions.dimension_id as dimension_id,dimensions.name as dimension_name,demographic_values.value as demographic_value,demographic_values.demographic_variable_id as demographic_variable_id,demographic_variables.name as demographic_variable_name").where("demographic_variables.id = ?",demographic_variable_id)
   end
-
-  def filter_by_dimensions(dimensions_ids = self.dimension_ids)
-    _dimensions = dimensions.group_by{|d| d.id}
-    _results = self.results.joins(:answers=>:question).where("questions.dimension_id in (?)", dimension_ids).group("questions.dimension_id, answers.value").select("dimension_id,value as value, count(value) as total_likeable, results.id").order("questions.dimension_id, answers.value").group_by{|result| result.dimension_id}
-    _results.each_key do |key|
-      _results[key] = {:dimension=>_dimensions[key].first,:results=>likeable_results(_results[key])}
+  
+  def total_perception(demographic_variable_id =  nil)
+    @total_perception ||= likeable_results(self.report(demographic_variable_id).group("demographic_variables.id, answers.value").select("count(answers.value) as total_likeable, answers.value"))
+  end
+  
+  def filter_by_questions(questions_ids = self.question_ids, demographic_variable_id =  nil)
+    unless @results_by_questions
+      _questions = questions.group_by{|d| d.id}
+      _results = report(demographic_variable_id).group("questions.id, answers.value").select("questions.id as question_id,answers.value as value, count(answers.value) as total_likeable, results.id as result_id").order("questions.id, answers.value").group_by{|result| result.question_id}
+      _results.each_key do |key|
+        _results[key] = {:question=>_questions[key].first,:results=>likeable_results(_results[key])}
+      end
+      @results_by_questions = _results
+    else
+      @results_by_questions
+    end
+  end
+  
+  # Global data by dimension
+  def filter_by_dimensions(dimensions_ids = self.dimension_ids, demographic_variable_id =  nil)
+    unless @results_by_dimensions
+      _dimensions = dimensions.group_by{|d| d.id}
+      _results = report(demographic_variable_id).group("questions.dimension_id, answers.value").select("questions.dimension_id,answers.value as value, count(answers.value) as total_likeable, results.id").order("questions.dimension_id, answers.value").group_by{|result| result.dimension_id}
+      _results.each_key do |key|
+        _results[key] = {:dimension=>_dimensions[key].first,:results=>likeable_results(_results[key])}
+      end
+      @results_by_dimensions = _results
+    else
+      @results_by_dimensions
     end
   end
   
@@ -99,9 +128,9 @@ class Research < ActiveRecord::Base
   def likeable_results(ungroup_results)
     data = {:likeable=>0,:unlikable=>0, :indiferent=>0}
     ungroup_results.each do |result|
-      if result.value > 0 and result.value < 3
+      if result.value > 0 and result.answer_value < 3
          data[:likeable]+= result.total_likeable
-      elsif result.value >= 3 and result.value <= 4
+      elsif result.value >= 3 and result.answer_value <= 4
         data[:unlikable]+= result.total_likeable
       else
         data[:indiferent]+= result.total_likeable
