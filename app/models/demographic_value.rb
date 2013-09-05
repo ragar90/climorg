@@ -4,6 +4,7 @@ class DemographicValue < ActiveRecord::Base
   validates :value, :presence=>true
   validate :value_type
   alias_method :variable, :demographic_variable
+  attr_accessor :condition_value
   def value_type
     if demographic_variable.is_boolean?
       unless self.value == "1" || self.value == "true" || self.value == "0" || self.value == "false"
@@ -31,21 +32,23 @@ class DemographicValue < ActiveRecord::Base
     end
   end
   
-  def typed_value
-    if demographic_variable.is_boolean?
-      return (self.value == "1" || self.value == "true") ? demographic_variable.true_boolean_value : ((self.value == "0" || self.value == "false") ? demographic_variable.false_boolean_value : nil )
-    elsif demographic_variable.is_integer? 
-      return self.value.to_i
-    elsif demographic_variable.is_float? or demographic_variable.is_range?
-      return self.value.to_f
+  def typed_value(val=self.value)
+    case demographic_variable.accepted_value
+    when "boolean"
+      (val == "1" || val == "true") ? demographic_variable.true_boolean_value : ((val == "0" || val == "false") ? demographic_variable.false_boolean_value : nil )
+    when "integer"
+      val.to_id
+    when "float" || "range"
+      val.to_f
+    when "hash"
+      demographic_variable.hash_value_parsed[val]
     else
-      return demographic_variable.hash_value_parsed[self.value]
+      ""
     end
   end
 
   def to_s
     demographic_variable.name
   end
-  
   
 end
