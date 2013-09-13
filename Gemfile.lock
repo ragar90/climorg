@@ -71,6 +71,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
+    pg (0.15.1)
     polyglot (0.3.3)
     prawn (1.0.0.rc2)
       afm
@@ -145,6 +146,7 @@ DEPENDENCIES
   jquery-rails
   meta_request
   mysql2
+  pg
   prawn (~> 1.0.0.rc1)
   railroady
   rails (= 4.0.0)

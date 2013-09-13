@@ -8,6 +8,7 @@ gem 'execjs'
 gem "therubyracer"
 gem "twitter-bootstrap-rails"
 gem 'mysql2'
+gem 'pg'
 #gem 'wicked_pdf'
 gem 'prawn', '~> 1.0.0.rc1'
 gem 'sass-rails',   '~> 4.0.0.rc1'
