@@ -55,8 +55,4 @@ class Result < ActiveRecord::Base
   def indiferent_percentage
     ((indiferent_count.to_f / answers.length)*100).round(2)
   end
-  
-  
-  
-  
 end

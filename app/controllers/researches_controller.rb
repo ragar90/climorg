@@ -81,7 +81,6 @@ class ResearchesController < ApplicationController
 
   def confirm
     @research = Research.find(params[:id])
-    
     respond_to do |format|
       if @research.confirm!
         format.html { redirect_to researches_path, notice: 'Research was successfully confirmed.' }
@@ -107,7 +106,6 @@ class ResearchesController < ApplicationController
   
   def survey
     @research = Research.find(params[:id])
-    copies = params[:copies] || 10
     respond_to do |format|
       format.html { render "survey", :layout=>"pdf"}
       format.pdf do

@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-
 gem 'rails', '4.0.0'
 
 # Bundle edge Rails instead:
@@ -27,6 +26,7 @@ gem 'jquery-rails'
 
 # Deploy with Capistrano
 # gem 'capistrano'
+
 
 group :development, :test do
   gem 'better_errors'

@@ -84,7 +84,4 @@ class Research < ActiveRecord::Base
   def survey
     self.questions.order(:ordinal)
   end
-
-  # Global data
-  
 end
