@@ -48,7 +48,7 @@ class ResearchesController < ApplicationController
   # POST /researches
   # POST /researches.json
   def create
-    @research = Research.new(permited_params(:research).permit!)
+    @research = Research.new(permited_params(:research))
     respond_to do |format|
       if @research.save
         format.html { redirect_to edit_research_path(id: @research.id), notice: 'Research was successfully created.' }
@@ -81,13 +81,12 @@ class ResearchesController < ApplicationController
 
   def confirm
     @research = Research.find(params[:id])
-    @current_state = @research.state
     respond_to do |format|
       if @research.confirm!
         format.html { redirect_to researches_path, notice: 'Research was successfully confirmed.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit", alert: "El Estudio no pudo confirmarse adecuadamente" }
+        format.html { render action: "edit", flash: "El Estudio no pudo confirmarse adecuadamente" }
         format.json { render json: @research.errors, status: :unprocessable_entity }
       end
     end

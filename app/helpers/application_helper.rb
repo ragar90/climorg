@@ -4,8 +4,15 @@ module ApplicationHelper
 	    return "" if resource.errors.messages.empty?
 
 	    messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
+	    errors_count = resource.errors.count
+	    resource.class.reflect_on_all_associations(:has_many).map(&:name).each do |assoc|
+	     resource.send(assoc).each do |nested_object|
+	       messages += nested_object.errors.full_messages.map { |msg| content_tag(:li, "#{msg}: #{nested_object.to_s}") }.join
+	       errors_count += nested_object.errors.count
+	     end
+	    end
 	    sentence = I18n.t("errors.messages.not_saved",
-	                      :count => resource.errors.count,
+	                      :count => errors_count,
 	                      :resource => resource.class.model_name.human.downcase)
 
 	    html = <<-HTML

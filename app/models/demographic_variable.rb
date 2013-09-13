@@ -52,4 +52,12 @@ class DemographicVariable < ActiveRecord::Base
   def hash_value_parsed
     accepted_value == "hash" ? JSON.parse("{#{display_values}}") : nil
   end
+
+  def has_displayable_fields?
+    is_boolean? or is_hash?
+  end
+
+  def displayable_fields
+    has_displayable_fields? ? ( is_boolean? ? [true_boolean_value,false_boolean_value] : hash_value_parsed.values ) : []
+  end
 end
