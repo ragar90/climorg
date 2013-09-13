@@ -2,7 +2,26 @@ class SurveyPdf < Prawn::Document
   def initialize(research, view, options = {})
     super(options)
     @research = research
-    generate_document
+    line_items
+  end
+
+
+  def line_items
+    move_down 20
+    table line_item_rows do
+      row(0).font_style = :bold
+      columns(1..6).align = :center
+      self.row_colors = ["DDDDDD", "FFFFFF"]
+      self.header = true
+      #self.column_widths = [10, 10, 10, 10, 10, 10]
+    end
+  end
+
+  def line_item_rows
+    [["Pregunta", "Completamente Insatisfactorio", "Insatisfactorio", "Satisfactorio","Completamente Satisfactorio", "No Aplica"]] +
+    @research.survey.map do |question|
+      [question.description, 1, 2, 3, 4, 0]
+    end
   end
   
   def generate_document
