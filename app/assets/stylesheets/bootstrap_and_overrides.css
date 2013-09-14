@@ -8,3 +8,6 @@
   .modal.fade.in {
   	top:50%;
   }
+  .navbar-inner{
+  	border-radius: 0px;
+  }
