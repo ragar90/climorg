@@ -1,3 +1,85 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.main-container{
+  margin-top: 41px;
+  .app-container{
+    margin-left: 130px;
+    padding-top: 20px;
+    padding-left: 50px;
+  }
+  .left-menu{
+    max-width: 130px;
+    position:fixed;
+    background-color: #474747;
+    height: 100%;
+    a{
+      color:#ebebeb;
+      &:hover{
+        text-decoration:none;
+      }
+      &:visited{
+        text-decoration: none;
+        color: #ebebeb;
+      }
+      &:active{
+        text-decoration: none;
+        color: #ebebeb;
+      }
+    }
+    .menu-options{
+      margin-left: 0px;
+      li{
+        list-style: none;
+      }
+      .option{
+        .option-icon{
+          margin-left: 33px;
+        }
+        text-align: center;
+        padding: 20px 10px;
+        border-bottom:1px solid #373737;
+      }
+      #demo-vars-option{
+        .option-icon{
+          margin-left: 25px;
+        }
+      }
+      #settings-option{
+        .option-icon{
+          margin-left: 28px;
+        }
+      }
+    }
+    .selected-option {
+      position: relative;
+      background: #1b1b1b;
+      border: 1px solid #000000;
+      &:after, &:before{
+        left: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+      &:after{
+        border-color: rgba(255, 255, 255, 0);
+        border-left-color: #1b1b1b;
+        border-width: 30px;
+        top: 50%;
+        margin-top: -30px;
+      }
+
+      &:before{
+        border-color: rgba(0, 0, 0, 0);
+        border-left-color: #000000;
+        border-width: 31px;
+        top: 50%;
+        margin-top: -31px;
+      }
+    }
+  }
+}

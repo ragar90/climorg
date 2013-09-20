@@ -1,0 +1,44 @@
+<aside class = "left-menu">
+  <ul class = "menu-options">
+    <li id = "home-option" class = "option<%= @selected_option == "home-option" ? " selected-option" : "" %>">
+      <%=link_to researches_path do %>
+        <div class = "option-btn">
+          <div class = "option-icon s-53-house-2x-white"></div>
+          Inicio
+        </div>
+      <% end %>
+    </li> 
+    <li id = "demo-vars-option" class = "option<%= @selected_option == "demo-vars-option" ? " selected-option" : "" %>">
+      <%=link_to demographic_variables_path do %>
+        <div class = "option-btn">
+          <div class = "option-icon s-112-group-2x-white"></div>
+          Variables Demograficas
+        </div>
+      <% end %>
+    </li> 
+    <li id = "questions-option" class = "option<%= @selected_option == "questions-option" ? " selected-option" : "" %>">
+      <%=link_to questions_path do %>
+        <div class = "option-btn">
+          <div class = "option-icon s-187-pencil-2x-white"></div>
+          Preguntas
+        </div>
+      <% end %>
+    </li> 
+    <li id = "dimension-option" class = "option<%= @selected_option == "dimension-option" ? " selected-option" : "" %>">
+      <%=link_to dimensions_path do %>
+        <div class = "option-btn">
+          <div class = "option-icon s-272-windows-2x-white"></div>
+          Dimensiones
+        </div>
+      <% end %>
+    </li> 
+    <li id = "settings-option" class = "option<%= @selected_option == "settings-option" ? " selected-option" : "" %>">
+      <%=link_to "#" do %>
+        <div class = "option-btn">
+          <div class = "option-icon s-19-gear-2x-white"></div>
+          Configuraciones
+        </div>
+      <% end %>
+    </li> 
+  </ul>
+</aside>

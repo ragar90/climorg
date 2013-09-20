@@ -36,20 +36,18 @@
     <%= yield(:gcharts_references) %>
   </head>
   <body>
-
     <%=render :partial=>"/shared/menu"%>
-
-    <div class="container">
+    <div class="main-container">
+      <%=render :partial=>"/shared/nav_menu"%>
+      <div class = "container app-container">
         <div class="row">
-          <div class="span12">
+          <div class="span11">
             <%= bootstrap_flash %>
             <%= yield(:error_messages) %>
             <%= yield %>
           </div>
         </div><!--/row-->
-      <footer>
-        <p>&copy; Company 2012</p>
-      </footer>
+      </div>
       <div id="modalView" class="modal hide fade"></div>
     </div> <!-- /container -->
 
