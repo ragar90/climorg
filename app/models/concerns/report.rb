@@ -20,7 +20,6 @@ module Report
       results = self.report(options[:demographic_variable_id],options[:demographic_query_value]).group("answers.value").select("count(answers.value) as total_likeable, answers.value")
       likeable_results(results)
     end
-    
   end
   
   def filter_by_questions(options = {})
@@ -44,6 +43,7 @@ module Report
     end
     return _results
   end
+  
   
   private
   

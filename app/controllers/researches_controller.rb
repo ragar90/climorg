@@ -4,7 +4,7 @@ class ResearchesController < ApplicationController
   # GET /researches.json
   def index
     @researches = Research.all
-
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @researches }

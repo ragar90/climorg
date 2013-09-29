@@ -1,6 +1,11 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.bar{
+  width: 30px;
+  height: 1px;
+  border-top: 7px solid black;
+}
 .user-settings{
   ul.dropdown-menu{
     color:#212121;
@@ -37,7 +42,7 @@
   .left-menu{
     max-width: 130px;
     position:fixed;
-    background-color: #474747;
+    background-color: #393939;
     height: 100%;
     a{
       color:#ebebeb;
@@ -64,7 +69,7 @@
         }
         text-align: center;
         padding: 20px 10px;
-        border-bottom:1px solid #373737;
+        border-bottom:1px solid #282828;
       }
       #demo-vars-option{
         .option-icon{
@@ -93,18 +98,124 @@
       &:after{
         border-color: rgba(255, 255, 255, 0);
         border-left-color: #1b1b1b;
-        border-width: 30px;
+        border-width: 15px;
         top: 50%;
-        margin-top: -30px;
+        margin-top: -15px;
       }
 
       &:before{
         border-color: rgba(0, 0, 0, 0);
         border-left-color: #000000;
-        border-width: 31px;
+        border-width: 21px;
         top: 50%;
-        margin-top: -31px;
+        margin-top: -21px;
       }
+    }
+  }
+}
+.data-window{
+  margin-bottom:20px;
+  border: 1px solid #d1d1d1;
+  header{
+    background: #eaeaea; /* Old browsers */
+    background: -moz-linear-gradient(top,  #eaeaea 0%, #e8e8e8 12%, #dbdbdb 50%, #d1d1d1 97%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaeaea), color-stop(12%,#e8e8e8), color-stop(50%,#dbdbdb), color-stop(97%,#d1d1d1)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #eaeaea 0%,#e8e8e8 12%,#dbdbdb 50%,#d1d1d1 97%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #eaeaea 0%,#e8e8e8 12%,#dbdbdb 50%,#d1d1d1 97%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #eaeaea 0%,#e8e8e8 12%,#dbdbdb 50%,#d1d1d1 97%); /* IE10+ */
+    background: linear-gradient(to bottom,  #eaeaea 0%,#e8e8e8 12%,#dbdbdb 50%,#d1d1d1 97%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#d1d1d1',GradientType=0 ); /* IE6-9 */
+    color: #363636;
+    border: 1px solid #d1d1d1;
+    padding: 5px 0px;
+    h4{
+      margin: 0px 10px;
+      display: inline-block;
+    }
+    a{
+      color:#323232;
+      &:hover{
+        text-decoration:underline;
+        color:#323232;
+      }
+      &:visited{
+        text-decoration: underline;
+        color: #323232;
+      }
+      &:active{
+        text-decoration: none;
+        color: #323232;
+      }
+    }
+    .windows-commands{
+      display: inline-block;
+      margin-right: 10px;
+      .command.options{
+        max-width: 25px;
+        display: inline-block;
+        a{
+            color:#323232;
+            &:hover{
+              text-decoration:none;
+              color:#323232;
+            }
+            &:visited{
+              text-decoration: none;
+              color: #323232;
+            }
+            &:active{
+              text-decoration: none;
+              color: #323232;
+            }
+        }
+        .dropdown-menu{
+          a{
+            color:#323232;
+            &:visited{  
+              text-decoration: none;
+              color: #323232;
+            }
+            &:active{
+              text-decoration: none;
+              color: #323232;
+            }
+            &:hover{
+              text-decoration:none;
+              color:#f4f4f4;
+            }
+          }
+        }
+      }
+      .command{
+        padding: 0px 5px;
+      }
+    }
+  }
+  .window-content{
+    width: 100%;
+    max-height: 300px;
+    background-color: white;
+    .general-info{
+      font-size: 14px;
+      padding:50px;
+      tr{
+        margin: 10px 0px;
+      }
+      .info-label{
+        font-weight: bold;
+        margin-right: 5px;
+      }
+      .command-options{
+        margin-top: 10px;
+        padding: 0px 20%;
+        .btn-command{
+          margin: 0px 5px;
+        }
+      }
+    }
+    .report-chart{
+      width: 100%;
+      height: auto;
     }
   }
 }

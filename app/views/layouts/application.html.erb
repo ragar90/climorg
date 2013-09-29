@@ -40,13 +40,9 @@
     <div class="main-container">
       <%=render :partial=>"/shared/nav_menu"%>
       <div class = "container app-container">
-        <div class="row">
-          <div class="span11">
-            <%= bootstrap_flash %>
-            <%= yield(:error_messages) %>
-            <%= yield %>
-          </div>
-        </div><!--/row-->
+        <%= bootstrap_flash %>
+        <%= yield(:error_messages) %>
+        <%= yield %>
       </div>
       <div id="modalView" class="modal hide fade"></div>
     </div> <!-- /container -->

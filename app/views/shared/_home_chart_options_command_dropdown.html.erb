@@ -1,0 +1,26 @@
+<div class = "dropdown command options">
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class = "icon-th"></i></a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    <li>
+      <%= link_to new_research_result_path(research_id: object.id) do %>
+        <i class = "icon-plus icon-white"></i> Agregar Resultado
+      <% end %>
+    </li>
+    <li>
+      <%= link_to survey_research_path(id:object.id, format: :pdf), target: "_blank" do %>
+        <i class = "icon-print icon-white"></i> Cuestionario
+      <% end %>
+    </li>
+    <li class = "divider"></li>
+    <li>
+      <%= link_to research_path(id:object.id) do %>
+        <i class = "icon-tasks icon-white"></i> Reportes
+      <% end %>
+    </li>
+    <li>
+      <%= link_to research_results_path(research_id: object.id) do %>
+        <i class = "icon-list-alt icon-white"></i> Resultados
+      <% end %>
+    </li>
+  </ul>
+</div>
