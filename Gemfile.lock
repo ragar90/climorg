@@ -64,7 +64,6 @@ GEM
     mime-types (1.24)
     minitest (4.7.5)
     multi_json (1.7.9)
-    mysql2 (0.3.13)
     pdf-reader (1.3.3)
       Ascii85 (~> 1.0.0)
       afm (~> 0.2.0)
@@ -150,7 +149,6 @@ DEPENDENCIES
   execjs
   jquery-rails
   meta_request
-  mysql2
   pg
   prawn (~> 1.0.0.rc1)
   railroady
