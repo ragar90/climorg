@@ -1,5 +1,5 @@
 ClimaOrg::Application.routes.draw do
-  root :to => 'home#index'
+  root :to => 'researches#index'
   get "home/index"
   resources :researches do
     resources :reports

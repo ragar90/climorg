@@ -1,0 +1,11 @@
+<div class = "dropdown command options">
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class = "icon-th"></i></a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    <li><a href="#" class = "download-chart"><i class = "icon-picture icon-white"></i> Exportar a PNG</a></li>
+    <li>
+      <%= link_to survey_research_path(id:object.id, format: :pdf), target: "_blank" do %>
+        <i class = "icon-download-alt icon-white"></i> Cuestionario
+      <% end %>
+    </li>
+  </ul>
+</div>

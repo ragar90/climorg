@@ -70,7 +70,7 @@ class Research < ActiveRecord::Base
     state_label(self.state)
   end
   
-  def state_label(state)
+  def state_label
     case state
       when 0 then "Creado"
       when 1 then "Configurado"
@@ -78,6 +78,16 @@ class Research < ActiveRecord::Base
       when 3 then "Confirmado"
       else 
         "Ninguno"
+    end
+  end
+
+  def state_label_color
+    case state
+      when 1 then "warning"
+      when 2 then "info"
+      when 3 then "success"
+      else 
+        ""
     end
   end
   

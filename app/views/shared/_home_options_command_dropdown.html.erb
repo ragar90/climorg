@@ -1,0 +1,16 @@
+<div class = "dropdown command options">
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class = "icon-th"></i></a>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+    <li>
+      <%= link_to edit_research_path(id: object.id) do %>
+        <i class = "icon-edit icon-white"></i> Editar</a>
+      <% end %>
+    </li>
+
+    <li>
+      <%= link_to research_path(id: object.id), method: :delete, confirm: "Estas seguro que deseas eliminar este Estudio" do %>
+        <i class = "icon-trash icon-white"></i> Elimiar</a>
+      <% end %>
+    </li>
+  </ul>
+</div>

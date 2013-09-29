@@ -1,0 +1,33 @@
+<%= content_for :gcharts_references do %>
+  <script type="text/javascript" charset="utf-8">
+    google.load('visualization', '1.0', {'packages':['corechart']});
+    google.setOnLoadCallback(drawChart);
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+      $(".report-chart").each(function(index,element){
+        // Create the data table.
+        var data = $(element).data("env")
+        var data_table = new google.visualization.DataTable();
+        data_table.addColumn('string', 'Perception');
+        data_table.addColumn('number', 'Percent');
+        data_table.addRows([
+          ['Satisfactorio', data.likeable],
+          ['Insatisfactorio', data.unlikable],
+          ['No aplica', data.indiferent]
+        ]);
+
+        // Set chart options
+        var options = {
+                        'title':$(element).data("title"),
+                        'height': 300,
+                      };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById($(element).attr("id")));
+        chart.draw(data_table, options);
+      })
+    }
+  </script>
+<% end %>

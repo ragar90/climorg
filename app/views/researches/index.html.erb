@@ -1,46 +1,19 @@
 <%- model_class = Research -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+<%= render "/shared/gchart_load" %>
+<div class="row">
+  <div class="span11">
+    <div class="page-header">
+      <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+    </div>
+    
+    <div class="row">
+      <% @researches.each do |research| %>
+        <div class="span5">
+          <!--result window-->
+          <%= render partial: "/shared/data_window", locals:{object: research, render_chart: research.is_confirmed?, data: research.total_perception} %>
+          <!--result window-->
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:company_name) %></th>
-      <th><%= model_class.human_attribute_name(:start_date) %></th>
-      <th><%= model_class.human_attribute_name(:end_date) %></th>
-      <th><%= model_class.human_attribute_name(:state) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @researches.each do |research| %>
-      <tr>
-        <td><%= link_to research.id, research_path(research) %></td>
-        <td><%= research.company_name %></td>
-        <td><%= research.start_date %></td>
-        <td><%= research.end_date %></td>
-        <td><%= research.current_state %></td>
-        <td>
-          <%if research.is_draft?%>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),edit_research_path(research), :class => 'btn btn-mini' %>
-            <% if research.state == 2 and research.questions.count > 0 %>
-              <%= link_to confirm_research_path(:id=>research.id), :class => 'btn btn-mini btn-success', :method => :put, :data=>{:confirm=>"Al confirmar el estudio ya no podra realizar mas cambios en la configuracion de este, ¿Esta seguro de hacerlo?"}  do %>
-                <i class="icon-check icon-white"></i> Confirmar Estudio
-              <%end%>
-            <% end %>
-            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),research_path(research),:method => :delete,:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },:class => 'btn btn-mini btn-danger' %>
-          <%else%>
-            <%= link_to "Generar Cuestionarios",survey_research_path(:id=>research.id, :format=>:pdf), :class => 'btn btn-mini btn-primary', target: "_blank" %>
-            <%= link_to "Resultados", research_results_path(:research_id=>research.id), :class => 'btn btn-mini' %>
-            <%= link_to new_research_result_path(:research_id=>research.id), :class => 'btn btn-mini btn-success' do %> 
-              <i class="icon-plus icon-white"></i> Agregar Respuestas
-            <%end%>
-          <%end%>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),new_research_path,:class => 'btn btn-primary' %>

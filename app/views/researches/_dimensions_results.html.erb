@@ -1,0 +1,11 @@
+<div class="row">
+  <% @dimensions_reports.each_pair do |key,report| %>
+    <div class = "span4">
+      <%= content_tag :div, "", id: "dimension-#{report[:dimension].id}-report", data: {env: report[:results], title: "Datos Asociados con la dimension #{report[:dimension].name.titleize}"}, class: "report-chart" %>
+      <div class = "chart-actions">
+        <%= link_to "Descargar Imagen", "", :class=>"btn btn-mini download-chart-btn", :data=>{:chart=>"dimension-#{report[:dimension].id}-report"} %>
+        <%= link_to "Descargar Excel", "", :class=>"btn btn-mini" %>
+      </div>
+    </div>
+  <% end %>
+</div>

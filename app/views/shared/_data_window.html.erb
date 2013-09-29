@@ -1,0 +1,55 @@
+<% window_id =  SecureRandom.uuid %>
+<% render_chart ||= false %>
+<% report_chart ||= false %>
+<div class = "data-window collapse-group" id = "window-<%= window_id %>">
+  <header>
+    <%= link_to research_path id: object.id do %>
+      <h4><%= object.company_name.titleize.truncate(24, separator: " ") %></h4>
+    <% end %>
+    <nav class = "windows-commands pull-right">
+      <% if render_chart %>
+        <%= render partial: "/shared/home_chart_options_command_dropdown", locals:{object: object} %>
+      <% elsif report_chart %>
+        <%= render partial: "/shared/reports_chart_options_command_dropdown"%>
+      <% else %>
+        <%= render partial: "/shared/home_options_command_dropdown", locals:{object: object} %>
+      <% end %>
+      <a href="" class = "command minimize" data-toggle="collapse" data-parent="#window-<%= window_id %>" href="#window-content-<%= window_id %>"><i class = "icon-minus"></i></a>
+      <a href="" class = "command dismiss" ><i class = "icon-remove-circle"></i></a>
+    </nav>
+  </header>
+  <div id = "window-content-<%= window_id %>" class = "window-content in collapse">
+    <% if render_chart ||  report_chart %>
+       <%= content_tag :div, "",id: "chart-#{window_id}", data: {env: data, title: "Datos Globales de la percepcion de clima organizacional"}, class: "report-chart" %>
+    <% else %>
+        <div class = "general-info">
+          <table>
+            <tr>
+              <td class = "info-label">id: </td>
+              <td> <%= object.id %> </td>
+            </tr>
+            <tr>
+              <td class = "info-label">Fecha de inicio: </td>
+              <td> <%= object.start_date.strftime("%A, %d de %B de %Y") %> </td>
+            </tr>
+            <tr>
+              <td class = "info-label">Fecha de fin: </td>
+              <td> <%= object.end_date.strftime("%A, %d de %B de %Y") %> </td>
+            </tr>
+            <tr>
+              <td class = "info-label">Estado: </td>
+              <td> <span class = "label label-<%= object.state_label_color  %>"><%= object.state_label %></span> </td>
+            </tr>
+          </table>
+          <div class = "command-options">
+            <%= link_to edit_research_path(id: object.id), class: "btn btn-primary btn-command" do %>
+              <i class = "icon-edit icon-white"></i> Editar
+            <% end %>
+            <%= link_to edit_research_path(id: object.id), class: "btn btn-danger btn-command" do %>
+              <i class = "icon-trash icon-white"></i> Eliminar
+            <% end %>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
