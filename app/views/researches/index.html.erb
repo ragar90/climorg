@@ -10,7 +10,7 @@
       <% @researches.each do |research| %>
         <div class="span5">
           <!--result window-->
-          <%= render partial: "/shared/data_window", locals:{object: research, render_chart: research.is_confirmed?, data: research.total_perception} %>
+          <%= gchart_window research, (research.is_confirmed? ? :home : :info), research.total_perception, :pie, title: "Datos Globales de la percepcion de clima organizacional" %>
           <!--result window-->
         </div>
       <% end %>

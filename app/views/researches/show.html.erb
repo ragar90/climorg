@@ -2,11 +2,11 @@
 <h1>Reports</h1>
 <div class = "row">
   <div class = "span5">
-    <%= render partial: "/shared/data_window", locals:{object: @research, report_chart: true, data: research.total_perception}%>
+    <%= gchart_window @research, :report, @research.total_perception, :pie, title: "Datos Globales de la percepcion de clima organizacional" %>
   </div>
 
   <div class = "span5">
-    <%= render partial: "/shared/data_window", locals:{object: @research, report_chart: true, data: research.total_perception}%>
+    <%= gchart_window @research, :report, @questions_results, :column, title: "Resultados por preguntas", hAxis: {title: 'Preguntas', gridlines: { count: @questions_results.last.first }} %>
   </div>
   
 </div>

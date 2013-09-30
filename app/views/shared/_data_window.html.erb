@@ -1,17 +1,15 @@
-<% window_id =  SecureRandom.uuid %>
-<% render_chart ||= false %>
-<% report_chart ||= false %>
 <div class = "data-window collapse-group" id = "window-<%= window_id %>">
   <header>
     <%= link_to research_path id: object.id do %>
       <h4><%= object.company_name.titleize.truncate(24, separator: " ") %></h4>
     <% end %>
     <nav class = "windows-commands pull-right">
-      <% if render_chart %>
+      <% case window_type %>
+      <% when :home %>
         <%= render partial: "/shared/home_chart_options_command_dropdown", locals:{object: object} %>
-      <% elsif report_chart %>
-        <%= render partial: "/shared/reports_chart_options_command_dropdown"%>
-      <% else %>
+      <% when :report %>
+        <%= render partial: "/shared/reports_chart_options_command_dropdown", locals:{object: object} %>
+      <% when :info %>
         <%= render partial: "/shared/home_options_command_dropdown", locals:{object: object} %>
       <% end %>
       <a href="" class = "command minimize" data-toggle="collapse" data-parent="#window-<%= window_id %>" href="#window-content-<%= window_id %>"><i class = "icon-minus"></i></a>
@@ -19,8 +17,11 @@
     </nav>
   </header>
   <div id = "window-content-<%= window_id %>" class = "window-content in collapse">
-    <% if render_chart ||  report_chart %>
-       <%= content_tag :div, "",id: "chart-#{window_id}", data: {env: data, title: "Datos Globales de la percepcion de clima organizacional"}, class: "report-chart" %>
+    <% unless window_type == :info %>
+      <%= gchart window_id, chart_type ,data,false ,chart_options%>
+      <% if  window_type == :report%>
+        <%= gchart window_id, chart_type ,data, true,chart_options%>
+      <% end %>
     <% else %>
         <div class = "general-info">
           <table>
