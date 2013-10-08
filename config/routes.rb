@@ -4,6 +4,7 @@ ClimaOrg::Application.routes.draw do
   resources :researches do
     resources :reports
     resources :results, :except=>[:show]
+    resources :applications, controller: :research_application, except: [:show]
     member do
       put 'confirm'
       get "survey"

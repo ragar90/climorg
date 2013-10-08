@@ -2,6 +2,7 @@ class Result < ActiveRecord::Base
   scope :filtered, ->(research_id){ where(:research_id=>research_id)}
   scope :by_correlative, -> { order(:correlative)}
   belongs_to :research
+  belongs_to :research_application
   has_many :demographic_values
   has_many :demographic_variables, :through => :demographic_values
   has_many :answers

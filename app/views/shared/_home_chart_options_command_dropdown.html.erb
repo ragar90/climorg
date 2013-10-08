@@ -8,6 +8,11 @@
     </li>
     <li>
       <%= link_to survey_research_path(id:object.id, format: :pdf), target: "_blank" do %>
+        <i class = "icon-file icon-white"></i> Nueva Aplicacion
+      <% end %>
+    </li>
+    <li>
+      <%= link_to new_research_application_path(research_id:object.id), confirm: "Para crear una nueva aplicacion debes concluir la anterior.\n Deseas concluirla?" do %>
         <i class = "icon-print icon-white"></i> Cuestionario
       <% end %>
     </li>

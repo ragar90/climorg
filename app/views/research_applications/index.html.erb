@@ -1,0 +1,42 @@
+<%- model_class = ResearchApplication -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:research_id) %></th>
+      <th><%= model_class.human_attribute_name(:starts_on) %></th>
+      <th><%= model_class.human_attribute_name(:ends_on) %></th>
+      <th><%= model_class.human_attribute_name(:number) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @research_applications.each do |research_application| %>
+      <tr>
+        <td><%= link_to research_application.id, research_application_path(research_application) %></td>
+        <td><%= research_application.research_id %></td>
+        <td><%= research_application.starts_on %></td>
+        <td><%= research_application.ends_on %></td>
+        <td><%= research_application.number %></td>
+        <td><%=l research_application.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_research_application_path(research_application), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      research_application_path(research_application),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_research_application_path,
+            :class => 'btn btn-primary' %>

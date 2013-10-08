@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  research_id: 1
+  starts_on: 2013-10-08
+  ends_on: 2013-10-08
+  number: 1
+
+two:
+  research_id: 1
+  starts_on: 2013-10-08
+  ends_on: 2013-10-08
+  number: 1
