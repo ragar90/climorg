@@ -1,5 +1,5 @@
 class Result < ActiveRecord::Base
-  scope :filtered, ->(research_id){ where(:research_id=>research_id)}
+  scope :filtered, ->(research_id, application_id){ where(:research_id=>research_id, :research_application_id=>application_id)}
   scope :by_correlative, -> { order(:correlative)}
   belongs_to :research
   belongs_to :research_application

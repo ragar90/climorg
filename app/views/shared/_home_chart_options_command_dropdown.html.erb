@@ -2,7 +2,7 @@
   <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class = "icon-th"></i></a>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
     <li>
-      <%= link_to new_research_result_path(research_id: object.id) do %>
+      <%= link_to new_research_application_result_path(research_id: object.id, application_id: object.current_application.id) do %>
         <i class = "icon-plus icon-white"></i> Agregar Resultado
       <% end %>
     </li>
@@ -23,7 +23,7 @@
       <% end %>
     </li>
     <li>
-      <%= link_to research_results_path(research_id: object.id) do %>
+      <%= link_to research_application_results_path(research_id: object.id, application_id: object.current_application.id) do %>
         <i class = "icon-list-alt icon-white"></i> Resultados
       <% end %>
     </li>

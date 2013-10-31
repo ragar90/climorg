@@ -3,8 +3,9 @@ ClimaOrg::Application.routes.draw do
   get "home/index"
   resources :researches do
     resources :reports
-    resources :results, :except=>[:show]
-    resources :applications, controller: :research_application, except: [:show]
+    resources :applications, controller: :research_application, except: [:show] do
+      resources :results, :except=>[:show]
+    end
     member do
       put 'confirm'
       get "survey"

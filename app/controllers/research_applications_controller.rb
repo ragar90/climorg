@@ -12,7 +12,7 @@ class ResearchApplicationsController < ApplicationController
 
   # GET /applications/new
   def new
-    @last_application = @research.applications.where(number: @research.applications.length).first
+    @last_application = @research.current_application
     @last_application.is_conclude = true
     @last_application.save
     @research_application = Application.new
