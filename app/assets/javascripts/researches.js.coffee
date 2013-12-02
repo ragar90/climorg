@@ -102,9 +102,3 @@ jQuery ->
   $(document).on "click","#cancel_modal_form_btn", (e) ->
     $("#modalView").modal('hide')
     e.preventDefault()
-
-  $(document).on("click", ".download-chart-btn", (e) ->
-    chart_id = $(@).data("chart")
-    saveAsImg(document.getElementById(chart_id));
-    e.preventDefaults();
-  )

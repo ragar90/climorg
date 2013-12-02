@@ -16,6 +16,7 @@ class ResearchesController < ApplicationController
   def show
     @research = Research.find(params[:id])
     @dimensions_reports = @research.filter_by_dimensions
+    @questions_results = [["Preguntas","Satisfactorio"]] + @research.filter_by_questions.to_barchart_data
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @research }

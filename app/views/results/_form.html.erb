@@ -1,8 +1,9 @@
 <%content_for :error_messages do  %> 
   <%= error_messages! @result%>
 <%end%> 
-<%= form_for [@research, @result] do |f| %>
+<%= form_for @result, url:research_application_results_path(research_id:@research.id,application_id: @application.id) do |f| %>
   <%= f.hidden_field :research_id %>
+  <%= f.hidden_field :research_application_id %>
   <fieldset class="demographic_variables" class="">
     <legend>Datos personales</legend>
     <div class="row">

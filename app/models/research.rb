@@ -7,10 +7,11 @@ class Research < ActiveRecord::Base
   has_many :dimensions, :through => :dimension_settings
   has_many :reports
   has_many :report_filters
+  has_many :applications, class_name: "ResearchApplication"
   validates :company_name,:start_date, :presence => true
   validate :start_and_end_date_consistency 
   accepts_nested_attributes_for :questions, allow_destroy: true
-  
+
   scope :results_group_by_answer, -> { results.joins(:answers).group("answers.value").select("count(value) as total_likeable, value")}
   include Report
   
@@ -93,5 +94,9 @@ class Research < ActiveRecord::Base
   
   def survey
     self.questions.order(:ordinal)
+  end
+
+  def current_application
+    self.applications.where(number: self.applications.count).first
   end
 end
