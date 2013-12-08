@@ -7,7 +7,7 @@ gem 'rails', '4.0.0'
 gem 'execjs'
 gem "therubyracer"
 gem "twitter-bootstrap-rails"
-#gem 'mysql2'
+gem 'mysql2'
 gem 'pg'
 gem 'rails_12factor', group: :production
 #gem 'wicked_pdf'
