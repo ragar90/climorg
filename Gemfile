@@ -1,13 +1,13 @@
 ruby "2.0.0"
 source 'https://rubygems.org'
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'execjs'
 gem "therubyracer"
 gem "twitter-bootstrap-rails"
-gem 'mysql2'
+#gem 'mysql2'
 gem 'pg'
 gem 'rails_12factor', group: :production
 #gem 'wicked_pdf'
