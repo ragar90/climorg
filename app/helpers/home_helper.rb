@@ -1,6 +1,6 @@
 module HomeHelper
-  def gchart_window(object, window_type, data, chart_type, chart_options = {} )
-    locals = { window_id:  SecureRandom.uuid, object: object, window_type: window_type, data: data, chart_type: chart_type, chart_options: chart_options }
+  def gchart_window(object, window_type, data_method, chart_type, chart_options = {} )
+    locals = { window_id:  SecureRandom.uuid, object: object, window_type: window_type, data_method: data_method, chart_type: chart_type, chart_options: chart_options }
     render partial: "/shared/data_window", locals: locals
   end
 

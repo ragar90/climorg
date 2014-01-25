@@ -18,9 +18,9 @@
   </header>
   <div id = "window-content-<%= window_id %>" class = "window-content in collapse">
     <% unless window_type == :info %>
-      <%= gchart window_id, chart_type ,data,false ,chart_options%>
+      <%= gchart window_id, chart_type ,object.send(data_method),false ,chart_options%>
       <% if  window_type == :report%>
-        <%= gchart window_id, chart_type ,data, true,chart_options%>
+        <%= gchart window_id, chart_type ,object.send(data_method), true,chart_options%>
       <% end %>
     <% else %>
         <div class = "general-info">

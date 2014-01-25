@@ -10,7 +10,7 @@
       <% @researches.each do |research| %>
         <div class="span5">
           <!--result window-->
-          <%= gchart_window research, (research.is_confirmed? ? :home : :info), research.total_perception, :pie, title: "Datos Globales de la percepcion de clima organizacional" %>
+          <%= gchart_window research, (research.is_confirmed? ? :home : :info), :total_perception, :pie, title: "Datos Globales de la percepcion de clima organizacional" %>
           <!--result window-->
         </div>
       <% end %>
