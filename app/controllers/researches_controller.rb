@@ -15,8 +15,14 @@ class ResearchesController < ApplicationController
   # GET /researches/1.json
   def show
     @research = Research.find(params[:id])
-    @dimensions_reports = @research.filter_by_dimensions
-    @questions_results = [["Preguntas","Satisfactorio"]] + @research.filter_by_questions.to_barchart_data
+    #@dimensions_reports = @research.filter_by_dimensions.map do |value|
+    #  dimension_name = value.last.values.first.name
+    #  total_answers = value.last.values.last.values.inject{|sum,x| sum + x }
+    #  likeable_percent = (((value.last.values.last[:likeable])*1.0 / total_answers)*100.0).round(2)
+    #  [dimension_name,likeable_percent]
+    #end
+    @demographic_reports = []
+    @dimensions_reports = [["Preguntas","Satisfactorio"]] + @research.filter_by_dimensions.to_barchart_data
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @research }
@@ -113,6 +119,27 @@ class ResearchesController < ApplicationController
         pdf = SurveyPdf.new(@research, view_context)
         send_data pdf.render,filename: "#{@research.company_name}_cuestionario",type: "application/pdf",disposition: "inline"
       end
+    end
+  end
+
+  def report
+    @research = Research.where(id: params[:id]).first
+    @report_type = params[:report_type]
+    case @report_type
+      when "global"
+        @data = @research.total_perception
+      when "global_dimensions"
+        @data = @research.filter_by_dimensions
+      when "dimension_demographic"
+        @data = @research.filter_by_dimensions(demographic_variable_id: params[:demographic_variable_id], demographic_query_value: params[:demographic_query_value])
+      when "dimension_questions"
+        @data = @research.filter_by_questions(dimension_id: params[:dimension_id])
+      when "dimension_questions_demographic"
+        @data = @research.filter_by_questions(dimension_id: params[:dimension_id], demographic_variable_id: params[:demographic_variable_id], demographic_query_value: params[:demographic_query_value])
+      when "global_questions"
+        @data = @research.filter_by_questions
+      when "questions_demographic"
+        @data = @research.filter_by_questions(demographic_variable_id: params[:demographic_variable_id], demographic_query_value: params[:demographic_query_value])
     end
   end
   

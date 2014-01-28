@@ -222,7 +222,7 @@
     .report-chart.chart-copy{
       width: 1500px;
       height: 900px;
-      display: none;
+      position: absolute;
     }
   }
 }
@@ -230,4 +230,15 @@
   position: absolute;
   top: 86px;
   right: 100px;
+}
+.easypie-chart-title{
+  font-size: 14px;
+  text-align: center;
+}
+.easypie-chart-label{
+  text-align: center;
+}
+.row.easypie-chart-container{
+  padding-left: 10%;
+  padding-bottom: 20px;
 }

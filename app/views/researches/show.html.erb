@@ -2,11 +2,17 @@
 <h1>Reports</h1>
 <div class = "row">
   <div class = "span5">
-    <%= gchart_window @research, :report, @research.total_perception, :pie, title: "Datos Globales de la percepcion de clima organizacional" %>
+    <%= gchart_window({object: @research,data_method: :total_perception, chart_type: :pie}, {title: "Datos Globales de la percepcion de clima organizacional"}) %>
   </div>
 
   <div class = "span5">
-    <%= gchart_window @research, :report, @questions_results, :column, title: "Resultados por preguntas", hAxis: {title: 'Preguntas', gridlines: { count: @questions_results.last.first }} %>
+    <%= gchart_window( {object:@research,data_method: @dimensions_reports, chart_type: :column, report_type: :global_dimensions}, {title: "Resultados por dimensiones", hAxis: {title: 'Preguntas', gridlines: { count: @dimensions_reports.last.first }}}) %>
   </div>
+  <%=@demographic_reports.each_slice(4) do |dimension_results|%>
+  	<div class = "span10">
+  		<%= gchart_window( {object:@research,data_method: dimension_results, report_type: :global_dimensions, chart_library: :easy_piecharts} ) %>
+  	</div>
+  <% end %>
+
   
 </div>

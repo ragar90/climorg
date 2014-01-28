@@ -1,6 +1,6 @@
 class SurveyPdf < Prawn::Document
   def initialize(research, view, options = {})
-    options[:top_margin] = 50
+    options[:top_margin] = 60
     super(options)
     @research = research
     generate_document
@@ -16,7 +16,7 @@ class SurveyPdf < Prawn::Document
         bounding_box [bounds.left, bounds.top], :width  => bounds.absolute_left + bounds.absolute_right,:height => 200 do
           move_down 20
           text @research.company_name.titleize, :align => :center,:style => :bold, :size=>16
-          move_down 20
+          move_down 10
           text "Encuesta de Clima Organizacional", :align => :center,:style => :bold, :size=>16
           text @research.start_date.strftime("%B %Y"), :align => :center,:style => :bold, :size=>16
         end

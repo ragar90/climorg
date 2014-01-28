@@ -12,6 +12,11 @@
       <% end %>
     </li>
     <li>
+      <%= link_to report_global_research_path(id:object.id, format: :xls), target: "_blank" do %>
+        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
+      <% end %>
+    </li>
+    <li>
       <%= link_to new_research_application_path(research_id:object.id), confirm: "Para crear una nueva aplicacion debes concluir la anterior.\n Deseas concluirla?" do %>
         <i class = "icon-file icon-white"></i> Nueva Aplicacion
       <% end %>

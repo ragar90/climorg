@@ -2,10 +2,31 @@
   <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class = "icon-th"></i></a>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
     <li><a href="#" class = "download-chart-btn"><i class = "icon-picture icon-white"></i> Exportar a PNG</a></li>
-    <li>
-      <%= link_to survey_research_path(id:object.id, format: :pdf), target: "_blank" do %>
-        <i class = "icon-download-alt icon-white"></i> Cuestionario
-      <% end %>
-    </li>
+    <%case report_type%>
+	    <% when :global %>
+		    <li>
+		      <%= link_to survey_research_path(id:object.id, format: :pdf), target: "_blank" do %>
+		        <i class = "icon-download-alt icon-white"></i> Cuestionario
+		      <% end %>
+		    </li>
+	   		<li>
+		      <%= link_to report_global_research_path(id:object.id, format: :xls), target: "_blank" do %>
+		        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
+		      <% end %>
+	   		</li>
+	   	<% when :global_dimensions %>
+	   	<% when :dimension_demographic %>
+	   	<% when :dimension_questions %>
+	   	<% when :dimension_questions_demographic %>
+	   	<% when :global_questions %>
+	   		<li>
+	   			<%= link_to report_global_questions_research_path(id:object.id, format: :xls), target: "_blank" do %>
+		        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
+	   			<% end %>
+	   		</li>
+	   	<% when :questions_demographic %>
+	   	<% when :global_cycles %>
+    <%end%>
+   	
   </ul>
 </div>

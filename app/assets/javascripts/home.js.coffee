@@ -12,3 +12,11 @@ jQuery ->
     root_parent = $(@).closest(".data-window")
     chart_container = $(root_parent).children(".window-content").children(".report-chart.chart-copy")[0]
     saveAsImg chart_container
+  $.each $(".easypie-chart"), (i,obj) ->
+  	color = $(obj).data("barcolor")
+  	$(obj).easyPieChart
+		  scaleColor: false,
+		  lineWidth: 15,
+		  trackColor: "#AFAFAF",
+		  lineCap: "butt",
+		  barColor: color

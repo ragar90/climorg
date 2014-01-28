@@ -1,3 +1,4 @@
+<% data = data_method.class == Symbol ? object.send(data_method) : data_method %>
 <div class = "data-window collapse-group" id = "window-<%= window_id %>">
   <header>
     <%= link_to research_path id: object.id do %>
@@ -6,9 +7,9 @@
     <nav class = "windows-commands pull-right">
       <% case window_type %>
       <% when :home %>
-        <%= render partial: "/shared/home_chart_options_command_dropdown", locals:{object: object} %>
+        <%= render partial: "/shared/home_chart_options_command_dropdown", locals:{object: object } %>
       <% when :report %>
-        <%= render partial: "/shared/reports_chart_options_command_dropdown", locals:{object: object} %>
+        <%= render partial: "/shared/reports_chart_options_command_dropdown", locals:{object: object, report_type: report_type} %>
       <% when :info %>
         <%= render partial: "/shared/home_options_command_dropdown", locals:{object: object} %>
       <% end %>
@@ -18,9 +19,13 @@
   </header>
   <div id = "window-content-<%= window_id %>" class = "window-content in collapse">
     <% unless window_type == :info %>
-      <%= gchart window_id, chart_type ,object.send(data_method),false ,chart_options%>
-      <% if  window_type == :report%>
-        <%= gchart window_id, chart_type ,object.send(data_method), true,chart_options%>
+      <% case chart_library%>
+        <%when :gcharts %>
+          <%= gchart window_id, chart_type ,data,false ,chart_options%>
+          <!--Chart for download in png-->
+          <%= gchart window_id, chart_type ,data, true,chart_options%>
+        <%when :easy_piecharts%>
+          <%= render partial: "/shared/easy_piecharts", locals:{chart_data: data} %>
       <% end %>
     <% else %>
         <div class = "general-info">

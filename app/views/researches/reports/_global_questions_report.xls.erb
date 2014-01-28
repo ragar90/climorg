@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String"># Pregunta</Data></Cell>
+        <Cell><Data ss:Type="String">Texto de la pregunta</Data></Cell>
+        <Cell><Data ss:Type="String">Insatisfactorio</Data></Cell>
+        <Cell><Data ss:Type="String">Satisfactorio</Data></Cell>
+        <Cell><Data ss:Type="String">Indiferente</Data></Cell>
+      </Row>
+      <% @data.values.each do |value| %>
+        <Row>
+          <Cell><Data ss:Type="Number"><%= value[:question].ordinal %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= value[:question].description %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= value[:results][:unlikable] %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= value[:results][:likeable] %></Data></Cell>
+          <Cell><Data ss:Type="Number"><%= value[:results][:indiferent] %></Data></Cell>
+        </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

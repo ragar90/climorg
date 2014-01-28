@@ -13,22 +13,19 @@ module Report
   end
   
   def total_perception(options={})
-    unless options[:demographic_query_value]
-      data = self.report(options[:demographic_variable_id],options[:demographic_query_value]).group("answer_value").select("count(answer_value) as total_likeable, answer_value")
-      @total_perception ||= likeable_results(data)
-    else
-      results = self.report(options[:demographic_variable_id],options[:demographic_query_value]).group("answer_value").select("count(answer_value) as total_likeable, answer_value")
-      likeable_results(results)
-    end
+    data = self.report(options[:demographic_variable_id],options[:demographic_query_value]).group("answer_value").select("count(answer_value) as total_likeable, answer_value")
+    likeable_results(data)
   end
   
   def filter_by_questions(options = {})
     _questions = questions.group_by{|d| d.id}
+    data = nil
     unless options[:dimension_id]
-      _results = report(options[:demographic_variable_id],options[:demographic_query_value]).group("question_id, answer_value,result_id,question_ordinal").select("question_id,answer_value, count(answer_value) as total_likeable, result_id").order("question_ordinal, answer_value").group_by{|result| result.question_id}
+      data = report(options[:demographic_variable_id],options[:demographic_query_value]).group("question_id,answer_value,result_id,question_ordinal").select("question_id,answer_value, count(answer_value) as total_likeable, result_id").order("question_ordinal, answer_value")
     else
-    _results = report(options[:demographic_variable_id],options[:demographic_query_value]).where("dimension_id in (?)",options[:dimension_id]).group("question_id, answer_value,question_ordinal").select("question_id,answer_value, count(answer_value) as total_likeable, result_id").order("question_ordinal, answer_value").group_by{|result| result.question_id}   
+      data = report(options[:demographic_variable_id],options[:demographic_query_value]).where("dimension_id in (?)",options[:dimension_id]).group("question_id, answer_value,question_ordinal, result_id").select("question_id,answer_value, count(answer_value) as total_likeable, result_id").order("question_ordinal, answer_value")  
     end
+    _results = data.group_by{|result| result.question_id}
     _results.each_key do |key|
       _results[key] = {:question=>_questions[key].first,:results=>likeable_results(_results[key])}
     end

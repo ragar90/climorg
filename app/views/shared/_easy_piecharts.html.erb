@@ -1,0 +1,11 @@
+<h3 class = "easypie-chart-title">Datos Globales de las dimensiones</h3>
+<div class = "row easypie-chart-container">
+	<%i = 0%>
+	<% chart_data.each do |data| %>
+		<div class = "span2">
+			<div class = "easypie-chart" data-percent = "<%=data.last%>" data-barcolor = "<%=case i when 0 then "#dc3912"; when 1 then "#ff9900"; when 2 then "#3366cc"; when 3 then "#109618"; end%>"><%=data.last%>%</div>
+			<div class = "easypie-chart-label"><%=data.first.titleize%></div>
+		</div>
+		<%i += 1%>
+	<% end %>
+</div>
