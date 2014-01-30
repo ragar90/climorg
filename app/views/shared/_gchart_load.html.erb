@@ -1,5 +1,59 @@
 <%= content_for :gcharts_references do %>
   <script type="text/javascript">
+    function draw_piechart(data,container_class,paper,chart_options){
+      copy = false
+      if(container_class.indexOf("chart-copy") < 0){
+        radius = 100;
+        chart_top = {x:200,y:150};
+        title_top = {x:240,y:30};
+        font = "16px sans-serif";
+      }
+      else{
+        radius = 300;
+        chart_top = {x:650,y:450};
+        title_top = {x:600,y:50}
+        font = "30px sans-serif";
+        copy = true
+      }
+      total = data.likeable + data.unlikable + data.indiferent;
+      likeable_percent = ((data.likeable / total) * 100).toFixed(2);
+      unlikable_percent = ((data.unlikable / total) * 100).toFixed(2);
+      indiferent_percent = ((data.indiferent / total) * 100).toFixed(2);
+      data = [data.likeable, data.unlikable,data.indiferent ]
+      percents = [likeable_percent,unlikable_percent,indiferent_percent]
+      pie = paper.piechart(chart_top.x, chart_top.y,radius,data,{legend: ["Satisfactorio" ,"Insastifactorio","No Aplica"],legendpos: "east"});     
+      if(pie.labels != undefined && copy){
+        $.each(pie.labels,function(i,legend){
+          var dy = (i *50)
+          legend[0].attr({r:(radius/20), cx: legend[0].attrs.cx, cy: legend[0].attrs.cy + dy })
+          legend[1].attr({ font: font, x: legend[1].attrs.x + 15, y: legend[1].attrs.y + dy });
+        });
+      }
+      i = 0
+      pie.each(function(){
+        paper.popup(this.sector.middle.x, this.sector.middle.y, percents[i]+"%").insertBefore(this.cover);
+        i++;
+      });
+
+      //
+      paper.text(title_top.x, title_top.y,chart_options.title  ).attr({ font: font });
+      pie.hover(function () {
+              this.sector.stop();
+              console.log(this)
+              this.sector.scale(1.1, 1.1, this.cx, this.cy);
+              if (this.label) {
+                  this.label[0].stop();
+                  this.label[0].attr({ r: 7.5 });
+                  this.label[1].attr({ "font-weight": 800 });
+              }
+          }, function () {
+              this.sector.animate({ transform: 's1 1 ' + this.cx + ' ' + this.cy }, 500, "bounce");
+              if (this.label) {
+                  this.label[0].animate({ r: 5 }, 500, "bounce");
+                  this.label[1].attr({ "font-weight": 400 });
+              }
+          });
+    }
     window.onload = function (){
       charts = $(".report-chart ")
       $.each(charts, function(i, chart){
@@ -9,55 +63,13 @@
         var container_class = $(chart).attr("class");
         var canvas_width = $(chart).data("width");
         var canvas_height = $(chart).data("height");
-        var r = null;
-        var radius = 0 ;
-        var chart_top = null;
-        var title_top = null;
-        var font = "";
-        if(container_class.indexOf("chart-copy") < 0){
-          r = Raphael(id);
-          radius = 100;
-          chart_top = {x:200,y:150};
-          title_top = {x:240,y:30};
-          font = "16px sans-serif";
-        }
-        else{
-          r = Raphael(id,canvas_width,canvas_height);
-          radius = 350;
-          chart_top = {x:750,y:450};
-          title_top = {x:750,y:50}
-          font = "30px sans-serif";
-        }
-        var rect = r.rect(0, 0, canvas_width, canvas_height);
+        var paper = Raphael(id,canvas_width,canvas_height);
+        var rect = paper.rect(0, 0, paper.width, paper.height);
         rect.attr("fill", "#fff");
         rect.attr("stroke", "#fff");
         switch(chart_type){
           case "pie":
-            data_json = $(chart).data("env")
-            total = data_json.likeable + data_json.unlikable + data_json.indiferent;
-            likeable_percent = ((data_json.likeable / total) * 100).toFixed(2);
-            unlikable_percent = ((data_json.unlikable / total) * 100).toFixed(2);
-            indiferent_percent = ((data_json.indiferent / total) * 100).toFixed(2);
-            data = [data_json.likeable, data_json.unlikable,data_json.indiferent ]
-            pie = r.piechart(chart_top.x, chart_top.y,radius,data,{legend: ["Satisfactorio " +likeable_percent+ "%" ,"Insastifactorio " +unlikable_percent+ "%","No Aplica " +indiferent_percent+ "%"],legendpos: "east"});
-            r.text(title_top.x, title_top.y,chart_options.title  ).attr({ font: font });
-            pie.hover(function () {
-                    this.sector.stop();
-                    this.sector.scale(1.1, 1.1, this.cx, this.cy);
-
-                    if (this.label) {
-                        this.label[0].stop();
-                        this.label[0].attr({ r: 7.5 });
-                        this.label[1].attr({ "font-weight": 800 });
-                    }
-                }, function () {
-                    this.sector.animate({ transform: 's1 1 ' + this.cx + ' ' + this.cy }, 500, "bounce");
-
-                    if (this.label) {
-                        this.label[0].animate({ r: 5 }, 500, "bounce");
-                        this.label[1].attr({ "font-weight": 400 });
-                    }
-                });
+            draw_piechart($(chart).data("env"),container_class, paper, chart_options)
             break;
           case "barchart":
             break
