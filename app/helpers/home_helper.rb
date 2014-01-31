@@ -4,6 +4,7 @@ module HomeHelper
     window_options[:report_type] = :global if window_options[:report_type].nil?
     window_options[:window_type] = :report if window_options[:window_type].nil?
     window_options[:chart_library] = :gcharts if window_options[:chart_library].nil?
+    window_options[:more_reports] = false if window_options[:more_reports].nil?
     locals = { window_id:  SecureRandom.uuid, chart_options: chart_options}
     locals.merge!(window_options)
     render partial: "/shared/data_window", locals: locals

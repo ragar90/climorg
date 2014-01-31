@@ -8,11 +8,10 @@
   <div class = "span6">
     <%= gchart_window( {object:@research,data_method: @dimensions_reports, chart_type: :column, report_type: :global_dimensions}, {title: "Resultados por dimensiones", hAxis: {title: 'Dimensiones', gridlines: { count: @dimensions_reports.last.first }}}) %>
   </div>
-  <%=@demographic_reports.each_slice(4) do |dimension_results|%>
-  	<div class = "span10">
-  		<%= gchart_window( {object:@research,data_method: dimension_results, report_type: :global_dimensions, chart_library: :easy_piecharts} ) %>
+  
+  	<div class = "span12">
+      <%= gchart_window( {object:@research,data_method: @demographic_reports, report_type: :global_dimensions, chart_library: :easy_piecharts, more_reports: true} ) %>
   	</div>
-  <% end %>
 
   
 </div>

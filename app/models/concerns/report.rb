@@ -9,7 +9,6 @@ module Report
       params = demographic_query_value.to_qprm
       RawData.where("demographic_variable_id = ? and research_id = ? ",demographic_variable_id,self.id).where(params)
     end
-    
   end
   
   def total_perception(options={})
@@ -41,6 +40,38 @@ module Report
     return _results
   end
   
+  def filer_by_variables(options = {})
+    options[:filter_by] ||= :global
+    options[:filter_by] = options[:filter_by].to_sym
+    results = []
+    if options[:query]
+      result =  case options[:filter_by]
+                  when :questions
+                    filter_by_questions(demographic_variable_id: options[:query][:variable_id], demographic_query_value: options[:query][:value])
+                  when :dimensions
+                    filter_by_dimensions(demographic_variable_id: options[:query][:variable_id], demographic_query_value: options[:query][:value])
+                  else
+                    total_perception(demographic_variable_id: options[:query][:variable_id], demographic_query_value: options[:query][:value])
+                end
+      results << result
+    else
+      variables = self.demographic_variables.map{|v| [{id:v.id,queryable_values:v.queryable_values}] }
+      variables.each do |variable|
+        variable[:queryable_values].each do |queryable_value|
+          result =  case options[:filter_by]
+                      when :questions
+                        filter_by_questions(demographic_variable_id: variable[:id], demographic_query_value: queryable_value)
+                      when :dimensions
+                        filter_by_dimensions(demographic_variable_id: variable[:id], demographic_query_value: queryable_value)
+                      else
+                        total_perception(demographic_variable_id: variable[:id], demographic_query_value: queryable_value)
+                    end
+          results << result
+        end
+      end
+    end
+    return results
+  end
   
   private
   

@@ -25,7 +25,7 @@
           <!--Chart for download in png-->
           <%= gchart window_id, chart_type ,data, true,chart_options%>
         <%when :easy_piecharts%>
-          <%= render partial: "/shared/easy_piecharts", locals:{chart_data: data} %>
+          <%= render partial: "/shared/easy_piecharts", locals:{chart_data: data, more_reports: more_reports} %>
       <% end %>
     <% else %>
         <div class = "general-info">
