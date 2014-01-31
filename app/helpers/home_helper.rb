@@ -11,9 +11,9 @@ module HomeHelper
 
   def gchart(id = SecureRandom.uuid,type,chart_data, is_copy ,html_data)
     div_id = is_copy ? "chart-copy-#{id}" : "chart-#{id}"
-    chart_dimensions = is_copy ? {width: 1500, height: 900} : {height: 300}
+    chart_dimensions = is_copy ? {width: 1500, height: 900, id: id} : {height: 300, id: id}
     chart_options = html_data.merge(chart_dimensions)
     data_attributes = {env:chart_data, type: type, chart_options: chart_options }
-    content_tag :div, "",id: div_id, data: data_attributes, class: "report-chart #{is_copy ? "chart-copy" : ""}" 
+    content_tag :div, "",id: div_id, data: data_attributes, class: "report-chart #{is_copy ? "chart-copy" : ""} #{ type}" 
   end
 end

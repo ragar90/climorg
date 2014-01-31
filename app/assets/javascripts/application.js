@@ -15,10 +15,5 @@
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap-multiselect
-//= require charts/raphael.js
-//= require charts/g.raphael-min.js
-//= require charts/gpie.js
-//= require charts/gbar.js
-//= require charts/gline.js
-//= require charts/gplot.js
+//= require charts/gcharts.js
 //= require_tree .

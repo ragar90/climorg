@@ -22,7 +22,7 @@ class ResearchesController < ApplicationController
     #  [dimension_name,likeable_percent]
     #end
     @demographic_reports = []
-    @dimensions_reports = [["Preguntas","Satisfactorio"]] + @research.filter_by_dimensions.to_barchart_data
+    @dimensions_reports = [["Dimensiones","Satisfactorio"]] + @research.filter_by_dimensions.to_barchart_data
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @research }

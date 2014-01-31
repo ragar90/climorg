@@ -1,16 +1,17 @@
 function getImgData(chartContainer) {
-  var svg = chartContainer.innerHTML;
+  var chartArea = chartContainer.getElementsByTagName('div')[1];
+  var svg = chartArea.innerHTML;
   var doc = chartContainer.ownerDocument;
   var canvas = doc.createElement('canvas');
-  canvas.setAttribute('width', 720);
-  canvas.setAttribute('height', 580);
+  canvas.setAttribute('width', chartArea.offsetWidth);
+  canvas.setAttribute('height', chartArea.offsetHeight);
   
   
   canvas.setAttribute(
       'style',
       'position: absolute; ' +
-      'top: ' + (-chartContainer.offsetHeight * 2) + 'px;' +
-      'left: ' + (-chartContainer.offsetWidth * 2) + 'px;');
+      'top: ' + (-chartArea.offsetHeight * 2) + 'px;' +
+      'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
   doc.body.appendChild(canvas);
   canvg(canvas, svg);
   var imgData = canvas.toDataURL("image/png");
