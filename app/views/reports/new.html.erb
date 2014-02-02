@@ -1,23 +1,42 @@
-<fieldset class="demographic_variables" class="">
+<fieldset class="report-parameters-builder" class="">
   <legend>Patametros del reporte</legend>
   <div class="row">
-  	<%= form_for @report, url: reports_path(id: @research.id) do |f| %>
+  	<%= form_for @report, url: reports_path(id: @research.id), html:{class: "form-inline"} do |f| %>
   	  <div class="span4">
-  	  	<%= f.label :show_dimension %>
-  	  	<%= f.check_box :show_dimension %><br />
-  	  	<%= f.collection_select(:dimension_id, @dimensions, :id, :name) %>
+  	  	<%= f.label :show_dimension, class: "checkbox" do %>
+  	  		<%= f.check_box :show_dimension, class: "parrameter-switch", data:{toggle: "#dimension-parameters"} %>
+  	  		Mostrar Dimensiones
+  	  	<% end %>
+  	  	<div class = "report-parameters" id = "dimension-parameters">
+  	  		<%= f.collection_select(:dimension_ids, @dimensions, :id, :name) %>
+  	  	</div>
   	  </div>
 	  	<div class="span4">
-  	  	<%= f.label :show_question %>
-  	  	<%= f.check_box :show_question %><br />
-  	  	<%= f.collection_select(:question_id, @questions, :id, :ordinal) %>
+  	  	<%= f.label :show_question, class: "checkbox" do %>
+  	  		<%= f.check_box :show_question, class: "parrameter-switch", data:{toggle: "#question-parameters"}  %>
+  	  		Mostrar Preguntas
+  	  	<% end %>
+  	  	<div class = "report-parameters"  id = "question-parameters">
+  	  		<%= f.collection_select(:question_ids, @questions, :id, :ordinal) %>
+  	  	</div>
   	  </div>
 	  	<div class="span4">
-  	  	<%= f.label :show_demographic %>
-  	  	<%= f.check_box :show_demographic %><br />
-  	  	<%= f.collection_select(:demographic_variable_ids, @demographic_variables, :id, :name) %>
-  	  	<%= f.hidden_field :query_value %>
+	  	  <%= f.hidden_field :query_value %>
+  	  	<%= f.label :show_demographic, class: "checkbox" do %>
+  	  		<%= f.check_box :show_demographic, class: "parrameter-switch", data:{toggle: "#demographic-parameters"}  %>
+  	  		Mostrar Variables Demograficas
+  	  	<% end %>
+  	  	<div class = "report-parameters"  id = "demographic-parameters">
+	  	  	<%= f.collection_select(:demographic_variable_ids, @demographic_variables, :id, :name,{prompt: "Seleccione una variable"},data:{variable_types: @variable_types}) %>
+	  	  	<div class = "demographic-inputs">
+	  	  		<% @variable_types.values.each do |queryable_value| %>
+	  	  			<%=filter_field(queryable_value.first,queryable_value.last)%>
+	  	  		<% end %>
+	  	  	</div>
+  	  	</div>
   	  </div>
   	<% end -%>
   </div>
 </fieldset>
+<div id="report-results" class = "row"></div>
+

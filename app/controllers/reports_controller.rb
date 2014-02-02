@@ -6,6 +6,10 @@ class ReportsController < ApplicationController
   	@questions = @research.questions
   	@dimensions = @research.dimensions
   	@demographic_variables = @research.demographic_variables
+  	@variable_types = {}
+  	@demographic_variables.map{|v| [v.id,v.accepted_value,v.queryable_values]}.each do |var|
+  		@variable_types[var.first.to_s.to_sym] = [var.second,var.last]
+  	end
   end
 
   def create

@@ -54,7 +54,7 @@ class DemographicVariable < ActiveRecord::Base
   end
 
   def has_displayable_fields?
-    is_boolean? or is_hash?
+    is_boolean? or is_hash? or is_range?
   end
 
   def displayable_fields
@@ -62,6 +62,15 @@ class DemographicVariable < ActiveRecord::Base
   end
 
   def queryable_values
-    has_displayable_fields? ? ( is_boolean? ? [["1", true_boolean_value],["0",false_boolean_value]] : hash_value_parsed.map{|h| [h.first.to_s,h.last]} ) : [] 
+    case accepted_value
+      when "boolean"
+        [["1", true_boolean_value],["0",false_boolean_value]]
+      when "hash"
+        hash_value_parsed.map{|h| [h.first.to_s,h.last]}
+      when "range"
+        [min_range_value,max_range_value]
+      else
+        []
+    end
   end
 end
