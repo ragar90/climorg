@@ -15,6 +15,11 @@
 		      <% end %>
 	   		</li>
 	   	<% when :global_dimensions %>
+	   		<li>
+		      <%= link_to report_global_dimensions_research_path(id:object.id, format: :xls), target: "_blank" do %>
+		        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
+		      <% end %>
+	   		</li>
 	   	<% when :dimension_demographic %>
 	   	<% when :dimension_questions %>
 	   	<% when :dimension_questions_demographic %>

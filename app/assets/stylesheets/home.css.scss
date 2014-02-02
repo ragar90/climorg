@@ -42,7 +42,7 @@
   .left-menu{
     max-width: 130px;
     position:fixed;
-    background-color: #393939;
+    background-color: #34495E;
     height: 100%;
     a{
       color:#ebebeb;
@@ -84,8 +84,8 @@
     }
     .selected-option {
       position: relative;
-      background: #1b1b1b;
-      border: 1px solid #000000;
+      background: #1C2833;
+      border: 1px solid #1C2833;
       &:after, &:before{
         left: 100%;
         border: solid transparent;
@@ -97,7 +97,7 @@
       }
       &:after{
         border-color: rgba(255, 255, 255, 0);
-        border-left-color: #1b1b1b;
+        border-left-color: #1C2833;
         border-width: 15px;
         top: 50%;
         margin-top: -15px;
@@ -105,7 +105,7 @@
 
       &:before{
         border-color: rgba(0, 0, 0, 0);
-        border-left-color: #000000;
+        border-left-color: #1C2833;
         border-width: 21px;
         top: 50%;
         margin-top: -21px;
@@ -115,18 +115,11 @@
 }
 .data-window{
   margin-bottom:20px;
-  border: 1px solid #d1d1d1;
+  border: 1px solid #BDC3C7;
   header{
-    background: #eaeaea; /* Old browsers */
-    background: -moz-linear-gradient(top,  #eaeaea 0%, #e8e8e8 12%, #dbdbdb 50%, #d1d1d1 97%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaeaea), color-stop(12%,#e8e8e8), color-stop(50%,#dbdbdb), color-stop(97%,#d1d1d1)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #eaeaea 0%,#e8e8e8 12%,#dbdbdb 50%,#d1d1d1 97%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #eaeaea 0%,#e8e8e8 12%,#dbdbdb 50%,#d1d1d1 97%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #eaeaea 0%,#e8e8e8 12%,#dbdbdb 50%,#d1d1d1 97%); /* IE10+ */
-    background: linear-gradient(to bottom,  #eaeaea 0%,#e8e8e8 12%,#dbdbdb 50%,#d1d1d1 97%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#d1d1d1',GradientType=0 ); /* IE6-9 */
+    background: #BDC3C7; 
     color: #363636;
-    border: 1px solid #d1d1d1;
+    border: 1px solid #BDC3C7;
     padding: 5px 0px;
     h4{
       margin: 0px 10px;
@@ -236,20 +229,39 @@
   text-align: center;
 }
 .easypie-chart-label{
-  text-align: center;
+  margin: 0 30px;
+  padding-top: 10px;
+  font-weight: bold;
 }
 .row.easypie-chart-container{
   padding-left: 10%;
   padding-bottom: 20px;
 }
 .btn-more-charts{
-  width: 148px;
-  height: 148px;
+  background-color: #AFAFAF;
+  background-image: none;
+  width: 110px;
+  height: 110px;
   border-radius: 100px;
   padding: 0;
-  p{
-    font-size: 16px;
+  &:hover{
+    background-color:#777b7d;
+  }
+  .btn-inner{
+    ont-size: 12px;
     text-align: center;
-    margin-top: 55px;
+    margin-left: 10px;
+    margin-top: 10px;
+    background: #fff;
+    border-radius: 100px;
+    height: 82px;
+    width: 90px;
+    padding-top: 10px;
+    p{
+      font-size: 12px;
+      text-align: center;
+      font-weight: bold;
+    }
+    
   }
 }

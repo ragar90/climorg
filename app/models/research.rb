@@ -13,7 +13,7 @@ class Research < ActiveRecord::Base
   accepts_nested_attributes_for :questions, allow_destroy: true
 
   scope :results_group_by_answer, -> { results.joins(:answers).group("answers.value").select("count(value) as total_likeable, value")}
-  include Report
+  include Reportable
   
   def start_and_end_date_consistency 
     unless (!start_date.nil? and !end_date.nil?) and start_date < end_date
@@ -98,5 +98,13 @@ class Research < ActiveRecord::Base
 
   def current_application
     self.applications.where(number: self.applications.count).first
+  end
+
+  def variables_values
+    query_values = 
+    self.demographic_variables.map do |v| 
+      query_values = v.queryable_values.map { |value| DemographicQueryValue.new(condition_value:value.first,condition_value_label:value.last,variable_type: v.accepted_value) }
+      {id:v.id,queryable_values: query_values }
+    end
   end
 end

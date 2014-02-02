@@ -22,6 +22,23 @@ class ResearchesController < ApplicationController
     #  [dimension_name,likeable_percent]
     #end
     @demographic_reports = []
+    variables = @research.variables_values
+    i = 0
+    variables.each do |variable|
+      variable[:queryable_values].each do |value|
+        results = @research.filer_by_variables(query:{variable_id: variable[:id],value: value} )
+        percent = (((results.first[:likeable] * 1.0) / results.first.values.inject { |sum,x| sum + x  }) * 100.0).round(2)
+        @demographic_reports <<  [results.last, percent]
+        i+=1
+        if i == 4
+          break
+        end
+      end
+      if i == 4
+        break
+      end
+    end
+   
     @dimensions_reports = [["Dimensiones","Satisfactorio"]] + @research.filter_by_dimensions.to_barchart_data
     respond_to do |format|
       format.html # show.html.erb

@@ -1,8 +1,12 @@
 <% data = data_method.class == Symbol ? object.send(data_method) : data_method %>
 <div class = "data-window collapse-group" id = "window-<%= window_id %>">
   <header>
-    <%= link_to research_path id: object.id do %>
-      <h4><%= object.company_name.titleize.truncate(24, separator: " ") %></h4>
+    <% if render_with_link %>
+      <%= link_to research_path id: object.id do %>
+        <h4><%=  window_title %></h4>
+      <% end %>
+    <% else %>
+      <h4><%=  window_title %></h4>
     <% end %>
     <nav class = "windows-commands pull-right">
       <% case window_type %>

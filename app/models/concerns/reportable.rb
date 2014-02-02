@@ -1,4 +1,4 @@
-module Report
+module Reportable
   extend ActiveSupport::Concern
   
   def report(demographic_variable_id,demographic_query_value)
@@ -54,8 +54,9 @@ module Report
                     total_perception(demographic_variable_id: options[:query][:variable_id], demographic_query_value: options[:query][:value])
                 end
       results << result
+      results << options[:query][:value].condition_value_label
     else
-      variables = self.demographic_variables.map{|v| [{id:v.id,queryable_values:v.queryable_values}] }
+      variables = self.variables_values
       variables.each do |variable|
         variable[:queryable_values].each do |queryable_value|
           result =  case options[:filter_by]

@@ -1,0 +1,23 @@
+<fieldset class="demographic_variables" class="">
+  <legend>Patametros del reporte</legend>
+  <div class="row">
+  	<%= form_for @report, url: reports_path(id: @research.id) do |f| %>
+  	  <div class="span4">
+  	  	<%= f.label :show_dimension %>
+  	  	<%= f.check_box :show_dimension %><br />
+  	  	<%= f.collection_select(:dimension_id, @dimensions, :id, :name) %>
+  	  </div>
+	  	<div class="span4">
+  	  	<%= f.label :show_question %>
+  	  	<%= f.check_box :show_question %><br />
+  	  	<%= f.collection_select(:question_id, @questions, :id, :ordinal) %>
+  	  </div>
+	  	<div class="span4">
+  	  	<%= f.label :show_demographic %>
+  	  	<%= f.check_box :show_demographic %><br />
+  	  	<%= f.collection_select(:demographic_variable_ids, @demographic_variables, :id, :name) %>
+  	  	<%= f.hidden_field :query_value %>
+  	  </div>
+  	<% end -%>
+  </div>
+</fieldset>

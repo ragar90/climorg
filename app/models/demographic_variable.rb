@@ -62,6 +62,6 @@ class DemographicVariable < ActiveRecord::Base
   end
 
   def queryable_values
-    has_displayable_fields? ? ( is_boolean? ? [true_boolean_value,false_boolean_value] : hash_value_parsed.keys ) : [] 
+    has_displayable_fields? ? ( is_boolean? ? [["1", true_boolean_value],["0",false_boolean_value]] : hash_value_parsed.map{|h| [h.first.to_s,h.last]} ) : [] 
   end
 end

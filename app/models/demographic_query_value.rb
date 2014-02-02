@@ -3,7 +3,7 @@ class DemographicQueryValue
   include ActiveModel::Conversion
   extend ActiveModel::Naming
   
-  attr_accessor :condition_value, :variable_type
+  attr_accessor :condition_value, :variable_type, :condition_value_label
   
   def initialize(attributes = {})
     attributes.each do |name, value|
@@ -17,13 +17,13 @@ class DemographicQueryValue
     else
       conditions =  self.query_values
       if conditions.length == 1
-          ["demographic_values.value = ?", conditions.first]
+          ["demographic_value = ?", conditions.first]
       else
         case variable_type
         when "hash"
-          ["demographic_values.value in (?)", conditions]
+          ["demographic_value in (?)", conditions]
         when "range" || "float" || "integer"
-          ["demographic_values.value >=  ? and demographic_values.value <= ? ", conditions.first, conditions.last]          
+          ["demographic_value >=  ? and demographic_value <= ? ", conditions.first, conditions.last]          
         end
         
       end
