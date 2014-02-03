@@ -7,4 +7,7 @@ class Question < ActiveRecord::Base
   def barchart_values
   	self.ordinal
   end
+  def ordinal_label
+  	"Pregunta ##{self.ordinal}"
+  end
 end

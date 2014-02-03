@@ -7,8 +7,8 @@
   	  		<%= f.check_box :show_dimension, class: "parrameter-switch", data:{toggle: "#dimension-parameters"} %>
   	  		Mostrar Dimensiones
   	  	<% end %>
-  	  	<div class = "report-parameters" id = "dimension-parameters">
-  	  		<%= f.collection_select(:dimension_ids, @dimensions, :id, :name) %>
+  	  	<div class = "report-parameters" id = "dimension-parameters" <%=@report.show_dimension ? "style=display:block" : ""%> >
+  	  		<%= f.collection_select(:dimension_ids, @dimensions, :id, :name,prompt: "Dimensiones a filtrar") %>
   	  	</div>
   	  </div>
 	  	<div class="span4">
@@ -16,8 +16,8 @@
   	  		<%= f.check_box :show_question, class: "parrameter-switch", data:{toggle: "#question-parameters"}  %>
   	  		Mostrar Preguntas
   	  	<% end %>
-  	  	<div class = "report-parameters"  id = "question-parameters">
-  	  		<%= f.collection_select(:question_ids, @questions, :id, :ordinal) %>
+  	  	<div class = "report-parameters"  id = "question-parameters" <%=@report.show_question ? "style= display:block" : ""%>>
+  	  		<%= f.collection_select(:question_ids, @questions, :id, :ordinal_label, prompt: "Preguntas a filtrar") %>
   	  	</div>
   	  </div>
 	  	<div class="span4">
@@ -26,15 +26,19 @@
   	  		<%= f.check_box :show_demographic, class: "parrameter-switch", data:{toggle: "#demographic-parameters"}  %>
   	  		Mostrar Variables Demograficas
   	  	<% end %>
-  	  	<div class = "report-parameters"  id = "demographic-parameters">
-	  	  	<%= f.collection_select(:demographic_variable_ids, @demographic_variables, :id, :name,{prompt: "Seleccione una variable"},data:{variable_types: @variable_types}) %>
+  	  	<div class = "report-parameters"  id = "demographic-parameters" <%=@report.show_demographic ? "style= display:block" : ""%> >
+	  	  	<%= f.collection_select(:demographic_variable_ids, @demographic_variables, :id, :name,{prompt: "Variable a filtrar"},data:{variable_types: @variable_types}) %>
 	  	  	<div class = "demographic-inputs">
+            <% selected_values = @demographic_variables.select{|v| @report.demographic_variable_ids.include?(v.id.to_s)}.map{|v| v.accepted_value}%>
 	  	  		<% @variable_types.values.each do |queryable_value| %>
-	  	  			<%=filter_field(queryable_value.first,queryable_value.last)%>
+	  	  			<%=filter_field(queryable_value.first,queryable_value.last, @report.show_demographic, selected_values)%>
 	  	  		<% end %>
 	  	  	</div>
   	  	</div>
   	  </div>
+      <div class = "span12">
+        <%= f.submit "Generar Reportes", class: "btn btn-primary" ,:disable_with => 'Generando Reportes...' %>
+      </div>
   	<% end -%>
   </div>
 </fieldset>

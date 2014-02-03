@@ -50,26 +50,13 @@ module Reportable
                     filter_by_questions(demographic_variable_id: options[:query][:variable_id], demographic_query_value: options[:query][:value])
                   when :dimensions
                     filter_by_dimensions(demographic_variable_id: options[:query][:variable_id], demographic_query_value: options[:query][:value])
+                  when :dimensions_and_questions
+                    filter_by_questions(dimension_id:options[:query][:dimension_id],demographic_variable_id: options[:query][:variable_id], demographic_query_value: options[:query][:value])
                   else
                     total_perception(demographic_variable_id: options[:query][:variable_id], demographic_query_value: options[:query][:value])
                 end
       results << result
       results << options[:query][:value].condition_value_label
-    else
-      variables = self.variables_values
-      variables.each do |variable|
-        variable[:queryable_values].each do |queryable_value|
-          result =  case options[:filter_by]
-                      when :questions
-                        filter_by_questions(demographic_variable_id: variable[:id], demographic_query_value: queryable_value)
-                      when :dimensions
-                        filter_by_dimensions(demographic_variable_id: variable[:id], demographic_query_value: queryable_value)
-                      else
-                        total_perception(demographic_variable_id: variable[:id], demographic_query_value: queryable_value)
-                    end
-          results << result
-        end
-      end
     end
     return results
   end
