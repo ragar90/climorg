@@ -3,7 +3,8 @@ class ReportsController < ApplicationController
   before_action :format_params, only: [:create]
 
   def new
-  	@report = Report.new({})
+  	@report = Report.new
+    @report.query = DemographicQueryValue.new
   	@questions = @research.questions.order(:ordinal)
   	@dimensions = @research.dimensions
   	@demographic_variables = @research.demographic_variables

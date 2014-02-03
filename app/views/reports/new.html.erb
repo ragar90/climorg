@@ -21,7 +21,11 @@
   	  	</div>
   	  </div>
 	  	<div class="span4">
-	  	  <%= f.hidden_field :query_value %>
+        <%= f.fields_for :query do |b|%>
+          <%= b.hidden_field :condition_value %>
+          <%= b.hidden_field :variable_type %>
+          <%= b.hidden_field :condition_value_label %>
+        <% end %>
   	  	<%= f.label :show_demographic, class: "checkbox" do %>
   	  		<%= f.check_box :show_demographic, class: "parrameter-switch", data:{toggle: "#demographic-parameters"}  %>
   	  		Mostrar Variables Demograficas
