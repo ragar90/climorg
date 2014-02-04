@@ -14,6 +14,12 @@ $(document).ready ->
 	$("#report_demographic_variable_ids").on "change", ->
 		var_id = $(@).val()
 		$(".demographic-query-value").css("display","none")
+		$(".demographic-query-value").removeClass("value-selected")
 		type_field = $(@).data("variable-types")[var_id][0]
-		console.log type_field
+		$("#report_query_variable_type").val(type_field)
 		$("."+type_field+"-field").css("display","block")
+		$("."+type_field+"-field").addClass("value-selected")
+
+	$("#new_report").on "submit", ->
+		value = $(".demographic-query-value.value-selected").val()
+		$("#report_query_condition_value").val(value);
