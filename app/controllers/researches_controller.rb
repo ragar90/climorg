@@ -25,10 +25,10 @@ class ResearchesController < ApplicationController
     variables = @research.variables_values
     i = 0
     variables.each do |variable|
-      variable[:queryable_values].each do |value|
-        results = @research.filer_by_variables(query:{variable_id: variable[:id],query_value: value} )
-        percent = (((results.first[:likeable] * 1.0) / results.first.values.inject { |sum,x| sum + x  }) * 100.0).round(2)
-        @demographic_reports <<  [results.last, percent]
+      variable[:queryable_values].each_with_index do |value,j|
+        results = @research.total_perception(variable_id: variable[:id],query_value: value )
+        percent = (((results[:likeable] * 1.0) / results.values.inject { |sum,x| sum + x  }) * 100.0).round(2)
+        @demographic_reports <<  [variable[:queryable_values][j].condition_value_label, percent]
         i+=1
         if i == 4
           break

@@ -3,13 +3,12 @@ class Report
   include ActiveModel::Conversion
   extend ActiveModel::Naming
   
-  attr_accessor :research_id, :dimension_ids, :question_ids, :demographic_variable_ids, :query,
-                :show_dimension, :show_question, :show_demographic
+  attr_accessor :research_id, :dimension_ids, :demographic_variable_ids, :query,
+                :show_questions
 
   def initialize(params = {})
     if params.length == 0
       self.dimension_ids = []
-      self.question_ids = []
       self.demographic_variable_ids = []
     else
     	params.each do |attribute, value|
