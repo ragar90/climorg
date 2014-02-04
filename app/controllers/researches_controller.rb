@@ -26,7 +26,7 @@ class ResearchesController < ApplicationController
     i = 0
     variables.each do |variable|
       variable[:queryable_values].each do |value|
-        results = @research.filer_by_variables(query:{variable_id: variable[:id],value: value} )
+        results = @research.filer_by_variables(query:{variable_id: variable[:id],query_value: value} )
         percent = (((results.first[:likeable] * 1.0) / results.first.values.inject { |sum,x| sum + x  }) * 100.0).round(2)
         @demographic_reports <<  [results.last, percent]
         i+=1

@@ -16,7 +16,7 @@ class ReportsController < ApplicationController
 
   def create
  		@report = Report.new(permited_params(:report))
-    @questions = @research.questions
+    @questions = @research.questions.order(:ordinal)
     @dimensions = @research.dimensions
     @demographic_variables = @research.demographic_variables
     @variable_types = {}

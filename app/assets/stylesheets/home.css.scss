@@ -44,6 +44,7 @@
     position:fixed;
     background-color: #34495E;
     height: 100%;
+    z-index: 1000;
     a{
       color:#ebebeb;
       &:hover{

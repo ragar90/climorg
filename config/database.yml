@@ -14,7 +14,7 @@ development:
   reconnect: false
   database: climorg-dev
   username: postgres
-  password: jhlive
+  password: developer
   #socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -26,7 +26,7 @@ test:
   reconnect: false
   database: climorg-test
   username: postgres
-  password: jhlive
+  password: developer
   #socket: /var/run/mysqld/mysqld.sock
 
 production:
@@ -35,5 +35,5 @@ production:
   reconnect: false
   database: climorg-dev
   username: postgres
-  password: jhlive
+  password: developer
   #socket: /var/run/mysqld/mysqld.sock
