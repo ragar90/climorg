@@ -3,7 +3,7 @@ module Reportable
   
   def report(demographic_variable_id,demographic_query_value)
     demographic_variable_id ||=  self.demographic_variable_ids.first
-    unless demographic_query_value
+    if demographic_query_value.nil? and (demographic_query_value.condition_value_label.blank? rescue true)
       RawData.where("demographic_variable_id = ? and research_id = ?",demographic_variable_id, self.id)
     else
       params = demographic_query_value.to_qprm
@@ -19,7 +19,7 @@ module Reportable
   def filter_by_dimensions(options = {})
     d = dimensions.where(id:options[:dimension_id]).first
     if options[:questions]
-      results = {dimension: d, results: filter_by_questions(options[:dimension_id])}
+      results = {dimension: d, results: filter_by_questions(options)}
     elsif options[:dimension_id]
       results = report(options[:variable_id],options[:query_value]).where(dimension_id:options[:dimension_id]).group("dimension_id, answer_value, result_id").select("dimension_id,answer_value, count(answer_value) as total_likeable, result_id").order("dimension_id, answer_value")
       results = {:dimension=>d,:results=>likeable_results(results)}
@@ -38,7 +38,7 @@ module Reportable
       raise ArgumentError, 'You must provide a dimension in order to generate a question report'
     end
     questions = self.questions.group_by{|d| d.id}
-    data = report(options[:variable_id],options[:query_value]).where(dimension_id: options[:dimension_id]).group("question_id, answer_value,question_ordinal, result_id").select("question_id,answer_value, count(answer_value) as total_likeable, result_id").order("question_ordinal, answer_value")
+    data = report(options[:variable_id],options[:query_value]).where(dimension_id: options[:dimension_id]).group("question_id, answer_value,question_ordinal, result_id").select("question_id,answer_value, count(answer_value) as total_likeable, result_id, question_ordinal").order("question_ordinal, answer_value")
     results = data.group_by{|result| result.question_ordinal}
     results.each_key do |key|
       results[key] = {:question=>questions[key].first,:results=>likeable_results(results[key])}

@@ -1,14 +1,14 @@
-<fieldset class="report-parameters-builder" class="">
+<fieldset class="report-parameters-builder">
   <legend>Patametros del reporte</legend>
   <div class="row">
   	<%= form_for @report, url: reports_path(id: @research.id), html:{class: "form-inline"} do |f| %>
   	  <div class="span5">
-        <div class = "row">
-          <div class = "span6" style = "max-width: 220px;">
+        <div class = "row report-parameters">
+          <div class = "span6 dimension-params">
             <%= f.label :dimension_ids, "Dimensiones" ,class: "checkbox" %>
             <%= f.collection_select(:dimension_ids, @dimensions, :id, :name,prompt: "Dimensiones a filtrar") %>
           </div>
-          <div class = "span6" style = "max-width: 165px;padding-top: 23px;margin-left: 15px;">
+          <div class = "span6 question-params">
             <%= f.label :show_questions, class: "checkbox" do %>
               <%= f.check_box :show_questions, class: "parrameter-switch", data:{toggle: "#demographic-parameters"}  %>
               Por Preguntas
@@ -20,8 +20,9 @@
         <%= f.submit "Generar Reportes", class: "btn btn-primary" ,:disable_with => 'Generando Reportes...' %>
   	  </div>
 	  	<div class="span5">
-        <div class "row">
-          <div class = "span6">
+        <div class "row  report-parameters">
+          <div class = "span4">
+            <%= f.label :demographic_variable_ids, "Variables Demograficas" ,class: "checkbox" %>
             <%= f.fields_for :query, @report.query do |b|%>
               <%= b.hidden_field :condition_value%>
               <%= b.hidden_field :variable_type %>
@@ -29,10 +30,10 @@
             <% end %>
             <%= f.collection_select(:demographic_variable_ids, @demographic_variables, :id, :name,{prompt: "Variable a filtrar"},data:{variable_types: @variable_types}) %>
           </div>
-          <div class = "span6">
+          <div class = "span4 demographic-params">
             <% selected_values = @demographic_variables.select{|v| @report.demographic_variable_ids.include?(v.id.to_s)}.map{|v| v.accepted_value}%>
             <% @variable_types.values.each do |queryable_value| %>
-              <%=filter_field(queryable_value.first,queryable_value.last)%>
+              <%=filter_field(queryable_value.first,queryable_value.last,@report.query.variable_type,@report.query.condition_value)%>
             <% end %>
           </div>
         </div>

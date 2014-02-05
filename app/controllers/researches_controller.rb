@@ -30,11 +30,11 @@ class ResearchesController < ApplicationController
         percent = (((results[:likeable] * 1.0) / results.values.inject { |sum,x| sum + x  }) * 100.0).round(2)
         @demographic_reports <<  [variable[:queryable_values][j].condition_value_label, percent]
         i+=1
-        if i == 4
+        if i == 3
           break
         end
       end
-      if i == 4
+      if i == 3
         break
       end
     end

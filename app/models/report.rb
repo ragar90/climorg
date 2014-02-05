@@ -10,6 +10,7 @@ class Report
     if params.length == 0
       self.dimension_ids = []
       self.demographic_variable_ids = []
+      self.show_questions = false
     else
     	params.each do |attribute, value|
         if attribute.to_s == "query" and params[:query].values.select{|val| !val.blank?}.length != 0
@@ -22,20 +23,9 @@ class Report
   end
 
   def report_method
-    if self.show_demographic == "1" and self.show_dimension == "1" and self.show_question == "1"
-      [:filer_by_variables,{filter_by: :dimensions_and_questions,query: {question_id: self.question_ids,dimension_id:self.dimension_ids.first, variable_id:self.demographic_variable_ids.first, query_value: self.query }}]
-    elsif self.show_question == "1" and self.show_dimension == "1"
-      [:filter_by_questions, {question_id: self.question_ids,dimension_id:self.dimension_ids.first}]
-    elsif self.show_question == "1" and self.show_demographic == "1"
-      [:filer_by_variables,{filter_by: :questions,query: {question_id: self.question_ids,variable_id:self.demographic_variable_ids.first, query_value: self.query }}]
-    elsif self.show_dimension == "1" and self.show_demographic == "1"
-      [:filer_by_variables,{filter_by: :dimensions,query: {dimension_id:self.dimension_ids.first, variable_id:self.demographic_variable_ids.first, query_value: self.query }}]
-    elsif self.show_dimension == "1"
-      [:filter_by_dimensions,{dimension_id:self.dimension_ids.first}]
-    elsif self.show_question == "1"
-      [:filter_by_questions, {question_id: self.question_ids}]
-    elsif self.show_demographic == "1"
-      [:filer_by_variables,{query: {variable_id:self.demographic_variable_ids.first, query_value: self.query }}]
-    end
+    dimension_ids = self.dimension_ids.length > 0 ? self.dimension_ids : nil
+    demographic_variable_ids = self.demographic_variable_ids.length > 0 ? self.demographic_variable_ids : nil
+    params = {questions: self.show_questions,dimension_id: dimension_ids,variable_id: demographic_variable_ids,query_value: self.query}
+    dimension_ids.nil? ? [:total_perception, params] : [:filter_by_dimensions,params]
   end
 end

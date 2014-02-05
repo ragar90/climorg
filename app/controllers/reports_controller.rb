@@ -36,8 +36,8 @@ class ReportsController < ApplicationController
 
   def format_params
     permited_params(:report)[:dimension_ids] = permited_params(:report)[:dimension_ids].split(",")
-    permited_params(:report)[:question_ids] = permited_params(:report)[:question_ids].split(",")
     permited_params(:report)[:demographic_variable_ids] = permited_params(:report)[:demographic_variable_ids].split(",")
+    permited_params(:report)[:show_questions] = permited_params(:report)[:show_questions] == "1"
   end
 
 end

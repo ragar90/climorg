@@ -37,7 +37,9 @@
       <div class = "container app-container">
         <%= bootstrap_flash %>
         <%= yield(:error_messages) %>
-        <%= yield %>
+        <div class = "inner-container">
+            <%= yield %>
+        </div>
       </div>
       <div id="modalView" class="modal hide fade"></div>
     </div> <!-- /app-container -->
