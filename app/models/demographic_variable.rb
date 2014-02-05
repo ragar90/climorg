@@ -73,4 +73,22 @@ class DemographicVariable < ActiveRecord::Base
         []
     end
   end
+
+  def label_for_value(value)
+    if has_displayable_fields?
+      case accepted_value
+        when "boolean"
+          if value == "1"
+            true_boolean_value
+          else
+            false_boolean_value
+          end
+        when "hash"
+          hash_value_parsed[value]
+        when "range"
+          display_values
+      end
+    end
+  end
+  
 end

@@ -19,6 +19,7 @@ class Report
           self.send("#{attribute}=",value)  
         end
     	end
+      self.query ||= DemographicQueryValue.new
     end
   end
 

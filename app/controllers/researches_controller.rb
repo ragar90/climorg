@@ -26,8 +26,8 @@ class ResearchesController < ApplicationController
     i = 0
     variables.each do |variable|
       variable[:queryable_values].each_with_index do |value,j|
-        results = @research.total_perception(variable_id: variable[:id],query_value: value )
-        percent = (((results[:likeable] * 1.0) / results.values.inject { |sum,x| sum + x  }) * 100.0).round(2)
+        data = @research.total_perception(variable_id: variable[:id],query_value: value )
+        percent = (((data[:results][:likeable] * 1.0) / data[:results].values.inject { |sum,x| sum + x  }) * 100.0).round(2)
         @demographic_reports <<  [variable[:queryable_values][j].condition_value_label, percent]
         i+=1
         if i == 3
@@ -38,8 +38,8 @@ class ResearchesController < ApplicationController
         break
       end
     end
-   
-    @dimensions_reports = [["Dimensiones","Satisfactorio"]] + @research.filter_by_dimensions.to_barchart_data
+    @dimensions = @research.filter_by_dimensions
+    @dimensions_reports = [["Dimensiones","Satisfactorio"]] + @dimensions[:results].to_barchart_data
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @research }

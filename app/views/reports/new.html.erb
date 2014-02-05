@@ -16,9 +16,6 @@
           </div>
         </div>
   	  </div>
-	  	<div class="span2">
-        <%= f.submit "Generar Reportes", class: "btn btn-primary" ,:disable_with => 'Generando Reportes...' %>
-  	  </div>
 	  	<div class="span5">
         <div class "row  report-parameters">
           <div class = "span4">
@@ -38,6 +35,9 @@
           </div>
         </div>
   	  </div>
+      <div class="span2" style = "padding-top:10px">
+        <%= f.submit "Generar Reportes", class: "btn btn-primary" ,:disable_with => 'Generando Reportes...' %>
+      </div>
   	<% end -%>
   </div>
 </fieldset>
