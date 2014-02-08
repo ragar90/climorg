@@ -9,8 +9,9 @@ ClimaOrg::Application.routes.draw do
       put 'confirm'
       get "survey"
       resources :reports, :only=>[:new,:create]
-      get "report/global" => "researches#report", defaults:{report_type: "global"}
-      get "report/global_dimensions" => "researches#report", defaults:{report_type: "global_dimensions"}
+      get "report/global" => "reports#report", defaults:{report_type: "global"}
+      get "report/global_dimensions" => "reports#report", defaults:{report_type: "global_dimensions"}
+      get "report/custom" => "reports#report", defaults:{report_type: "custom"}
     end
   end
   resources :questions

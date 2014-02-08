@@ -21,13 +21,13 @@
       <a href="" class = "command dismiss" ><i class = "icon-remove-circle"></i></a>
     </nav>
   </header>
-  <div id = "window-content-<%= window_id %>" class = "window-content in collapse">
+  <div id = "window-content-<%= window_id %>" class = "window-content in collapse" <%= chart_height > 300 ? "style=max-height:620px;" : "" %> >
     <% unless window_type == :info %>
       <% case chart_library%>
         <%when :gcharts %>
-          <%= gchart window_id, chart_type ,data,false ,chart_options%>
+          <%= gchart window_id, chart_type ,data,false ,chart_options, chart_height%>
           <!--Chart for download in png-->
-          <%= gchart window_id, chart_type ,data, true,chart_options%>
+          <%= gchart window_id, chart_type ,data, true,chart_options,chart_height%>
         <%when :easy_piecharts%>
           <%= render partial: "/shared/easy_piecharts", locals:{chart_data: data, more_reports: more_reports} %>
       <% end %>

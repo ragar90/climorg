@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :load_layout
   before_action :selected_option
+  before_filter :clean_report_sessions
 
   def load_layout
   	@layout = (params[:layout].nil? or params[:layout]==true) ? true : false
@@ -27,5 +28,15 @@ class ApplicationController < ActionController::Base
                           else
                             "home-option"
                         end
+  end
+  
+  private
+
+  def clean_report_sessions
+    session[:report] = nil
+  end
+
+  def breakpoint
+    raise RuntimeError
   end
 end

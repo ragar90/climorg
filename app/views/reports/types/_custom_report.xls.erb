@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <%unlikable_tot = 0%>
+    <%likeable_tot = 0%>
+    <%indiferent_tot = 0%>
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String"><%= @title %></Data></Cell>
+      </Row>
+      <% if @chart_type == :pie %>
+        <Row>
+          <Cell><Data ss:Type="String">Insatisfactorio</Data></Cell>
+          <Cell><Data ss:Type="Number"><%=@report_data[:unlikable]%></Data></Cell>
+        </Row>
+        <Row>
+          <Cell><Data ss:Type="String">Satisfactorio</Data></Cell>
+          <Cell><Data ss:Type="Number"><%=@report_data[:likeable]%></Data></Cell>
+        </Row>
+        <Row>
+          <Cell><Data ss:Type="String">Indiferente</Data></Cell>
+          <Cell><Data ss:Type="Number"><%=@report_data[:indiferent]%></Data></Cell>
+        </Row>  
+      <% else %>
+        <% @report_data.each_with_index do |data,i| %>
+          <Row>
+            <% data.each_with_index do |cell,j| %>
+              <% if i == 0 and j >0 %>
+                <Cell><Data ss:Type="<%= cell.class == String ? "String" : "Number" %>"><%= "#{cell} (Satisfactorio)" %></Data></Cell>
+              <% else %>
+                <Cell><Data ss:Type="<%= cell.class == String ? "String" : "Number" %>"><%= cell %></Data></Cell>
+              <% end %>
+            <% end %>
+          </Row>
+        <% end %>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

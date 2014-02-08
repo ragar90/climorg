@@ -138,27 +138,6 @@ class ResearchesController < ApplicationController
       end
     end
   end
-
-  def report
-    @research = Research.where(id: params[:id]).first
-    @report_type = params[:report_type]
-    case @report_type
-      when "global"
-        @data = @research.total_perception
-      when "global_dimensions"
-        @data = @research.filter_by_dimensions
-      when "dimension_demographic"
-        @data = @research.filter_by_dimensions(demographic_variable_id: params[:demographic_variable_id], demographic_query_value: params[:demographic_query_value])
-      when "dimension_questions"
-        @data = @research.filter_by_questions(dimension_id: params[:dimension_id])
-      when "dimension_questions_demographic"
-        @data = @research.filter_by_questions(dimension_id: params[:dimension_id], demographic_variable_id: params[:demographic_variable_id], demographic_query_value: params[:demographic_query_value])
-      when "global_questions"
-        @data = @research.filter_by_questions
-      when "questions_demographic"
-        @data = @research.filter_by_questions(demographic_variable_id: params[:demographic_variable_id], demographic_query_value: params[:demographic_query_value])
-    end
-  end
   
   private 
 

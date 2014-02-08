@@ -4,7 +4,7 @@ class Report
   extend ActiveModel::Naming
   
   attr_accessor :research_id, :dimension_ids, :demographic_variable_ids, :query,
-                :show_questions
+                :show_questions, :title
 
   def initialize(params = {})
     if params.length == 0
@@ -28,5 +28,9 @@ class Report
     demographic_variable_ids = self.demographic_variable_ids.length > 0 ? self.demographic_variable_ids : nil
     params = {questions: self.show_questions,dimension_id: dimension_ids,variable_id: demographic_variable_ids,query_value: self.query}
     dimension_ids.nil? ? [:total_perception, params] : [:filter_by_dimensions,params]
+  end
+
+  def titleize
+    self.title.titleize rescue nil
   end
 end

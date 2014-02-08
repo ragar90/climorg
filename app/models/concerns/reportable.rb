@@ -12,15 +12,16 @@ module Reportable
   end
   
   def total_perception(options={})
-    data = self.report(options[:variable_id],options[:query_value]).group("answer_value").select("count(answer_value) as total_likeable, answer_value")
     if options[:variable_id] and options[:query_value].condition_value.blank?
+      data = self.report(options[:variable_id],options[:query_value]).group("answer_value,demographic_value ").select("count(answer_value) as total_likeable, answer_value,demographic_value")
       var = DemographicVariable.where(id: options[:variable_id]).first
       data = data.group_by{|r| r.demographic_value}
       data.each_key do |key|
         data[key] = {variable: var.label_for_value(key), results: likeable_results(data[key])}
       end
-      data = {:dimension=>d,:results=> data, chart: :bars }
+      data = {:dimension=>nil,:results=> data, chart: :bars }
     else
+      data = self.report(options[:variable_id],options[:query_value]).group("answer_value").select("count(answer_value) as total_likeable, answer_value")
       {dimension: nil, results: likeable_results(data), chart: :pie}
     end
   end
@@ -55,7 +56,7 @@ module Reportable
     unless options[:dimension_id]
       raise ArgumentError, 'You must provide a dimension in order to generate a question report'
     end
-    questions = self.questions.group_by{|d| d.id}
+    questions = self.questions.group_by{|d| d.ordinal}
     data = report(options[:variable_id],options[:query_value]).where(dimension_id: options[:dimension_id]).group("question_id, answer_value,question_ordinal, result_id, demographic_value").select("question_id,answer_value, count(answer_value) as total_likeable, result_id, question_ordinal, demographic_value").order("question_ordinal, answer_value")
     if options[:variable_id] and options[:query_value].condition_value.blank?
       var = DemographicVariable.where(id: options[:variable_id]).first

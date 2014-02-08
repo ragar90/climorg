@@ -20,17 +20,12 @@
 		        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
 		      <% end %>
 	   		</li>
-	   	<% when :dimension_demographic %>
-	   	<% when :dimension_questions %>
-	   	<% when :dimension_questions_demographic %>
-	   	<% when :global_questions %>
+	   	<% when :custom %>
 	   		<li>
-	   			<%= link_to report_global_questions_research_path(id:object.id, format: :xls), target: "_blank" do %>
+	   			<%= link_to report_custom_research_url(id:object.id ,format: :xls), class: "custom-report-link" do %>
 		        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
 	   			<% end %>
 	   		</li>
-	   	<% when :questions_demographic %>
-	   	<% when :global_cycles %>
     <%end%>
    	
   </ul>
