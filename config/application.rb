@@ -56,5 +56,7 @@ module ClimaOrg
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| 
         "#{html_tag}".html_safe 
     }
+    config.assets.precompile += ['devise.js', 'devise.css']
+
   end
 end

@@ -18,7 +18,7 @@
     <% @results.each do |result| %>
       <tr>
         <td><%= link_to result.correlative, edit_research_application_result_path(id: result.id, research_id:@research.id, research_application_id: @application.id) %></td>
-        <td><%= result.research.company_name %></td>
+        <td><%= result.research.organization_name %></td>
         <td><%= result.likeable_percentage %>%</td>
         <td><%= result.unlikeable_percentage %>%</td>
         <td><%= result.indiferent_percentage %>%</td>

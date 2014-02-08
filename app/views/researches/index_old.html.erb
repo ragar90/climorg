@@ -14,7 +14,7 @@
     <% @researches.each do |research| %>
       <tr>
         <td><%= link_to research.id, research_path(research) %></td>
-        <td><%= research.company_name %></td>
+        <td><%= research.organization_name %></td>
         <td><%= research.start_date %></td>
         <td><%= research.end_date %></td>
         <td><%= research.current_state %></td>

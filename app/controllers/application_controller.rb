@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_layout
   before_action :selected_option
   before_filter :clean_report_sessions
+  before_action :authenticate 
 
   def load_layout
   	@layout = (params[:layout].nil? or params[:layout]==true) ? true : false
@@ -31,6 +32,12 @@ class ApplicationController < ActionController::Base
   end
   
   private
+
+  def authenticate
+    if self.class != HomeController
+      authenticate_user!
+    end
+  end
 
   def clean_report_sessions
     session[:report] = nil

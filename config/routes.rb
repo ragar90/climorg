@@ -1,6 +1,12 @@
 ClimaOrg::Application.routes.draw do
-  root :to => 'researches#index'
+  devise_for :users
+  root :to => 'home#index'
   get "home/index"
+  get "home/about_us"
+  get "home/contact_us"
+  get "home/pricing"
+  get "home/policy"
+  get "researches" => "researches#index", as: :users_root
   resources :researches do
     resources :applications, controller: :research_application, except: [:show] do
       resources :results, :except=>[:show]

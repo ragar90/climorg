@@ -134,7 +134,7 @@ class ResearchesController < ApplicationController
       format.html { render "survey", :layout=>"pdf"}
       format.pdf do
         pdf = SurveyPdf.new(@research, view_context)
-        send_data pdf.render,filename: "#{@research.company_name}_cuestionario",type: "application/pdf",disposition: "inline"
+        send_data pdf.render,filename: "#{@research.organization_name}_cuestionario",type: "application/pdf",disposition: "inline"
       end
     end
   end

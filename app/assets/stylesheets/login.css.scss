@@ -1,0 +1,46 @@
+body{
+  background-image: image-url("pattern.png");
+  background-position: center center;
+	background-repeat: repeat;
+}
+.account-container{
+	margin-top: 50px;
+	.inner-container{
+			margin-left: 25%;
+			background-color:#e6e5e6;
+			border: 12px solid rgba(0, 0, 0, 0.45);
+			padding: 5px 10px;
+			min-width:280px;
+			max-width: 468px;
+			.account-title{
+				text-align: center;
+			}
+			.login-avatar{
+				margin-left: 23%;
+				border-radius: 122px;
+				border: 12px solid rgba(0, 0, 0, 0.45);
+				margin-bottom: 15px;
+				margin-top: 15px;
+			}
+			.account-field{
+				width: 96%;
+				padding-right: 10px;
+				input[type="email"],input[type="password"]{
+					height: 45px;
+					font-size: 25px;
+					width: 100%;
+				}
+				.btn{
+					margin-top:5px;
+					margin-bottom:5px;
+					width:98%;
+					font-size: 25px;
+					padding-top: 10px;
+					padding-bottom: 10px;
+				}
+				.btn.btn-primary{
+					width:103%;
+				}
+			}
+	}
+}
