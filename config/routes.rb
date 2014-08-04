@@ -1,5 +1,5 @@
 ClimaOrg::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations"}
   root :to => 'home#index'
   get "home/index"
   get "home/about_us"

@@ -20,6 +20,24 @@
     li.dropdown.open>.dropdown-toggle{
       background-color: #0D6196;
     }
+    ul.account-menu{
+      li{
+        &:hover{
+          background: #e6e5e6;
+        }
+        a{
+          color:#000;
+          padding:0;
+          background: none;
+          &:hover{
+            background: none;
+          }
+          &:active{
+            background: none;
+          }
+        }
+      }
+    }
     a{
       color:#f6f6f6;
       &:hover{
