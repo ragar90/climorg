@@ -18,6 +18,6 @@ module HomeHelper
     chart_dimensions = is_copy ? {width: 1500, height: 900, id: id} : {height: chart_height, id: id}
     chart_options = html_data.merge(chart_dimensions)
     data_attributes = {env:chart_data, type: type, chart_options: chart_options }
-    content_tag :div, "",id: div_id, data: data_attributes, class: "report-chart #{is_copy ? "chart-copy" : ""} #{ type}" 
+    content_tag :div, "",id: div_id, name: div_id,  data: data_attributes, class: "report-chart #{is_copy ? "chart-copy" : ""} #{ type}" 
   end
 end

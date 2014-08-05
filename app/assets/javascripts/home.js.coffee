@@ -8,16 +8,19 @@ jQuery ->
     $collapse = $this.closest('.collapse-group').find('.collapse');
     $collapse.collapse('toggle');
 
-  $(".download-chart-btn").on "click", ->
-    console.log "download..."
+  $(".download-chart-btn").on "click", (e)->
+    e.preventDefault()
     root_parent = $(@).closest(".data-window")
     chart_container = $(root_parent).children(".window-content").children(".report-chart.chart-copy")[0]
-    saveAsImg chart_container
+    container_div_name = $(chart_container).attr("name")
+    grChartImg.SetImageFormat = {type:'png'}
+    grChartImg.DownloadImage(container_div_name)
+    
   $.each $(".easypie-chart"), (i,obj) ->
-  	color = $(obj).data("barcolor")
-  	$(obj).easyPieChart
-		  scaleColor: false,
-		  lineWidth: 15,
-		  trackColor: "#AFAFAF",
-		  lineCap: "butt",
-		  barColor: color
+    color = $(obj).data("barcolor")
+    $(obj).easyPieChart
+      scaleColor: false,
+      lineWidth: 15,
+      trackColor: "#AFAFAF",
+      lineCap: "butt",
+      barColor: color
