@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  http_basic_authenticate_with :name => "admin", :password => "climorgadmin"
+  #http_basic_authenticate_with :name => "admin", :password => "climorgadmin"
   protect_from_forgery with: :exception
   before_filter :load_layout
   before_action :selected_option

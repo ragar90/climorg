@@ -5,52 +5,79 @@
   To use Glyphicons sprites instead of Font Awesome, replace with "require twitter-bootstrap-static/sprites"
   =require twitter-bootstrap-static/fontawesome
   */
+  @import "brand_variables";
   .table{
     td{
       max-width: 300px;
     }
   }
-  
   .modal.fade.in {
   	top:50%;
   }
-  .navbar-inverse .navbar-inner{
-    background: #2980B9; /* Old browsers */
-    color:#f6f6f6;
-    li.dropdown.open>.dropdown-toggle{
-      background-color: #0D6196;
-    }
-    ul.account-menu{
-      li{
-        &:hover{
-          background: #e6e5e6;
-        }
-        a{
-          color:#000;
-          padding:0;
-          background: none;
+  .navbar-inverse {
+    .navbar-inner{
+      background: $primary-color; /* Old browsers */
+      color:#fff;
+      li.dropdown.open>.dropdown-toggle{
+        background-color: darken($primary-color, 20%);
+      }
+      ul.account-menu{
+        li{
           &:hover{
-            background: none;
+            background: darken($primary-color, 20%);
           }
-          &:active{
+          a{
+            color:#000;
+            padding:0;
             background: none;
+            &:hover{
+              background: none;
+            }
+            &:active{
+              background: none;
+            }
+          }
+        }
+      }
+      a{
+        color:#fff;
+        &:hover{
+          text-decoration:none;
+        }
+        &:visited{
+          text-decoration: none;
+          color: #fff;
+        }
+        &:active{
+          background: darken($primary-color, 20%);
+          text-decoration: none;
+          color: #fff;
+        }
+      }
+      .brand{
+        background-color:#fff;
+        padding:0px;
+        width:100px;
+        img{
+          width: 100%;
+        }
+      }
+      .btn-navbar{
+        background-color: darken($primary-color, 25%);
+        background-image: linear-gradient(to bottom, darken($primary-color, 30%), darken($primary-color, 25%));
+      }
+    }
+    .nav-collapse{
+      .dropdown-menu{
+        a{
+          &:hover{
+            background-color: darken($primary-color, 20%);
           }
         }
       }
     }
-    a{
-      color:#f6f6f6;
-      &:hover{
-        text-decoration:none;
-      }
-      &:visited{
-        text-decoration: none;
-        color: #f6f6f6;
-      }
-      &:active{
-        background: #0064b7;
-        text-decoration: none;
-        color: #f6f6f6;
-      }
-    }
+  }
+  .navbar .nav > li > a {
+    padding: 18px 15px;
+    padding-bottom: 13px;
   }

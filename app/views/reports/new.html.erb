@@ -4,10 +4,6 @@
 
 <div class="row report-parameters-builder">
   <%= form_for @report, url: reports_path(id: @research.id), html:{class: "form-inline"} do |f| %>
-    <div class = "span10" style = "margin-bottom:10px">
-      <%= f.label :title, "Titulo del reporte" %>
-      <%= f.text_field :title %>
-    </div>
     <div class="span5">
       <div class = "row report-parameters">
         <div class = "span6 dimension-params">

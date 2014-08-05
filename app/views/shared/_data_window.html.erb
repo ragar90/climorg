@@ -52,12 +52,18 @@
             </tr>
           </table>
           <div class = "command-options">
+            <%= link_to confirm_research_path(id: object.id), class: "btn btn-success btn-command", method: :put do %>
+              <i class = "icon-ok icon-white"></i> Confirmar
+            <% end %>
+
             <%= link_to edit_research_path(id: object.id), class: "btn btn-primary btn-command" do %>
               <i class = "icon-edit icon-white"></i> Editar
             <% end %>
-            <%= link_to edit_research_path(id: object.id), class: "btn btn-danger btn-command" do %>
+
+            <%= link_to research_path(id: object.id), class: "btn btn-danger btn-command", method: :delete do %>
               <i class = "icon-trash icon-white"></i> Eliminar
             <% end %>
+
           </div>
         </div>
     <% end %>

@@ -5,8 +5,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:research_id) %></th>
+      <th>Boleta</th>
       <th>Satisfactorio</th>
       <th>Insatisfactorio</th>
       <th>Indiferente</th>
@@ -18,7 +17,6 @@
     <% @results.each do |result| %>
       <tr>
         <td><%= link_to result.correlative, edit_research_application_result_path(id: result.id, research_id:@research.id, research_application_id: @application.id) %></td>
-        <td><%= result.research.organization_name %></td>
         <td><%= result.likeable_percentage %>%</td>
         <td><%= result.unlikeable_percentage %>%</td>
         <td><%= result.indiferent_percentage %>%</td>

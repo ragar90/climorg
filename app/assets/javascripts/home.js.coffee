@@ -9,6 +9,7 @@ jQuery ->
     $collapse.collapse('toggle');
 
   $(".download-chart-btn").on "click", ->
+    console.log "download..."
     root_parent = $(@).closest(".data-window")
     chart_container = $(root_parent).children(".window-content").children(".report-chart.chart-copy")[0]
     saveAsImg chart_container

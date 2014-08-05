@@ -8,7 +8,7 @@ class Research < ActiveRecord::Base
   has_many :reports
   has_many :report_filters
   has_many :applications, class_name: "ResearchApplication"
-  validates :company_name,:start_date, :presence => true
+  validates :organization_name,:start_date, :presence => true
   validate :start_and_end_date_consistency 
   accepts_nested_attributes_for :questions, allow_destroy: true
 

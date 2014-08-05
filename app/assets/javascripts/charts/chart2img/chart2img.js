@@ -14,7 +14,7 @@ function getImgData(chartContainer) {
       'left: ' + (-chartArea.offsetWidth * 2) + 'px;');
   doc.body.appendChild(canvas);
   canvg(canvas, svg);
-  var imgData = canvas.toDataURL("image/png");
+  var imgData = canvas.toDataURL();
   canvas.parentNode.removeChild(canvas);
   return imgData;
 }
@@ -22,8 +22,9 @@ function getImgData(chartContainer) {
 function saveAsImg(chartContainer) {
   var imgData = getImgData(chartContainer);
   var a = document.createElement('a');
-  a.href = imgData.replace("image/png", "image/octet-stream");
+  a.href = imgData;
   a.download = "chart.png";
+  console.log(a)
   a.click();
 }
 

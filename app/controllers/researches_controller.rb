@@ -3,7 +3,7 @@ class ResearchesController < ApplicationController
   # GET /researches
   # GET /researches.json
   def index
-    @researches = Research.all
+    @researches = Research.order("state DESC")
     
     respond_to do |format|
       format.html # index.html.erb
@@ -107,9 +107,11 @@ class ResearchesController < ApplicationController
     @research = Research.find(params[:id])
     respond_to do |format|
       if @research.confirm!
+        @current_state = @research.state
         format.html { redirect_to researches_path, notice: 'Research was successfully confirmed.' }
         format.json { head :no_content }
       else
+        @current_state = @research.state
         format.html { render action: "edit", flash: "El Estudio no pudo confirmarse adecuadamente" }
         format.json { render json: @research.errors, status: :unprocessable_entity }
       end

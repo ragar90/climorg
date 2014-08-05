@@ -17,7 +17,7 @@ class ReportsController < ApplicationController
 
   def create
  		@report = Report.new(permited_params(:report))
-    @title = !@report.titleize.blank? ? @report.titleize : "Reporte Generado en #{DateTime.now.strftime("%d-%m-%Y %l:%M %p")}"
+    @title = @report.set_title(params)
     @questions = @research.questions.order(:ordinal)
     @dimensions = @research.dimensions
     @demographic_variables = @research.demographic_variables
