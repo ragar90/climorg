@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap-sprockets
+//= require twitter/bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap-multiselect
 //= require charts/gcharts.js
