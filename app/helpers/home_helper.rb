@@ -6,7 +6,7 @@ module HomeHelper
     window_options[:chart_library] = :gcharts if window_options[:chart_library].nil?
     window_options[:more_reports] = false if window_options[:more_reports].nil?
     window_options[:render_with_link] = true if window_options[:render_with_link].nil?
-    window_options[:chart_height] = 300 if window_options[:chart_height].nil?
+    window_options[:chart_height] = 250 if window_options[:chart_height].nil?
     title = window_options[:window_title] || window_options[:object].organization_name.titleize.truncate(24, separator: " ")
     locals = { window_id:  SecureRandom.uuid, chart_options: chart_options, window_title: title  }
     locals.merge!(window_options)

@@ -20,6 +20,7 @@ ClimaOrg::Application.routes.draw do
       get "report/custom" => "reports#report", defaults:{report_type: "custom"}
     end
   end
+  get "new_evaluation" => "results#new_evaluation", as: :new_evaluation
   resources :questions
   resources :dimensions
   resources :demographic_variables

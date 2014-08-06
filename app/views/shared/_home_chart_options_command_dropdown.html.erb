@@ -1,35 +1,35 @@
 <div class = "dropdown command options">
-  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class = "icon-th"></i></a>
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class = "glyphicon glyphicon-th"></span></a>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
     <li>
       <%= link_to new_research_application_result_path(research_id: object.id, application_id: object.current_application.id) do %>
-        <i class = "icon-plus icon-white"></i> Agregar Resultado
+        <span class = "glyphicon glyphicon-plus"></span> Agregar Resultado
       <% end %>
     </li>
     <li>
       <%= link_to survey_research_path(id:object.id, format: :pdf), target: "_blank" do %>
-        <i class = "icon-print icon-white"></i> Cuestionario
+        <span class = "glyphicon glyphicon-print"></span> Cuestionario
       <% end %>
     </li>
     <li>
       <%= link_to report_global_research_path(id:object.id, format: :xls), target: "_blank" do %>
-        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
+        <span class = "glyphicon glyphicon-download-alt"></span> Exportar Datos a Excel
       <% end %>
     </li>
     <li>
       <%= link_to new_research_application_path(research_id:object.id), confirm: "Para crear una nueva aplicacion debes concluir la anterior.\n Deseas concluirla?" do %>
-        <i class = "icon-file icon-white"></i> Nueva Aplicacion
+        <span class = "glyphicon glyphicon-file"></span> Nueva Aplicacion
       <% end %>
     </li>
     <li class = "divider"></li>
     <li>
       <%= link_to research_path(id:object.id) do %>
-        <i class = "icon-tasks icon-white"></i> Reportes
+        <span class = "glyphicon glyphicon-tasks"></span> Reportes
       <% end %>
     </li>
     <li>
       <%= link_to research_application_results_path(research_id: object.id, application_id: object.current_application.id) do %>
-        <i class = "icon-list-alt icon-white"></i> Resultados
+        <span class = "glyphicon glyphicon-list-alt"></span> Resultados
       <% end %>
     </li>
   </ul>

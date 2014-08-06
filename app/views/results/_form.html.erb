@@ -4,7 +4,7 @@
 <%= form_for @result, url:research_application_results_path(research_id:@research.id,application_id: @application.id) do |f| %>
   <%= f.hidden_field :research_id %>
   <%= f.hidden_field :research_application_id %>
-  <fieldset class="demographic_variables" class="">
+  <fieldset class="demographic_variables">
     <legend>Datos personales</legend>
     <div class="row">
       <%= f.fields_for :demographic_values do |b|%>
@@ -14,26 +14,28 @@
   </fieldset>
   <fieldset class = "results">
     <legend>Resultados</legend>
-    <table class="table survey">
+    <table class="table table-striped survey table-responsive">
       <thead>
         <tr>
           <th>Pregunta</th>
-          <th>Nada</th>
-          <th>Poco</th>
-          <th>Bastante</th>
-          <th>Muchisimio</th>
-          <th>No Aplica</th>
+          <th class = "survey-controll">Nada</th>
+          <th class = "survey-controll">Poco</th>
+          <th class = "survey-controll">Bastante</th>
+          <th class = "survey-controll">Muchisimio</th>
+          <th class = "survey-controll">No Aplica</th>
+          <th class = "survey-controll smart-phone">Respuesta</th>
         </tr>
       </thead>
       <%= f.fields_for :answers do |b| %>
         <%= b.hidden_field :question_id %>
         <tr>
           <td><%= b.object.question.description %></td>
-          <td><%= b.radio_button :value, 1,:class=>"survey_answer"%></td>
-          <td><%= b.radio_button :value, 2,:class=>"survey_answer"%></td>
-          <td><%= b.radio_button :value, 3,:class=>"survey_answer"%></td>
-          <td><%= b.radio_button :value, 4,:class=>"survey_answer"%></td>
-          <td><%= b.radio_button :value, 0,:class=>"survey_answer"%></td>
+          <td class = "survey-controll"><%= b.radio_button :value, 1,:class=>"survey_answer"%></td>
+          <td class = "survey-controll"><%= b.radio_button :value, 2,:class=>"survey_answer"%></td>
+          <td class = "survey-controll"><%= b.radio_button :value, 3,:class=>"survey_answer"%></td>
+          <td class = "survey-controll"><%= b.radio_button :value, 4,:class=>"survey_answer"%></td>
+          <td class = "survey-controll"><%= b.radio_button :value, 0,:class=>"survey_answer"%></td>
+          <td class = "survey-controll smart-phone"><%= b.select :value, @answers, class: "survey_answer_select form-control", prompt: "-"  %></td>
         </tr>
       <% end %>
     </table>

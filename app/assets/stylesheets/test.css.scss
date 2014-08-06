@@ -1,0 +1,40 @@
+@import "brand_variables";
+@import "compass";
+body{
+	background-color: lighten($secondary-color, 60%);
+}
+.container{
+	margin-top:0px;
+	margin-bottom:10px;
+	background-color: #fff;
+	padding:0;
+	.evaluation-header{
+		color:#fff;
+		//font-size: 24px;
+    padding-bottom: 60px;
+    text-align: left;
+		background-color: $secondary-color;
+		@include background-image(linear-gradient(lighten($secondary-color, 5%), darken($secondary-color, 5%)));
+		position: relative;
+		.content{
+			.brand{
+				width:50%;
+				img{
+					width: 100%;
+				}
+			}
+			.slogan{
+				padding:0 5%;
+				margin-top: 0;
+			}
+		}
+	}
+	.test-body{
+		padding: 10px 5%;
+		padding-bottom: 20px;
+		.demographic_variables{
+			margin-top: 20px;
+			margin-bottom: 10px;
+		}
+	}
+}

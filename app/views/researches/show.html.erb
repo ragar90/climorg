@@ -1,14 +1,14 @@
 <%= render "/shared/gchart_load" %>
 <h1>Reports</h1>
 <div class = "row">
-  <div class = "span5">
+  <div class = "col-md-6">
     <%= gchart_window({object: @research,data_method: @research.total_perception[:results], chart_type: :pie, window_title: "Resultados Globales", render_with_link: false}, {title: "Datos Globales de la percepcion de clima organizacional"}) %>
   </div>
 
-  <div class = "span5">
+  <div class = "col-md-6">
     <%= gchart_window( {object:@research,data_method: @dimensions_reports, chart_type: :column, report_type: :global_dimensions, window_title: "Resultados por Dimension", render_with_link: false}, {title: "Resultados por dimensiones", hAxis: {title: 'Dimensiones', gridlines: { count: @dimensions_reports.last.first }}}) %>
   </div>
-	<div class = "span10">
+	<div class = "col-md-12">
     <%= gchart_window( {object:@research,data_method: @demographic_reports, report_type: :global_dimensions, chart_library: :easy_piecharts, more_reports: true, window_title: "Resultados por Variables Demograficas", render_with_link: false} ) %>
 	</div>
 </div>

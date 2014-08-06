@@ -1,29 +1,29 @@
 <div class = "dropdown command options">
-  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class = "icon-th"></i></a>
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class = "glyphicon glyphicon-th"></span></a>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-    <li><a href="#" class = "download-chart-btn"><i class = "icon-picture icon-white"></i> Exportar a PNG</a></li>
+    <li><a href="#" class = "download-chart-btn"><span class = "glyphicon glyphicon-picture"></span> Exportar a PNG</a></li>
     <%case report_type%>
 	    <% when :global %>
 		    <li>
 		      <%= link_to survey_research_path(id:object.id, format: :pdf), target: "_blank" do %>
-		        <i class = "icon-download-alt icon-white"></i> Cuestionario
+		        <span class = "glyphicon glyphicon-download-alt"></span> Cuestionario
 		      <% end %>
 		    </li>
 	   		<li>
 		      <%= link_to report_global_research_path(id:object.id, format: :xls), target: "_blank" do %>
-		        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
+		        <span class = "glyphicon glyphicon-download-alt"></span> Exportar Datos a Excel
 		      <% end %>
 	   		</li>
 	   	<% when :global_dimensions %>
 	   		<li>
 		      <%= link_to report_global_dimensions_research_path(id:object.id, format: :xls), target: "_blank" do %>
-		        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
+		        <span class = "glyphicon glyphicon-download-alt"></span> Exportar Datos a Excel
 		      <% end %>
 	   		</li>
 	   	<% when :custom %>
 	   		<li>
 	   			<%= link_to report_custom_research_url(id:object.id ,format: :xls), class: "custom-report-link" do %>
-		        <i class = "icon-download-alt icon-white"></i> Exportar Datos a Excel
+		        <span class = "glyphicon glyphicon-download-alt"></span> Exportar Datos a Excel
 	   			<% end %>
 	   		</li>
     <%end%>

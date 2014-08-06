@@ -1,14 +1,54 @@
 class ResultsController < ApplicationController
-  before_filter :load_research
+  before_filter :load_research, except: [:new_evaluation]
   def index
     @results = Result.filtered(@research.id, @application.id).by_correlative.includes(:answers)
   end
 
   def new
+    @answers = (0..4).map do |a|
+      label = case a
+                when 1
+                  "Nada"
+                when 2
+                  "Poco"
+                when 3
+                  "Bastante"
+                when 4
+                  "Muchisimio"
+                else
+                  "No Aplica"
+              end
+      [label,a]
+    end
     @result =   Result.new(research_id: @research.id)
     @result.research = @research
     @result.research_application = @application
     @result.init_values
+  end
+
+  def new_evaluation
+    @answers = (0..4).map do |a|
+      label = case a
+                when 1
+                  "Nada"
+                when 2
+                  "Poco"
+                when 3
+                  "Bastante"
+                when 4
+                  "Muchisimio"
+                else
+                  "No Aplica"
+              end
+      [label,a]
+    end
+    @research = Research.where(state: 3).first
+    @application = @research.applications.first
+    @result = Result.new(research_id: @research.id)
+    @result.research = @research
+    @result.research_application = @application
+    @result.init_values
+    render layout: false
   end
 
   def create

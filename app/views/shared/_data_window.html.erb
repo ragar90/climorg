@@ -1,6 +1,6 @@
 <% data = data_method.class == Symbol ? object.send(data_method) : data_method %>
-<div class = "data-window collapse-group" id = "window-<%= window_id %>">
-  <header>
+<div class="panel panel-default data-window collapse-group" id = "window-<%= window_id %>">
+  <header class="panel-heading">
     <% if render_with_link %>
       <%= link_to research_path id: object.id do %>
         <h4><%=  window_title %></h4>
@@ -17,11 +17,11 @@
       <% when :info %>
         <%= render partial: "/shared/home_options_command_dropdown", locals:{object: object} %>
       <% end %>
-      <a href="" class = "command minimize" data-toggle="collapse" data-parent="#window-<%= window_id %>" href="#window-content-<%= window_id %>"><i class = "icon-minus"></i></a>
-      <a href="" class = "command dismiss" ><i class = "icon-remove-circle"></i></a>
+      <a href="" class = "command minimize" data-toggle="collapse" data-parent="#window-<%= window_id %>" href="#window-content-<%= window_id %>"><span class = "glyphicon glyphicon-minus"></span></a>
+      <a href="" class = "command dismiss" ><span class = "glyphicon glyphicon-remove-circle"></span></a>
     </nav>
   </header>
-  <div id = "window-content-<%= window_id %>" class = "window-content in collapse" <%= chart_height > 300 ? "style=max-height:620px;" : "" %> >
+  <div class="panel-body window-content in collapse" <%= chart_height > 300 ? "style=max-height:620px;" : "" %> id = "window-content-<%= window_id %>">
     <% unless window_type == :info %>
       <% case chart_library%>
         <%when :gcharts %>
@@ -33,35 +33,35 @@
       <% end %>
     <% else %>
         <div class = "general-info">
-          <table>
-            <tr>
-              <td class = "info-label">id: </td>
-              <td> <%= object.id %> </td>
-            </tr>
-            <tr>
-              <td class = "info-label">Fecha de inicio: </td>
-              <td> <%= object.start_date.strftime("%A, %d de %B de %Y") %> </td>
-            </tr>
-            <tr>
-              <td class = "info-label">Fecha de fin: </td>
-              <td> <%= object.end_date.strftime("%A, %d de %B de %Y") %> </td>
-            </tr>
-            <tr>
-              <td class = "info-label">Estado: </td>
-              <td> <span class = "label label-<%= object.state_label_color  %>"><%= object.state_label %></span> </td>
-            </tr>
-          </table>
+          <div class = "info-container">
+            <div class = "row">
+              <div class = "col-md-5 info-label">id: </div>
+              <div class = "col-md-6"><%= object.id %> </div>
+            </div>
+            <div class = "row">
+              <div class = "col-md-5 info-label">Fecha de inicio: </div>
+              <div class = "col-md-6"> <%= object.start_date.strftime("%A, %d de %B de %Y") %> </div>
+            </div>
+            <div class = "row">
+              <div class = "col-md-5 info-label">Fecha de fin: </div>
+              <div class = "col-md-6"> <%= object.end_date.strftime("%A, %d de %B de %Y") %> </div>
+            </div>
+            <div class = "row">
+              <div class = "col-md-5 info-label">Estado: </div>
+              <div class = "col-md-6"> <span class = "label label-<%= object.state_label_color  %>"><%= object.state_label %></span> </div>
+            </div>
+          </div>
           <div class = "command-options">
             <%= link_to confirm_research_path(id: object.id), class: "btn btn-success btn-command", method: :put do %>
-              <i class = "icon-ok icon-white"></i> Confirmar
+              <span class = "glyphicon glyphicon-ok"></span> Confirmar
             <% end %>
 
             <%= link_to edit_research_path(id: object.id), class: "btn btn-primary btn-command" do %>
-              <i class = "icon-edit icon-white"></i> Editar
+              <span class = "glyphicon glyphicon-edit"></span> Editar
             <% end %>
 
             <%= link_to research_path(id: object.id), class: "btn btn-danger btn-command", method: :delete do %>
-              <i class = "icon-trash icon-white"></i> Eliminar
+              <span class = "glyphicon glyphicon-trash"></span> Eliminar
             <% end %>
 
           </div>

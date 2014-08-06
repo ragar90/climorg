@@ -8,11 +8,12 @@
   border-top: 7px solid black;
 }
 .user-settings{
-  ul.dropdown-menu{
-    color:#212121;
-    li{
-      padding-left: 10px;
-    }
+  .label{
+    display: inline-block;
+  }
+  .caret{
+    margin-top: -15px;
+    color: #fff;
   }
   .user-icon{
     border: 2px solid #ebebeb;
@@ -28,7 +29,7 @@
   }
   .dropdown-toggle{
     padding-top: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
   }
 
 }
@@ -49,7 +50,7 @@
     position:fixed;
     background-color: lighten($secondary-color, 10%);
     height: 100%;
-    margin-top: 24px;
+    margin-top: 10px;
     z-index: 1000;
     a{
       color:#ebebeb;
@@ -67,6 +68,7 @@
     }
     .menu-options{
       margin-left: 0px;
+      padding-left: 0px;
       li{
         list-style: none;
       }
@@ -193,14 +195,22 @@
   }
   .window-content{
     width: 100%;
-    max-height: 300px;
+    max-height: 280px;
     //overflow: scroll;
     background-color: white;
     .general-info{
-      font-size: 14px;
-      padding:50px;
+      font-size: 15px;
+      padding: 30px 15px;
       tr{
+        padding: 5px 0px;
         margin: 10px 0px;
+      }
+      .info-container{
+        width: 100%;
+        font-size: 12px;
+        .row{
+          margin-bottom: 10px;
+        }
       }
       .info-label{
         font-weight: bold;
@@ -223,6 +233,7 @@
       width: 1500px;
       height: 900px;
       position: absolute;
+      display: none;
     }
   }
 }
@@ -255,15 +266,15 @@
     background-color:#777b7d;
   }
   .btn-inner{
-    ont-size: 12px;
-    text-align: center;
-    margin-left: 10px;
-    margin-top: 10px;
-    background: #fff;
+    font-size: 12px;
+    background: none repeat scroll 0 0 #fff;
     border-radius: 100px;
-    height: 82px;
-    width: 90px;
+    height: 90px;
+    margin-left: 10px;
+    margin-top: 9px;
     padding-top: 10px;
+    text-align: center;
+    width: 90px;
     p{
       font-size: 12px;
       text-align: center;
@@ -271,4 +282,7 @@
     }
     
   }
+}
+.results{
+  margin-top: 10px;
 }

@@ -12,8 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
-//= require bootstrap-datepicker
-//= require bootstrap-multiselect
+//= require bootstrap-sprockets
 //= require charts/gcharts.js
-//= require_tree .
+//= home
+//= reports
+//= researches

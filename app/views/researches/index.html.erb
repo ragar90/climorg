@@ -1,14 +1,14 @@
 <%- model_class = Research -%>
 <%= render "/shared/gchart_load" %>
 <div class="row">
-  <div class="span11">
+  <div class="col-md-11">
     <div class="page-header">
       <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
     </div>
     
     <div class="row">
       <% @researches.each do |research| %>
-        <div class="span5">
+        <div class="col-md-6">
           <!--result window-->
           <%= gchart_window({object: research, window_type: (research.is_confirmed? ? :home : :info), data_method: research.total_perception[:results], chart_type: :pie}, {title: "Datos Globales de la percepcion de clima organizacional"}) %>
           <!--result window-->

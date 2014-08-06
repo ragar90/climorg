@@ -6,7 +6,7 @@ class DemographicVariable < ActiveRecord::Base
   validates :display_values, :presence => true, :demographic_type_format => true
 
   def self.demographic_types
-  	{:boolean => "Valor booleano", :integer=> "Entero", :float => "Punto Flotante", :range=> "Rango de valores", :hash => "Lista de valores"}
+  	{:boolean => "Valor booleano", :hash => "Lista de valores"}
   end
 
   def is_boolean?
