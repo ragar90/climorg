@@ -1,6 +1,7 @@
 <%- model_class = Question -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <%= link_to "Agregar una nueva pregunta",new_question_path, :class => 'btn btn-primary new-btn' %>
 </div>
 <table class="table table-striped">
   <thead>
@@ -34,5 +35,3 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to "Agregar una nueva pregunta",new_question_path, :class => 'btn btn-primary new-btn' %>

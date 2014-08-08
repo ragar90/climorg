@@ -42,7 +42,6 @@ module ApplicationHelper
 			<ul>#{messages}</ul>
 			</div>
 		HTML
-    html.html_safe
-    
+    html.html_safe   
   end
 end

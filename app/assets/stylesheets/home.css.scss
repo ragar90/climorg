@@ -238,9 +238,8 @@
   }
 }
 .new-btn{
-  position: absolute;
-  top: 86px;
-  right: 100px;
+  float: right;
+  margin-top: -50px;
 }
 .easypie-chart-title{
   font-size: 14px;
@@ -270,7 +269,7 @@
     background: none repeat scroll 0 0 #fff;
     border-radius: 100px;
     height: 90px;
-    margin-left: 10px;
+    margin-left: 9px;
     margin-top: 9px;
     padding-top: 10px;
     text-align: center;

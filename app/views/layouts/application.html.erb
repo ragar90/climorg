@@ -41,7 +41,11 @@
             <%= yield %>
         </div>
       </div>
-      <div id="modalView" class="modal hide fade"></div>
+      <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id = "modalView">
+        <div class="modal-dialog">
+          <div class="modal-content"></div>
+        </div>
+      </div>
 
       <%= render partial: "/shared/modals_views" %>
 

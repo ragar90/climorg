@@ -53,11 +53,12 @@ jQuery ->
   $('.research_form').on 'click', '.add_fields', (event) ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
-    $(this).before($(this).data('fields').replace(regexp, time))
+    html = $(this).data('fields').replace(regexp, time)
+    $("#questions-set").append(html)
     load_dimension_values($(".dq_select").last())
     event.preventDefault()
 
-  $(".datetime_select").datepicker(format: "dd/mm/yyyy")
+  $(".datetime_select").datetimepicker(format: "DD/MM/YYYY", pickTime: false)
 
   $("#research_dimension_ids").multiselect
     buttonClass: "btn"
@@ -79,7 +80,7 @@ jQuery ->
     $(@).html("")
   $(document).on "click",".new_setting_link", (e) ->
     remote_url = $(@).attr("href")
-    $("#modalView").load(remote_url)
+    $("#modalView .modal-content").load(remote_url)
     $("#modalView").modal
     $("#modalView").modal("show")
     $("a[data-toggle=tooltip]").tooltip(placement:"right")

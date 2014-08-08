@@ -14,6 +14,11 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require charts/gcharts.js
-//= home
-//= reports
-//= researches
+//= require charts/jquery.easy-pie-chart.js.js
+//= require bootstrap-plugins/moment.js
+//= require bootstrap-plugins/bootstrap-datetimepicker.js
+//= require bootstrap-plugins/bootstrap-multiselect.js
+//= require home
+//= require reports
+//= require researches
+//= require demographic_variables

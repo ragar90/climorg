@@ -7,22 +7,22 @@
   <% if @current_state == 0 %>
     <fieldset>
       <legend>Información General</legend>
-      <div class="control-group">
-        <%= f.label :organization_name, :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_field :organization_name, :class => 'text_field' %>
+      <div class="form-group">
+        <%= f.label :organization_name, :class => 'col-sm-2 control-label' %>
+        <div class="col-sm-10">
+          <%= f.text_field :organization_name, :class => 'form-control' %>
         </div>
       </div>
-      <div class="control-group">
-        <%= f.label :start_date, :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_field :start_date, :class => 'datetime_select', :value=>(!@research.start_date.nil? ? @research.start_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+      <div class="form-group">
+        <%= f.label :start_date, :class => 'col-sm-2 control-label' %>
+        <div class="col-sm-10">
+          <%= f.text_field :start_date, :class => 'datetime_select form-control', :value=>(!@research.start_date.nil? ? @research.start_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
         </div>
       </div>
-      <div class="control-group">
-        <%= f.label :end_date, :class => 'control-label' %>
-        <div class="controls">
-          <%= f.text_field :end_date, :class => 'datetime_select',:data=>{:"date-format"=>"dd-mm-yyyy"}, :value=>(!@research.end_date.nil? ? @research.end_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+      <div class="form-group">
+        <%= f.label :end_date, :class => 'col-sm-2 control-label' %>
+        <div class="col-sm-10">
+          <%= f.text_field :end_date, :class => 'datetime_select form-control',:data=>{:"date-format"=>"DD/MM/YYYY"}, :value=>(!@research.end_date.nil? ? @research.end_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
         </div>
       </div>
     </fieldset>
@@ -31,18 +31,18 @@
   <%if  @current_state >= 1%>
     <fieldset>
       <legend>Configuracion de Variables</legend>
-      <div class="control-group">
-        <%= f.label :demographic_variables, :class => 'control-label' %>
-        <div class="controls">
-          <%=f.collection_select :demographic_variable_ids, DemographicVariable.where(:is_default=>true), :id, :name, {}, {:multiple=>true,:name=>"research[demographic_variable_ids][]"}%></br>
+      <div class="form-group">
+        <%= f.label :demographic_variables, :class => 'col-sm-2 control-label' %>
+        <div class="col-sm-10">
+          <%=f.collection_select :demographic_variable_ids, DemographicVariable.where(:is_default=>true), :id, :name, {}, {:multiple=>true,:name=>"research[demographic_variable_ids][]", class: "form-control"}%></br>
           <%=link_to "Agregar nueva Variable Demografica", new_demographic_variable_path(:layout=>false), :class=>"new_setting_link"  %>
         </div>
       </div>
 
-      <div class="control-group">
-        <%= f.label :dimensions, :class => 'control-label' %>
-        <div class="controls">
-          <%=f.collection_select :dimension_ids, Dimension.where(:is_default=>true), :id, :camelize_name, {}, {:multiple=>true,:name=>"research[dimension_ids][]"}%></br>
+      <div class="form-group">
+        <%= f.label :dimensions, :class => 'col-sm-2 control-label' %>
+        <div class="col-sm-10">
+          <%=f.collection_select :dimension_ids, Dimension.where(:is_default=>true), :id, :camelize_name, {}, {:multiple=>true,:name=>"research[dimension_ids][]", class: "form-control"}%></br>
           <%=link_to "Agregar nueva Dimension", new_dimension_path(:layout=>false), :class=>"new_setting_link"  %>
         </div>
       </div>      
@@ -50,17 +50,17 @@
   <%end%>
   
   <% if @current_state >= 2%>
-    <fieldset>
+    <fieldset id = "questions-set">
       <legend>Preguntas</legend>
       <%= f.fields_for(:questions) do |builder| %>
         <%= render :partial=>'question_fields', :locals=>{f: builder} %>
-      <% end %>
-      <%= link_to_add_fields "Agregar Pregunta", f, :questions %>  
+      <% end %> 
     </fieldset>
   <% end %>
 
   <div class="form-actions">
     <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),researches_path, :class => 'btn' %>
+    <%= link_to_add_fields("Agregar Pregunta", f, :questions) if @current_state >= 2%> 
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),researches_path, :class => 'btn btn-danger' %>
   </div>
 <% end %>

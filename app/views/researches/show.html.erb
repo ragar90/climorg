@@ -1,5 +1,8 @@
 <%= render "/shared/gchart_load" %>
-<h1>Reports</h1>
+<div class="page-header">
+	<h1>Reports</h1>
+	<%= link_to "Generar Otros reportes", new_report_path(id: @research.id), :class => 'btn btn-primary new-btn' %>
+</div>
 <div class = "row">
   <div class = "col-md-6">
     <%= gchart_window({object: @research,data_method: @research.total_perception[:results], chart_type: :pie, window_title: "Resultados Globales", render_with_link: false}, {title: "Datos Globales de la percepcion de clima organizacional"}) %>
@@ -12,4 +15,3 @@
     <%= gchart_window( {object:@research,data_method: @demographic_reports, report_type: :global_dimensions, chart_library: :easy_piecharts, more_reports: true, window_title: "Resultados por Variables Demograficas", render_with_link: false} ) %>
 	</div>
 </div>
-<%= link_to "Generar Otros reportes", new_report_path(id: @research.id), :class => 'btn btn-primary new-btn' %>

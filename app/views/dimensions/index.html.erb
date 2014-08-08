@@ -1,6 +1,7 @@
 <%- model_class = Dimension -%>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <%= link_to "Nueva Dimension",new_dimension_path, :class => 'btn btn-primary new-btn' %>
 </div>
 <table class="table table-striped">
   <thead>
@@ -32,5 +33,3 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to "Nueva Dimension",new_dimension_path, :class => 'btn btn-primary new-btn' %>
