@@ -1,44 +1,75 @@
-<aside class = "left-menu">
-  <ul class = "menu-options">
-    <li id = "home-option" class = "option<%= @selected_option == "home-option" ? " selected-option" : "" %>">
-      <%=link_to researches_path do %>
-        <div class = "option-btn">
-          <div class = "option-icon s-53-house-2x-white"></div>
-          Inicio
+<aside id = "side-menu" class = "left-menu">
+  <div class="panel-group" id="nav-accordion">
+    <!--Inicio-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#nav-accordion" href="#dashboard">
+            <span class="fa fa-home"></span> Inicio 
+          </a>
+        </h4>
+      </div>
+      <div id="dashboard" class="panel-collapse collapse <%= @selected_option == "home-option" ? "in" : "" %>">
+        <div class="panel-body">
+          <ul>
+            <li><%= link_to "Mis Estudios", researches_path %></li>
+            <li><%= link_to "Nuevo Estudio", new_research_path %></li>
+            <li><%= link_to "Generar Reporte", new_custom_report_path %></li>
+          </ul>
         </div>
-      <% end %>
-    </li> 
-    <li id = "demo-vars-option" class = "option<%= @selected_option == "demo-vars-option" ? " selected-option" : "" %>">
-      <%=link_to demographic_variables_path do %>
-        <div class = "option-btn">
-          <div class = "option-icon s-112-group-2x-white"></div>
-          Variables Demograficas
+      </div>
+    </div>
+
+    <!--Variables Demograficas-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#nav-accordion" href="#demo_vars">
+            <span class = "fa fa-group"></span> Variables Demograficas
+          </a>
+        </h4>
+      </div>
+      <div id="demo_vars" class="panel-collapse collapse <%= @selected_option == "demo-vars-option" ? "in" : "" %>">
+        <div class="panel-body">
+          <ul>
+            <li><%= link_to "Variables por Defecto", demographic_variables_path %></li>
+            <li><%= link_to "Nueva Variable por Defecto", new_demographic_variable_path %></li>
+          </ul>
         </div>
-      <% end %>
-    </li> 
-    <li id = "questions-option" class = "option<%= @selected_option == "questions-option" ? " selected-option" : "" %>">
-      <%=link_to questions_path do %>
-        <div class = "option-btn">
-          <div class = "option-icon s-187-pencil-2x-white"></div>
-          Preguntas
+      </div>
+    </div>
+
+    <!--Dimensiones-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#nav-accordion"  href="#dimensions">
+            <span class = "fa fa-cubes"></span> Dimensiones
+          </a>
+        </h4>
+      </div>
+      <div id="dimensions" class="panel-collapse collapse <%= @selected_option == "dimension-option" ? "in" : "" %>">
+        <div class="panel-body">
+          <ul>
+            <li><%= link_to "Dimensiones Por Defecto", dimensions_path %></li>
+            <li><%= link_to "Nueva Dimension Por Defecto", new_dimension_path %></li>
+          </ul>
         </div>
-      <% end %>
-    </li> 
-    <li id = "dimension-option" class = "option<%= @selected_option == "dimension-option" ? " selected-option" : "" %>">
-      <%=link_to dimensions_path do %>
-        <div class = "option-btn">
-          <div class = "option-icon s-272-windows-2x-white"></div>
-          Dimensiones
-        </div>
-      <% end %>
-    </li> 
-    <li id = "settings-option" class = "option<%= @selected_option == "settings-option" ? " selected-option" : "" %>">
-      <%=link_to "#" do %>
-        <div class = "option-btn">
-          <div class = "option-icon s-19-gear-2x-white"></div>
-          Configuraciones
-        </div>
-      <% end %>
-    </li> 
-  </ul>
+      </div>
+    </div>
+
+    <!--Configurariones-->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#nav-accordion"   href="#settings">
+            <span class = "fa fa-cog"></span> Configuraciones
+          </a>
+        </h4>
+      </div>
+      <div id="settings" class="panel-collapse collapse <%= @selected_option == "settings-option" ? "in" : "" %>">
+        <div class="panel-body">....</div>
+      </div>
+    </div>
+  </div>
 </aside>

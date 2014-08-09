@@ -21,6 +21,7 @@ ClimaOrg::Application.routes.draw do
     end
   end
   get "new_evaluation" => "results#new_evaluation", as: :new_evaluation
+  get "report/new" => "reports#new", as: :new_custom_report
   resources :questions
   resources :dimensions
   resources :demographic_variables
