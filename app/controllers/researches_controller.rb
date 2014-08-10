@@ -61,6 +61,8 @@ class ResearchesController < ApplicationController
   # GET /researches/1/edit
   def edit
     @research = Research.find(params[:id])
+    @grouped_questions = @research.grouped_questions
+    @dimensions = @research.dimensions
     if @research.is_confirmed?
       redirect_to researches_path, notice: 'Este estudio ya fue confirmado por lo que no se puede editar.'
       return

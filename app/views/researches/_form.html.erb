@@ -51,10 +51,8 @@
   
   <% if @current_state >= 2%>
     <fieldset id = "questions-set">
-      <legend>Preguntas</legend>
-      <%= f.fields_for(:questions) do |builder| %>
-        <%= render :partial=>'question_fields', :locals=>{f: builder} %>
-      <% end %> 
+      <legend>Custionario</legend>
+      <%= render partial: "question_tab_fields", locals: {f:f} %> 
     </fieldset>
   <% end %>
 

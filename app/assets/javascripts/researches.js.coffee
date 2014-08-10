@@ -54,7 +54,7 @@ jQuery ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
     html = $(this).data('fields').replace(regexp, time)
-    $("#questions-set").append(html)
+    $(".questions-tab .tab-pane.active").append(html)
     load_dimension_values($(".dq_select").last())
     event.preventDefault()
 

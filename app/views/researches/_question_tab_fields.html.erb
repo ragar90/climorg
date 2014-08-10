@@ -1,0 +1,30 @@
+<% i = 0%>
+<% @dimensions.each do |dimension| %>
+  <%= content_for :dimension_tabs do%>
+    <li <%= i == 0 ? "class=active" : "" %> id = "<%=dimension.id%>_tab" >
+      <a href="#<%=dimension.id%>_panel" role="tab" data-toggle="tab">
+        <%=dimension.name.titleize%>
+      </a>
+    </li>
+  <% end %>
+  <%= content_for :questions_panel do%>
+    <div class="tab-pane <%= i == 0 ? "active" : "" %>" id="<%=dimension.id%>_panel" >
+      <% if @grouped_questions[dimension.id] %>
+        <%= f.fields_for(:questions, @grouped_questions[dimension.id]) do |builder| %>
+          <%= render :partial=>'question_fields', :locals=>{f: builder, ordinal: (builder.options[:child_index] + 1)} %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  <% i += 1%>
+<% end %>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <%= yield(:dimension_tabs)%>
+</ul>
+
+<!-- Tab panes -->
+<div class="questions-tab tab-content">
+  <%= yield(:questions_panel)%>
+</div>

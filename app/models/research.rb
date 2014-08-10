@@ -107,4 +107,8 @@ class Research < ActiveRecord::Base
       {id:v.id,queryable_values: query_values }
     end
   end
+
+  def grouped_questions
+    @grouped_questions ||= self.questions.group_by(&:dimension_id)
+  end
 end
