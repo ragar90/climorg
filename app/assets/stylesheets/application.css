@@ -11,7 +11,7 @@
  *= require sprits
  *= require bootstrap_and_overrides
  *= require bootstrap-plugins/bootstrap-datetimepicker.css
- *= require bootstrap-plugins/bootstrap-multiselect.css
+ *= require bootstrap-plugins/bootstrap-duallistbox.css
  *= require scaffolds
  *= require demographic_variables
  *= require home

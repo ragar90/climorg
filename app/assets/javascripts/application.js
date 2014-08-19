@@ -17,7 +17,7 @@
 //= require charts/jquery.easy-pie-chart.js.js
 //= require bootstrap-plugins/moment.js
 //= require bootstrap-plugins/bootstrap-datetimepicker.js
-//= require bootstrap-plugins/bootstrap-multiselect.js
+//= require bootstrap-plugins/bootstrap-duallistbox.js
 //= require home
 //= require reports
 //= require researches

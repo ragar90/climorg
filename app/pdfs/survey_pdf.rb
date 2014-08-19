@@ -3,6 +3,7 @@ class SurveyPdf < Prawn::Document
     options[:top_margin] = 60
     super(options)
     @research = research
+    @survey = options[:survey] || @research.survey
     generate_document
   end
   
@@ -48,7 +49,7 @@ class SurveyPdf < Prawn::Document
   def render_questions
     move_down 20
     data = [ ]
-    @research.survey.each do |question|
+    @survey.each do |question|
       data << ["#{question.ordinal}","<font size='9.5'>#{question.description}</font>", "Nada", "Poco", "Bastante","Muchisimo", "No Aplica"]
     end
     table(data,:cell_style => { :inline_format => true }) do

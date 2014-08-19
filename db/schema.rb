@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140208165056) do
+ActiveRecord::Schema.define(version: 20140819011340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,21 +71,14 @@ ActiveRecord::Schema.define(version: 20140208165056) do
     t.datetime "updated_at"
   end
 
-  create_table "question_settings", force: true do |t|
-    t.integer  "research_id"
-    t.integer  "question_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "questions", force: true do |t|
     t.string   "description"
-    t.boolean  "is_default"
     t.integer  "dimension_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "research_id"
     t.integer  "ordinal"
+    t.boolean  "is_active",    default: true
   end
 
   create_table "report_filters", force: true do |t|
@@ -105,16 +98,6 @@ ActiveRecord::Schema.define(version: 20140208165056) do
     t.string   "chart_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "research_applications", force: true do |t|
-    t.integer  "research_id"
-    t.date     "starts_on"
-    t.date     "ends_on"
-    t.integer  "number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "is_conclude", default: false
   end
 
   create_table "researches", force: true do |t|

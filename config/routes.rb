@@ -8,7 +8,7 @@ ClimaOrg::Application.routes.draw do
   get "home/policy"
   get "researches" => "researches#index", as: :users_root
   resources :researches do
-    resources :applications, controller: :research_application, except: [:show] do
+    resources :applications, controller: :research_applications, except: [:show] do
       resources :results, :except=>[:show]
     end
     member do
@@ -18,11 +18,12 @@ ClimaOrg::Application.routes.draw do
       get "report/global" => "reports#report", defaults:{report_type: "global"}
       get "report/global_dimensions" => "reports#report", defaults:{report_type: "global_dimensions"}
       get "report/custom" => "reports#report", defaults:{report_type: "custom"}
+      get "(dimensions/:dimension_id)/questions" => "questions#index", as: :questions
     end
+
   end
   get "new_evaluation" => "results#new_evaluation", as: :new_evaluation
   get "report/new" => "reports#new", as: :new_custom_report
-  resources :questions
   resources :dimensions
   resources :demographic_variables
 end

@@ -30,9 +30,9 @@
   return true
 
 @add_option_to_select = (select, value, display_value) =>
-  select_option = "<option value='"+value+"'>"+display_value+"</option>"
+  select_option = "<option value='"+value+"' selected='selected'>"+display_value+"</option>"
   $("#research_"+select+"_ids").append(select_option)
-  $("#research_"+select+"_ids").multiselect('rebuild')
+  $("#research_"+select+"_ids").bootstrapDualListbox('refresh', true);
 
 @multiselect_options_text = (options) ->
   if options.length is 0
@@ -44,40 +44,96 @@
     options.each ->
       selected += $(this).text() + ", "
     selected.substr(0, selected.length - 2) + " <b class=\"caret\"></b>"
+
+@arr_diff = (a1, a2) ->
+  a = []
+  diff = []
+  i = 0
+  while i < a1.length
+    a[a1[i]] = true
+    i++
+  i = 0
+  while i < a2.length
+    if a[a2[i]]
+      delete a[a2[i]]
+    else
+      a[a2[i]] = true
+    i++
+  for k of a
+    diff.push k
+  return diff
 jQuery ->
+  # Data initialization
+  $("#dimension_tabs").children().each (index, tab) ->
+    id = $(tab).attr("id").split("_")[0] 
+    tab_str = $("<div/>").append($(tab).clone()).html()
+    panel_str = $("<div/>").append($("##{id}_panel").clone()).html()
+    dim_ob = 
+      tab_html: tab_str
+      panel_html: panel_str
+    $("#questions-set").data("#{id}-html",dim_ob)
+  selected_dimensions = $("#research_dimension_ids").val()
+  $("#questions-set").data("selected_dimensions",selected_dimensions)
+  $(".datetime_select").datetimepicker(format: "DD/MM/YYYY", pickTime: false)
+  $("#research_dimension_ids").bootstrapDualListbox()
+  $("#research_demographic_variable_ids").bootstrapDualListbox()
+  unselected_ids = $("#research_dimension_ids").children("option:not(:selected)").map ->
+    $(@).val()
+  unselected_ids = jQuery.makeArray(unselected_ids)
+  $("#unselected_ids").val(unselected_ids)
+  selected_ids = $("#research_dimension_ids").children("option:selected").map ->
+    $(@).val()
+  selected_ids = jQuery.makeArray(selected_ids)
+  $("#selected_ids").val(selected_ids)
+  # Event Bindings
   $('.research_form').on 'click', '.remove_fields', (event) ->
     $(this).prev('input[type=hidden]').val('1')
-    $(this).closest('.question-form').hide()
+    $(this).closest('.question-fields').hide()
     event.preventDefault()
-
   $('.research_form').on 'click', '.add_fields', (event) ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
     html = $(this).data('fields').replace(regexp, time)
     $(".questions-tab .tab-pane.active").append(html)
+    dimension_id = $(".questions-tab .tab-pane.active").attr("id").split("_")[0]
+    $("#research_questions_attributes_#{time}_dimension_id").val(dimension_id)
     load_dimension_values($(".dq_select").last())
     event.preventDefault()
-
-  $(".datetime_select").datetimepicker(format: "DD/MM/YYYY", pickTime: false)
-
-  $("#research_dimension_ids").multiselect
-    buttonClass: "btn"
-    buttonWidth: "auto"
-    buttonContainer: "<div class=\"btn-group\" />"
-    maxHeight: 150
-    buttonText: multiselect_options_text
-    onChange: (element, checked)->
-      load_dimension_values(".dq_select")
-
-  $("#research_demographic_variable_ids").multiselect
-    buttonClass: "btn"
-    buttonWidth: "auto"
-    buttonContainer: "<div class=\"btn-group\" />"
-    maxHeight: 150
-    buttonText: multiselect_options_text
-
   $("#modalView").on "hidden", ->
     $(@).html("")
+  $(document).on "change", "#research_dimension_ids", (e) ->
+    vals = $(@).val() || []
+    unselected_ids = jQuery.makeArray(unselected_ids)
+    $("#unselected_ids").val(unselected_ids)
+    selected_ids = $("#research_dimension_ids").children("option:selected").map ->
+      $(@).val()
+    selected_ids = jQuery.makeArray(selected_ids)
+    $("#selected_ids").val(selected_ids)
+    $("#dimension_tabs").html("")
+    $("#dimension_panels").html("")
+    $.each vals, (index, value) ->
+      dim_ob = $("#questions-set").data("#{value}-html")
+      if dim_ob is undefined
+        dimension_id = value
+        research_id = $("#research_id").val()
+        url = "/researches/#{research_id}/dimensions/#{dimension_id}/questions"
+        $.get url, (data) ->
+          panel_html = "#{data}"
+          name = $("#research_dimension_ids").children("option[value='#{value}']").text()
+          dim_ob = 
+            tab_html: "<li id = '#{value}_tab' ><a href='##{value}_panel' role='tab' data-toggle='tab'>#{name}</a></li>"
+            panel_html: panel_html
+          $("#questions-set").data("#{value}-html",dim_ob)
+          $("#dimension_tabs").append(dim_ob.tab_html)
+          $("#dimension_panels").append(dim_ob.panel_html)
+          $("#dimension_tabs ##{value}_tab").tab('show')
+          $(".tab-pane").removeClass("active")
+          id = $("#dimension_tabs ##{value}_tab a").attr("href")
+          $(id).addClass("active")
+      else
+        $("#dimension_tabs").append(dim_ob.tab_html)
+        $("#dimension_panels").append(dim_ob.panel_html)
+    $("#questions-set").data("selected_dimensions",vals)
   $(document).on "click",".new_setting_link", (e) ->
     remote_url = $(@).attr("href")
     $("#modalView .modal-content").load(remote_url)
@@ -85,7 +141,6 @@ jQuery ->
     $("#modalView").modal("show")
     $("a[data-toggle=tooltip]").tooltip(placement:"right")
     e.preventDefault()
-
   $(document).on "ajax:success", ".modal_form", (evt, data, status, xhr) -> 
     errors = data["errors"]
     if errors isnt `undefined` or errors?
@@ -94,12 +149,10 @@ jQuery ->
       console.log "before setting new options"
       add_option_to_select(data.class, data.value,data.display_value)
       $("#modalView").modal("hide")
-
   $(document).on "click","#submit_modal_form_btn", (e) ->
     set_display_values()
     $(".modal_form").trigger("submit.rails");
     e.preventDefault()
-
   $(document).on "click","#cancel_modal_form_btn", (e) ->
     $("#modalView").modal('hide')
     e.preventDefault()

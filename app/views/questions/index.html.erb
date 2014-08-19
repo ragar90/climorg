@@ -1,37 +1,38 @@
-<%- model_class = Question -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
-  <%= link_to "Agregar una nueva pregunta",new_question_path, :class => 'btn btn-primary new-btn' %>
-</div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:description) %></th>
-      <th><%= model_class.human_attribute_name(:is_default) %></th>
-      <th><%= model_class.human_attribute_name(:dimension_id) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @questions.each do |question| %>
-      <tr>
-        <td><%= link_to question.id, question_path(question) %></td>
-        <td><%= question.description %></td>
-        <td><%= question.is_default %></td>
-        <td><%= question.dimension.name.titleize %></td>
-        <td><%=l question.created_at %></td>
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_question_path(question), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      question_path(question),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
-        </td>
-      </tr>
+<% form_for @research do |f| -%>
+  <%= content_for :research_questions do %>
+    <%= f.fields_for(:questions, @questions) do |builder| %>
+      <div class = "question-fields">
+        <% ordinal = ordinal.nil? ? builder.object.ordinal : ordinal%>
+        <%= builder.hidden_field :dimension_id %>
+        <div class="form-group">
+          <%= builder.label :ordinal,"Pregunta #" , :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-10">
+            <%= builder.number_field :ordinal, :class => 'form-control', min: 1, value: ordinal  %>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <%= builder.label :description, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-10">
+            <%= builder.text_field :description, :class => 'form-control' %>
+          </div>
+        </div>
+
+        <div class = "form-group">
+          <div class = "col-sm-12">
+            <%= builder.hidden_field :_destroy %>
+            <%= link_to '#', :class=> "remove_fields btn btn-danger pull-right"  do%>
+              <span class="glyphicon glyphicon-trash"></span> Eliminar
+            <% end %>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  <% end %>
+<% end -%>
+<div class="tab-pane" id="<%=@dimension.id%>_panel" >
+  <%= link_to questions_research_path(id:@research.id, dimension_id:@dimension.id, format: :pdf), target: "_blank", class: "btn btn-primary", style: "margin-bottom:10px;" do %>
+    <span class = "glyphicon glyphicon-print"></span> Imprimir Preguntas
+  <% end %>
+  <%= yield(:research_questions)%>
+</div>

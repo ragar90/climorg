@@ -13,6 +13,7 @@ class Research < ActiveRecord::Base
   accepts_nested_attributes_for :questions, allow_destroy: true
 
   scope :results_group_by_answer, -> { results.joins(:answers).group("answers.value").select("count(value) as total_likeable, value")}
+
   include Reportable
   
   def start_and_end_date_consistency 
@@ -20,6 +21,10 @@ class Research < ActiveRecord::Base
     	errors.add(:start_date, "No puede ser despues de la fecha de finalizacion")
     	errors.add(:end_date, "No puede ser antes de la fecha de inicio")
     end
+  end
+
+  def test
+    self.questions.where(is_active:true)
   end
   
   def is_draft?
@@ -93,7 +98,7 @@ class Research < ActiveRecord::Base
   end
   
   def survey
-    self.questions.order(:ordinal)
+    self.test.order(:ordinal)
   end
 
   def current_application
@@ -109,6 +114,6 @@ class Research < ActiveRecord::Base
   end
 
   def grouped_questions
-    @grouped_questions ||= self.questions.group_by(&:dimension_id)
+    @grouped_questions ||= self.test.where(is_active:true).order(:ordinal).group_by(&:dimension_id)
   end
 end

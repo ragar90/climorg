@@ -9,6 +9,9 @@
   <% end %>
   <%= content_for :questions_panel do%>
     <div class="tab-pane <%= i == 0 ? "active" : "" %>" id="<%=dimension.id%>_panel" >
+      <%= link_to questions_research_path(id:@research.id, dimension_id:dimension.id, format: :pdf), target: "_blank", class: "btn btn-primary", style: "margin-bottom:10px;" do %>
+        <span class = "glyphicon glyphicon-print"></span> Imprimir Preguntas
+      <% end %>
       <% if @grouped_questions[dimension.id] %>
         <%= f.fields_for(:questions, @grouped_questions[dimension.id]) do |builder| %>
           <%= render :partial=>'question_fields', :locals=>{f: builder, ordinal: (builder.options[:child_index] + 1)} %>
@@ -20,11 +23,11 @@
 <% end %>
 
 <!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
+<ul id = "dimension_tabs" class="nav nav-tabs" role="tablist">
   <%= yield(:dimension_tabs)%>
 </ul>
 
 <!-- Tab panes -->
-<div class="questions-tab tab-content">
+<div id = "dimension_panels" class="questions-tab tab-content">
   <%= yield(:questions_panel)%>
 </div>

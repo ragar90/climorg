@@ -47,6 +47,9 @@
   }
 }
 #side-menu{
+  a{
+    width: 100%;
+  }
   .panel-default{
     color: #fff;
     border:none;
@@ -56,14 +59,17 @@
       color:#fff;
       &:hover{
         text-decoration:none;
+        border:none;
       }
       &:visited{
         text-decoration: none;
         color: #fff;
+        border:none;
       }
       &:active{
         text-decoration: none;
         color: #fff;
+        border:none;
       }
     }
     h4{

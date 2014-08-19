@@ -94,11 +94,25 @@ class ResearchesController < ApplicationController
       redirect_to researches_path, notice: 'Este estudio ya fue confirmado por lo que no se puede editar.'
       return
     end
+    @ok = true
+    Research.transaction do
+      begin
+        @ok = @research.update_attributes(permited_params(:research).permit!) and @ok
+        unselected_ids = params[:unselected_ids].split(",") rescue []
+        selected_ids = params[:selected_ids].split(",") rescue []
+        @research.questions.where(dimension_id: unselected_ids).update_all(is_active: false)
+        @research.questions.where(dimension_id: selected_ids).update_all(is_active: true)
+      end
+    end
+    @current_state = @research.state || 0
     respond_to do |format|
-      if @research.update_attributes(permited_params(:research).permit!)
+      if @ok
         format.html { redirect_to edit_research_path(id: @research.id), notice: 'Research was successfully updated.' }
         format.json { head :no_content }
       else
+        @grouped_questions = @research.grouped_questions
+        @dimensions = @research.dimensions
+        @current_state = @research.state || 0
         format.html { render action: "edit" }
         format.json { render json: @research.errors, status: :unprocessable_entity }
       end
