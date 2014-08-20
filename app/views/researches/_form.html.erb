@@ -10,7 +10,11 @@
       <div class="form-group">
         <%= f.label :organization_name, :class => 'col-sm-2 control-label' %>
         <div class="col-sm-10">
-          <%= f.text_field :organization_name, :class => 'form-control' %>
+          <% if @research_continue  %>
+            <%= @research.organization.name.titleize %>
+          <% else %>
+            <%= f.text_field :organization_name, :class => 'form-control' %>
+          <% end %>
         </div>
       </div>
       <div class="form-group">

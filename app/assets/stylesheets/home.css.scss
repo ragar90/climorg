@@ -42,7 +42,7 @@
     padding-left: 50px;
     .inner-container{
       padding: 20px 80px 35px 80px;
-      background: #fff;
+      background: #e5e9ef;
     }
   }
   .left-menu{
@@ -87,21 +87,6 @@
       .command.options{
         max-width: 25px;
         display: inline-block;
-        a{
-            color:#323232;
-            &:hover{
-              text-decoration:none;
-              color:#323232;
-            }
-            &:visited{
-              text-decoration: none;
-              color: #323232;
-            }
-            &:active{
-              text-decoration: none;
-              color: #323232;
-            }
-        }
         .dropdown-menu{
           a{
             color:#323232;

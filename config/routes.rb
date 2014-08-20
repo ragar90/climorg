@@ -7,10 +7,11 @@ ClimaOrg::Application.routes.draw do
   get "home/pricing"
   get "home/policy"
   get "researches" => "researches#index", as: :users_root
+  
+  resources :organizations
+  resources :employees, only: [:index, :new, :create]
   resources :researches do
-    resources :applications, controller: :research_applications, except: [:show] do
-      resources :results, :except=>[:show]
-    end
+    resources :results, :except=>[:show]
     member do
       put 'confirm'
       get "survey"
@@ -20,10 +21,9 @@ ClimaOrg::Application.routes.draw do
       get "report/custom" => "reports#report", defaults:{report_type: "custom"}
       get "(dimensions/:dimension_id)/questions" => "questions#index", as: :questions
     end
-
   end
-  get "new_evaluation" => "results#new_evaluation", as: :new_evaluation
-  get "report/new" => "reports#new", as: :new_custom_report
   resources :dimensions
   resources :demographic_variables
+  get "new_evaluation" => "results#new_evaluation", as: :new_evaluation
+  get "report/new" => "reports#new", as: :new_custom_report
 end

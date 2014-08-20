@@ -1,7 +1,7 @@
 class ResultsController < ApplicationController
   before_filter :load_research, except: [:new_evaluation]
   def index
-    @results = Result.filtered(@research.id, @application.id).by_correlative.includes(:answers)
+    @results = Result.filtered(@research.id).by_correlative.includes(:answers)
   end
 
   def new
@@ -93,6 +93,5 @@ class ResultsController < ApplicationController
   private
   def load_research
     @research = Research.where(id: params[:research_id]).includes(:dimensions).first
-    @application = @research.applications.where(id: params[:application_id]).first
   end
 end

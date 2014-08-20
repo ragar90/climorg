@@ -1,6 +1,9 @@
 <%- model_class = DemographicVariable -%>
-<div class="page-header">
-  <h1><%=t '.title', :default => t('helpers.titles.edit', :model => model_class.model_name.human,
-                                   :default => "Edit #{model_class.model_name.human}") %></h1>
+<div class="panel panel-default data-window collapse-group" id = "new-research" >
+  <header class="panel-heading">
+    <h4>Variable <%= @demographic_variable.name.titleize%>	</h4>
+  </header>
+  <div class="panel-body" id = "new-research-form">
+		<%= render :partial => 'form', :locals=>{:url=>demographic_variable_path(:id=> @demographic_variable.id)}%>
+  </div>
 </div>
-<%= render :partial => 'form', :locals=>{:url=>demographic_variable_path(:id=> @demographic_variable.id)}%>

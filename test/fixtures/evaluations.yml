@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  research_id: 1
+  employee_id: 1
+  done: false
+  result_id: 1
+
+two:
+  research_id: 1
+  employee_id: 1
+  done: false
+  result_id: 1

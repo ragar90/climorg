@@ -42,8 +42,27 @@
 }
 .panel-default{
   > .panel-heading{
-    background-color: lighten($secondary-color, 70%);
+    background-color: lighten($secondary-color, 10%);
     border-radius:0px;
+    color: #fff;
+    a{
+      color:#fff;
+      &:hover{
+        text-decoration:none;
+        border:none;
+        color:#fff;
+      }
+      &:visited{
+        text-decoration: none;
+        color: #fff;
+        border:none;
+      }
+      &:active{
+        text-decoration: none;
+        color: #fff;
+        border:none;
+      }
+    }
   }
 }
 #side-menu{
@@ -102,4 +121,12 @@
       }
     }
   }
+}
+.page-header {
+    border-bottom: 1px solid #000;
+    margin: 40px 0 20px;
+    padding-bottom: 9px;
+}
+.panel-body.form-panel{
+  padding: 30px;
 }

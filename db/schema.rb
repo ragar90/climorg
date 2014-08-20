@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819011340) do
+ActiveRecord::Schema.define(version: 20140820022522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 20140819011340) do
     t.integer  "city_id"
     t.integer  "state_id"
     t.integer  "country_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "countries", force: true do |t|
+    t.string   "name"
+    t.string   "iso"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -71,6 +78,33 @@ ActiveRecord::Schema.define(version: 20140819011340) do
     t.datetime "updated_at"
   end
 
+  create_table "employees", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "access_token"
+    t.boolean  "has_evaluated_research", default: false
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "evaluations", force: true do |t|
+    t.integer  "research_id"
+    t.integer  "employee_id"
+    t.boolean  "done",        default: false
+    t.integer  "result_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.string   "logo"
+    t.integer  "country_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "questions", force: true do |t|
     t.string   "description"
     t.integer  "dimension_id"
@@ -109,6 +143,7 @@ ActiveRecord::Schema.define(version: 20140819011340) do
     t.integer  "state",             default: 0
     t.boolean  "is_conclude",       default: false
     t.integer  "user_id"
+    t.integer  "organization_id"
   end
 
   create_table "result_reports", id: false, force: true do |t|
@@ -132,7 +167,7 @@ ActiveRecord::Schema.define(version: 20140819011340) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "correlative"
-    t.integer  "research_application_id"
+    t.integer  "evaluation_id"
   end
 
   create_table "users", force: true do |t|

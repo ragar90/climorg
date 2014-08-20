@@ -10,9 +10,10 @@
       <div id="dashboard" class="panel-collapse collapse <%= @selected_option == "home-option" ? "in" : "" %>">
         <div class="panel-body">
           <ul>
-            <li><%= link_to "Mis Estudios", researches_path %></li>
+            <li><%= link_to "Organizaciones", organizations_path %></li>
+            <li><%= link_to "Estudios Recientes", researches_path %></li>
             <li><%= link_to "Nuevo Estudio", new_research_path %></li>
-            <li><%= link_to "Generar Reporte", new_custom_report_path %></li>
+            <li><%= link_to "Generar Reporte","#org_selection",data:{url:new_custom_report_path,toggle:"modal"} %></li>
           </ul>
         </div>
       </div>

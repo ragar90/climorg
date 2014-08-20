@@ -1,4 +1,5 @@
 class Research < ActiveRecord::Base
+  belongs_to :organization
   has_many :results
   has_many :demographic_settings
   has_many :demographic_variables, :through => :demographic_settings
@@ -7,11 +8,18 @@ class Research < ActiveRecord::Base
   has_many :dimensions, :through => :dimension_settings
   has_many :reports
   has_many :report_filters
-  has_many :applications, class_name: "ResearchApplication"
+  has_many :evaluations
+  has_many :employees, through: :evaluations
+
   validates :organization_name,:start_date, :presence => true
-  validate :start_and_end_date_consistency 
+  validate :start_and_end_date_consistency
+
   accepts_nested_attributes_for :questions, allow_destroy: true
 
+  before_create :set_correlative
+  
+  scope :only_parents, -> {where(parent_id:nil)}
+  scope :only_active, ->{where(is_conclude:false)}
   scope :results_group_by_answer, -> { results.joins(:answers).group("answers.value").select("count(value) as total_likeable, value")}
 
   include Reportable
@@ -115,5 +123,11 @@ class Research < ActiveRecord::Base
 
   def grouped_questions
     @grouped_questions ||= self.test.where(is_active:true).order(:ordinal).group_by(&:dimension_id)
+  end
+
+  def set_correlative
+    if self.research_parent_id.prenset?
+      self.correlative = self.research_parent.researches_children.count + 1
+    end
   end
 end

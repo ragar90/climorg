@@ -1,10 +1,14 @@
 class ResearchesController < ApplicationController
+  before_filter :load_organization
   before_filter :load_change_state
   # GET /researches
   # GET /researches.json
   def index
-    @researches = Research.order("state DESC")
-    
+    unless @organization.nil?
+      @researches = @organization.researches.only_active.order("state DESC")
+    else
+      @researches = Research.only_active.order("state DESC")
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @researches }
@@ -50,6 +54,7 @@ class ResearchesController < ApplicationController
   # GET /researches/new.json
   def new
     @research = Research.new
+    @research.user_id = current_user.id
     @current_state = @research.state || 0
     @research.state += 1 if  @research.state < 2
     respond_to do |format|
@@ -158,6 +163,10 @@ class ResearchesController < ApplicationController
   end
   
   private 
+
+  def load_organization
+    @organization = params[:organization_id].present? ? Organization.find(params[:organization_id]) : nil
+  end
 
   def load_change_state
     @change_state = params[:change_state] == "true"
