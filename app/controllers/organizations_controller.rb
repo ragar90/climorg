@@ -3,7 +3,6 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations
   def index
-    @organizations = Organization.all
   end
 
   # GET /organizations/1

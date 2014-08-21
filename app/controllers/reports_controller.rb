@@ -79,7 +79,7 @@ class ReportsController < ApplicationController
   private
 
   def load_research
-  	@research = Research.where(id:params[:id]).includes(:demographic_variables).first
+  	@research = current_organization.researches.where(id:params[:id]).includes(:demographic_variables).first
   end
 
   def format_params

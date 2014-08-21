@@ -4,7 +4,8 @@ class ApplicationController < ActionController::Base
   before_filter :load_layout
   before_action :selected_option
   before_filter :clean_report_sessions
-  before_action :authenticate 
+  before_action :authenticate
+  before_action :load_current_organization
 
   def load_layout
   	@layout = (params[:layout].nil? or params[:layout]==true) ? true : false
@@ -18,19 +19,36 @@ class ApplicationController < ActionController::Base
   end
 
   def selected_option
-     @selected_option = case params[:controller]
-                          when "demographic_variables"
-                            "demo-vars-option"
-                          when "dimensions"
-                            "dimension-option"
-                          when "questions"
-                            "questions-option"
-                          when "settings"
-                            "settings-option"
-                          else
-                            "home-option"
-                        end
+    @selected_option = case params[:controller]
+                        when "demographic_variables"
+                          "demo-vars-option"
+                        when "dimensions"
+                          "dimension-option"
+                        when "questions"
+                          "questions-option"
+                        when "settings"
+                          "settings-option"
+                        else
+                          "home-option"
+                      end
   end
+
+  def load_current_organization
+    @organizations = current_user.organizations
+    if params[:selected_org_id].present?
+      @current_organization = @organizations.where(id:params[:selected_org_id]).first
+      session[:selected_org_id] = params[:selected_org_id]
+    elsif session[:selected_org_id].present?
+      @current_organization = @organizations.where(id:session[:selected_org_id]).first
+    else
+      @current_organization = @organizations.first
+    end
+  end
+
+  def current_organization
+    @current_organization
+  end
+  helper_method :current_organization
   
   private
 

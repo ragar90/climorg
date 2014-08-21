@@ -104,6 +104,18 @@ class Research < ActiveRecord::Base
         ""
     end
   end
+
+  def label
+    "Estudio #{self.formated_start_date} - #{self.formated_end_date}"
+  end
+
+  def formated_start_date
+    self.start_date.strftime("%d/%m/%y")
+  end
+
+  def formated_end_date
+    self.end_date.strftime("%d/%m/%y")
+  end
   
   def survey
     self.test.order(:ordinal)

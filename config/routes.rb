@@ -9,9 +9,9 @@ ClimaOrg::Application.routes.draw do
   get "researches" => "researches#index", as: :users_root
   
   resources :organizations
-  resources :employees, only: [:index, :new, :create]
   resources :researches do
     resources :results, :except=>[:show]
+    resources :employees, only: [:index, :new, :create]
     member do
       put 'confirm'
       get "survey"
@@ -22,6 +22,7 @@ ClimaOrg::Application.routes.draw do
       get "(dimensions/:dimension_id)/questions" => "questions#index", as: :questions
     end
   end
+  get "researches"=> "researches#index"
   resources :dimensions
   resources :demographic_variables
   get "new_evaluation" => "results#new_evaluation", as: :new_evaluation

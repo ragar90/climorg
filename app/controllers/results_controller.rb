@@ -5,19 +5,9 @@ class ResultsController < ApplicationController
   end
 
   def new
+    labels = ["Nada","Poco","Bastante","Muchisimio","No Aplica"]
     @answers = (0..4).map do |a|
-      label = case a
-                when 1
-                  "Nada"
-                when 2
-                  "Poco"
-                when 3
-                  "Bastante"
-                when 4
-                  "Muchisimio"
-                else
-                  "No Aplica"
-              end
+      label = label[a]
       [label,a]
     end
     @result =   Result.new(research_id: @research.id)
@@ -27,19 +17,9 @@ class ResultsController < ApplicationController
   end
 
   def new_evaluation
+    labels = ["Nada","Poco","Bastante","Muchisimio","No Aplica"]
     @answers = (0..4).map do |a|
-      label = case a
-                when 1
-                  "Nada"
-                when 2
-                  "Poco"
-                when 3
-                  "Bastante"
-                when 4
-                  "Muchisimio"
-                else
-                  "No Aplica"
-              end
+      label = label[a]
       [label,a]
     end
     @research = Research.where(state: 3).first
@@ -92,6 +72,6 @@ class ResultsController < ApplicationController
   
   private
   def load_research
-    @research = Research.where(id: params[:research_id]).includes(:dimensions).first
+    @research = current_organization.researches.where(id: params[:research_id]).includes(:dimensions).first
   end
 end

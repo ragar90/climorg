@@ -1,14 +1,9 @@
 class ResearchesController < ApplicationController
-  before_filter :load_organization
   before_filter :load_change_state
   # GET /researches
   # GET /researches.json
   def index
-    unless @organization.nil?
-      @researches = @organization.researches.only_active.order("state DESC")
-    else
-      @researches = Research.only_active.order("state DESC")
-    end
+    @researches = current_organization.researches
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @researches }
@@ -18,13 +13,7 @@ class ResearchesController < ApplicationController
   # GET /researches/1
   # GET /researches/1.json
   def show
-    @research = Research.find(params[:id])
-    #@dimensions_reports = @research.filter_by_dimensions.map do |value|
-    #  dimension_name = value.last.values.first.name
-    #  total_answers = value.last.values.last.values.inject{|sum,x| sum + x }
-    #  likeable_percent = (((value.last.values.last[:likeable])*1.0 / total_answers)*100.0).round(2)
-    #  [dimension_name,likeable_percent]
-    #end
+    @research = current_organization.researches.find(params[:id])
     @demographic_reports = []
     variables = @research.variables_values
     i = 0
@@ -57,6 +46,7 @@ class ResearchesController < ApplicationController
     @research.user_id = current_user.id
     @current_state = @research.state || 0
     @research.state += 1 if  @research.state < 2
+    @research.organization_id = current_organization.id
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @research }
@@ -65,9 +55,10 @@ class ResearchesController < ApplicationController
 
   # GET /researches/1/edit
   def edit
-    @research = Research.find(params[:id])
+    @research = current_organization.researches.find(params[:id])
     @grouped_questions = @research.grouped_questions
     @dimensions = @research.dimensions
+    @employees = @research.employees
     if @research.is_confirmed?
       redirect_to researches_path, notice: 'Este estudio ya fue confirmado por lo que no se puede editar.'
       return
@@ -94,7 +85,7 @@ class ResearchesController < ApplicationController
   # PUT /researches/1
   # PUT /researches/1.json
   def update
-    @research = Research.find(params[:id])
+    @research = current_organization.researches.find(params[:id])
     if @research.is_confirmed?
       redirect_to researches_path, notice: 'Este estudio ya fue confirmado por lo que no se puede editar.'
       return
@@ -125,7 +116,7 @@ class ResearchesController < ApplicationController
   end
 
   def confirm
-    @research = Research.find(params[:id])
+    @research = current_organization.researches.find(params[:id])
     respond_to do |format|
       if @research.confirm!
         @current_state = @research.state
@@ -142,7 +133,7 @@ class ResearchesController < ApplicationController
   # DELETE /researches/1
   # DELETE /researches/1.json
   def destroy
-    @research = Research.find(params[:id])
+    @research = current_organization.researches.find(params[:id])
     @research.destroy
 
     respond_to do |format|
@@ -152,7 +143,7 @@ class ResearchesController < ApplicationController
   end
   
   def survey
-    @research = Research.find(params[:id])
+    @research = current_organization.researches.find(params[:id])
     respond_to do |format|
       format.html { render "survey", :layout=>"pdf"}
       format.pdf do
@@ -163,10 +154,6 @@ class ResearchesController < ApplicationController
   end
   
   private 
-
-  def load_organization
-    @organization = params[:organization_id].present? ? Organization.find(params[:organization_id]) : nil
-  end
 
   def load_change_state
     @change_state = params[:change_state] == "true"

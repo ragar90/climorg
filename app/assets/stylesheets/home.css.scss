@@ -206,3 +206,11 @@
   padding-top:20px;
   margin-bottom: 35px;
 }
+.action-links{
+  a{
+    text-decoration: none;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+}

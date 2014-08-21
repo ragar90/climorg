@@ -50,8 +50,7 @@ class EmployeesController < ApplicationController
     end
 
     def set_research_and_organization
-      @organization = Organization.find(params[:organization_id])
-      @research = @organization.researches.where(id: params[:research_id])
+      @research = current_organization.researches.where(id: params[:research_id])
     end
 
     # Only allow a trusted parameter "white list" through.

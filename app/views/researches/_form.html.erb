@@ -4,51 +4,112 @@
 <%= form_for @research, :html => { :class => 'research_form form-horizontal' } do |f| %>
   <%=f.hidden_field :id%>
   <%=f.hidden_field :state%>
+  <%=f.hidden_field :organization_id%>
   <% if @current_state == 0 %>
     <fieldset>
       <legend>Información General</legend>
-      <div class="form-group">
-        <%= f.label :organization_name, :class => 'col-sm-2 control-label' %>
-        <div class="col-sm-10">
-          <% if @research_continue  %>
-            <%= @research.organization.name.titleize %>
-          <% else %>
-            <%= f.text_field :organization_name, :class => 'form-control' %>
-          <% end %>
+      <div class = "fieldset-body">
+        <div class="form-group">
+          <%= f.label :organization_name, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-10">
+            <div style = "margin-top: 13px;"><%= current_organization.name.titleize %></div style = "vertical-align:middle;">
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :start_date, :class => 'col-sm-2 control-label' %>
-        <div class="col-sm-10">
-          <%= f.text_field :start_date, :class => 'datetime_select form-control', :value=>(!@research.start_date.nil? ? @research.start_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+        <div class="form-group">
+          <%= f.label :start_date, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-10">
+            <%= f.text_field :start_date, :class => 'datetime_select form-control', :value=>(!@research.start_date.nil? ? @research.start_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <%= f.label :end_date, :class => 'col-sm-2 control-label' %>
-        <div class="col-sm-10">
-          <%= f.text_field :end_date, :class => 'datetime_select form-control',:data=>{:"date-format"=>"DD/MM/YYYY"}, :value=>(!@research.end_date.nil? ? @research.end_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+        <div class="form-group">
+          <%= f.label :end_date, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-10">
+            <%= f.text_field :end_date, :class => 'datetime_select form-control',:data=>{:"date-format"=>"DD/MM/YYYY"}, :value=>(!@research.end_date.nil? ? @research.end_date.strftime("%d/%m/%Y") : DateTime.now.strftime("%d/%m/%Y")) %>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <%= f.label :use_virtual_application do %>
+                <%= f.check_box :use_virtual_application, :class => 'check_box' %> Aplicar Virtualmente?
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
     </fieldset>
   <% end %>
 
   <%if  @current_state >= 1%>
+    <% if @research.use_virtual_application %>
+      <% content_for :data_tables_references do %>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
+        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function(){
+            $('#employees_list').DataTable();
+          });
+        </script>
+      <% end %>
+
+      <fieldset>
+        <legend>
+          Lista de Empleados
+          <%= link_to "#", class: "pull-right" do %>
+            <span class = "fa fa-minus"></span>
+          <% end %>
+        </legend>
+        <%= link_to "#", class: "btn btn-info pull-right", style:"margin-bottom:10px;margin-left:10px;" do %>
+          <span class = "glyphicon glyphicon-download"></span> Descargar Formato
+        <% end %>
+        </legend>
+        <%= link_to "#", class: "btn btn-primary pull-right", style:"margin-bottom:10px;margin-left:10px;" do %>
+          <span class = "glyphicon glyphicon-download"></span> Nuevo Empleado
+        <% end %>
+        <%= link_to "#", class: "btn btn-success pull-right", style:"margin-bottom:10px;" do %>
+          <span class = "glyphicon glyphicon-cloud-upload"></span> Subir lista de Empleados
+        <% end %>
+        <div class = "fieldset-body">
+          <table id="employees_list" class="display">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @employees.each do |employee| %>
+                <tr>
+                  <td><%=employee.name%></td>
+                  <td><%=employee.email%></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </fieldset>
+    <% end %>
+
     <fieldset>
       <legend>Configuracion de Variables</legend>
-      <div class="form-group">
-        <%= f.label :demographic_variables, :class => 'col-sm-2 control-label' %>
-        <div class="col-sm-10">
-          <%=f.collection_select :demographic_variable_ids, DemographicVariable.where(:is_default=>true), :id, :name, {}, {:multiple=>true,:name=>"research[demographic_variable_ids][]", class: "form-control"}%></br>
-          <%=link_to "Agregar nueva Variable Demografica", new_demographic_variable_path(:layout=>false), :class=>"new_setting_link"  %>
+      <div class = "fieldset-body">
+        <div class="form-group">
+          <%= f.label :demographic_variables, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-10">
+            <%=f.collection_select :demographic_variable_ids, DemographicVariable.where(:is_default=>true), :id, :name, {}, {:multiple=>true,:name=>"research[demographic_variable_ids][]", class: "form-control"}%></br>
+            <%=link_to "Agregar nueva Variable Demografica", new_demographic_variable_path(:layout=>false), :class=>"new_setting_link"  %>
+          </div>
         </div>
+        <div class="form-group">
+          <%= f.label :dimensions, :class => 'col-sm-2 control-label' %>
+          <div class="col-sm-10">
+            <%=f.collection_select :dimension_ids, Dimension.where(:is_default=>true), :id, :camelize_name, {}, {:multiple=>true,:name=>"research[dimension_ids][]", class: "form-control"}%></br>
+            <%=link_to "Agregar nueva Dimension", new_dimension_path(:layout=>false), :class=>"new_setting_link"  %>
+          </div>
+        </div>      
       </div>
-      <div class="form-group">
-        <%= f.label :dimensions, :class => 'col-sm-2 control-label' %>
-        <div class="col-sm-10">
-          <%=f.collection_select :dimension_ids, Dimension.where(:is_default=>true), :id, :camelize_name, {}, {:multiple=>true,:name=>"research[dimension_ids][]", class: "form-control"}%></br>
-          <%=link_to "Agregar nueva Dimension", new_dimension_path(:layout=>false), :class=>"new_setting_link"  %>
-        </div>
-      </div>      
     </fieldset>
     <%= hidden_field_tag :unselected_ids %>
     <%= hidden_field_tag :selected_ids %>
@@ -57,7 +118,9 @@
   <% if @current_state >= 2%>
     <fieldset id = "questions-set">
       <legend>Custionario</legend>
-      <%= render partial: "question_tab_fields", locals: {f:f} %> 
+      <div class = "fieldset-body">
+        <%= render partial: "question_tab_fields", locals: {f:f} %> 
+      </div>
     </fieldset>
   <% end %>
 

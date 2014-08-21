@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @research = Research.find(params[:id])
+    @research = current_organization.researches.find(params[:id])
     @dimension = Dimension.find(params[:dimension_id])
     respond_to do |format|
       format.html do
