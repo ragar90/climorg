@@ -19,6 +19,8 @@ gem 'jquery-rails'
 gem 'carrierwave'
 gem 'fog'
 gem "rmagick", :require => 'RMagick'
+gem 'roo'
+gem "iconv", "~> 1.0.3"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

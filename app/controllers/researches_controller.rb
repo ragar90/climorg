@@ -14,6 +14,7 @@ class ResearchesController < ApplicationController
   # GET /researches/1.json
   def show
     @research = current_organization.researches.find(params[:id])
+    @employees = @research.employees if @research.use_virtual_application
     @demographic_reports = []
     variables = @research.variables_values
     i = 0
@@ -123,6 +124,9 @@ class ResearchesController < ApplicationController
         format.html { redirect_to researches_path, notice: 'Research was successfully confirmed.' }
         format.json { head :no_content }
       else
+        @grouped_questions = @research.grouped_questions
+        @dimensions = @research.dimensions
+        @employees = @research.employees if @research.use_virtual_application
         @current_state = @research.state
         format.html { render action: "edit", flash: "El Estudio no pudo confirmarse adecuadamente" }
         format.json { render json: @research.errors, status: :unprocessable_entity }

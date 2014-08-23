@@ -11,7 +11,11 @@ ClimaOrg::Application.routes.draw do
   resources :organizations
   resources :researches do
     resources :results, :except=>[:show]
-    resources :employees, only: [:index, :new, :create]
+    resources :employees, only: [:index, :new, :create] do
+      collection do
+        post "massive_creation"=>"employees#massive_upload"
+      end
+    end
     member do
       put 'confirm'
       get "survey"
@@ -25,6 +29,7 @@ ClimaOrg::Application.routes.draw do
   get "researches"=> "researches#index"
   resources :dimensions
   resources :demographic_variables
+  get "file_format" => "employees#upload_file_format", as: :file_format
   get "new_evaluation" => "results#new_evaluation", as: :new_evaluation
   get "report/new" => "reports#new", as: :new_custom_report
 end

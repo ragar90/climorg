@@ -1,5 +1,35 @@
 <%= render "/shared/gchart_load" %>
 <div class="page-header">
+  <h1>Employees</h1>
+</div>
+<div class = "row">
+  <div class = "col-md-12">
+    <div class="panel panel-default data-window collapse-group" id = "new-research" >
+      <header class="panel-heading">
+        <h4>Evaluaciones Realizadas por los empleados</h4>
+      </header>
+      <div class="panel-body" id = "new-research-form">
+        <%= datatable @employees, [:name, :email, :has_evaluated_research, "" ], {} do |employee, column_names| %>
+          <td><%=employee.name%></td>
+          <td><%=employee.email%></td>
+          <td>
+            <% if employee.has_evaluated_research %>
+              <span class="label label-success">Si</span>
+            <% else %>
+              <span class="label label-danger">No</span>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to "#", class: "btn btn-primary"  do%>
+              <span class = "glyphicon glyphicon-envelope"></span> Enviar Recordatorio
+            <% end %>
+          </td>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-header">
 	<h1>Reports</h1>
 	<%= link_to "Generar Otros reportes", new_report_path(id: @research.id), :class => 'btn btn-primary new-btn' %>
 </div>

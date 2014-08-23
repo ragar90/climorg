@@ -20,14 +20,13 @@
         <td><%= dimension.name %></td>
         <td><%= dimension.is_default %></td>
         <td><%=l dimension.created_at %></td>
-        <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_dimension_path(dimension), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      dimension_path(dimension),
-                      :method => :delete,
-                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-mini btn-danger' %>
+        <td class = "action-links">
+          <%= link_to edit_dimension_path(dimension), title:"Editar" do %>
+            <span class = "glyphicon glyphicon-edit"></span>
+          <% end %>
+          <%= link_to dimension_path(dimension),:method => :delete,:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, title:"Eliminar"  do %>
+            <span class = "glyphicon glyphicon-trash"></span>
+          <% end %>
         </td>
       </tr>
     <% end %>

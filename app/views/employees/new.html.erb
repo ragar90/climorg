@@ -1,5 +1,8 @@
-<h1>New employee</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', employees_path %>
+<div class="panel panel-default data-window collapse-group" id = "new-employee" >
+  <header class="panel-heading">
+    <h4>Nueva Empleado</h4>
+  </header>
+  <div class="panel-body" id = "new-employee-form">
+		<%= render :partial => 'form' %>
+  </div>
+</div>

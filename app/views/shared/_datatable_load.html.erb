@@ -1,0 +1,14 @@
+<% content_for :data_tables_references do %>
+  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
+
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
+  
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      var options = $('#collection_list').data("options")
+      $('#collection_list').DataTable(options);
+    });
+  </script>
+<% end %>

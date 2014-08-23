@@ -7,7 +7,12 @@
   <%=f.hidden_field :organization_id%>
   <% if @current_state == 0 %>
     <fieldset>
-      <legend>Información General</legend>
+      <legend>
+        Información General
+        <%= link_to "#", class: "pull-right minimize-btn", data:{open: true} do %>
+          <span class = "fa fa-minus"></span>
+        <% end %>
+      </legend>
       <div class = "fieldset-body">
         <div class="form-group">
           <%= f.label :organization_name, :class => 'col-sm-2 control-label' %>
@@ -42,58 +47,39 @@
 
   <%if  @current_state >= 1%>
     <% if @research.use_virtual_application %>
-      <% content_for :data_tables_references do %>
-        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.2/css/jquery.dataTables.css">
-        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.css">
-        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
-        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/725b2a2115b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-        <script type="text/javascript">
-          $(document).ready(function(){
-            $('#employees_list').DataTable();
-          });
-        </script>
-      <% end %>
-
       <fieldset>
         <legend>
           Lista de Empleados
-          <%= link_to "#", class: "pull-right" do %>
+          <%= link_to "#", class: "pull-right minimize-btn", data:{open: true} do %>
             <span class = "fa fa-minus"></span>
           <% end %>
         </legend>
-        <%= link_to "#", class: "btn btn-info pull-right", style:"margin-bottom:10px;margin-left:10px;" do %>
-          <span class = "glyphicon glyphicon-download"></span> Descargar Formato
-        <% end %>
-        </legend>
-        <%= link_to "#", class: "btn btn-primary pull-right", style:"margin-bottom:10px;margin-left:10px;" do %>
-          <span class = "glyphicon glyphicon-download"></span> Nuevo Empleado
-        <% end %>
-        <%= link_to "#", class: "btn btn-success pull-right", style:"margin-bottom:10px;" do %>
-          <span class = "glyphicon glyphicon-cloud-upload"></span> Subir lista de Empleados
-        <% end %>
         <div class = "fieldset-body">
-          <table id="employees_list" class="display">
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Email</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @employees.each do |employee| %>
-                <tr>
-                  <td><%=employee.name%></td>
-                  <td><%=employee.email%></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+          <%= link_to file_format_path(format: :xls), class: "btn btn-info pull-right", style:"margin-bottom:10px;margin-left:10px;", target: "_blank" do %>
+            <span class = "glyphicon glyphicon-download"></span> Descargar Formato
+          <% end %>
+          </legend>
+          <%= link_to new_research_employee_path(research_id:@research.id), class: "btn btn-primary pull-right", style:"margin-bottom:10px;margin-left:10px;" do %>
+            <span class = "glyphicon glyphicon-download"></span> Nuevo Empleado
+          <% end %>
+          <%= link_to "#", class: "btn btn-success pull-right", style:"margin-bottom:10px;", id:"upload-btn" do %>
+            <span class = "glyphicon glyphicon-cloud-upload"></span> Subir lista de Empleados
+          <% end %>
+          <%= datatable @employees, [:name, :email], {} do |employee, column_names| %>
+            <td><%=employee.name%></td>
+            <td><%=employee.email%></td>
+          <% end %>
         </div>
       </fieldset>
     <% end %>
 
     <fieldset>
-      <legend>Configuracion de Variables</legend>
+      <legend>
+        Configuracion de Variables
+        <%= link_to "#", class: "pull-right minimize-btn", data:{open: true} do %>
+          <span class = "fa fa-minus"></span>
+        <% end %>
+      </legend>
       <div class = "fieldset-body">
         <div class="form-group">
           <%= f.label :demographic_variables, :class => 'col-sm-2 control-label' %>
@@ -117,7 +103,12 @@
   
   <% if @current_state >= 2%>
     <fieldset id = "questions-set">
-      <legend>Custionario</legend>
+      <legend>
+        Cuestionario
+        <%= link_to "#", class: "pull-right minimize-btn", data:{open: true} do %>
+          <span class = "fa fa-minus"></span>
+        <% end %>
+      </legend>
       <div class = "fieldset-body">
         <%= render partial: "question_tab_fields", locals: {f:f} %> 
       </div>
@@ -129,4 +120,8 @@
     <%= link_to_add_fields("Agregar Pregunta", f, :questions) if @current_state >= 2%> 
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),researches_path, :class => 'btn btn-danger' %>
   </div>
+<% end %>
+
+<%= form_tag massive_creation_research_employees_path(research_id: @research.id), multipart: true, id: "employees-file-form" do %>
+  <%= file_field_tag :file, style: "display:none;", id:"employees-file-field" %>
 <% end %>

@@ -7,26 +7,23 @@ class ResultsController < ApplicationController
   def new
     labels = ["Nada","Poco","Bastante","Muchisimio","No Aplica"]
     @answers = (0..4).map do |a|
-      label = label[a]
+      label = labels[a]
       [label,a]
     end
     @result =   Result.new(research_id: @research.id)
     @result.research = @research
-    @result.research_application = @application
     @result.init_values
   end
 
   def new_evaluation
     labels = ["Nada","Poco","Bastante","Muchisimio","No Aplica"]
     @answers = (0..4).map do |a|
-      label = label[a]
+      label = labels[a]
       [label,a]
     end
     @research = Research.where(state: 3).first
-    @application = @research.applications.first
     @result = Result.new(research_id: @research.id)
     @result.research = @research
-    @result.research_application = @application
     @result.init_values
     render layout: false
   end
@@ -36,8 +33,13 @@ class ResultsController < ApplicationController
     
     respond_to do |format|
       if @result.save
-        format.html{ redirect_to new_research_application_result_path(:research_id=>@research.id, application_id: @application.id), notice: "Resultado guardado exitosamente" }
+        format.html{ redirect_to new_research_result_path(:research_id=>@research.id), notice: "Resultado guardado exitosamente" }
       else
+        labels = ["Nada","Poco","Bastante","Muchisimio","No Aplica"]
+        @answers = (0..4).map do |a|
+          label = labels[a]
+          [label,a]
+        end
         qids = @result.answers.collect{|a| a.question_id}
         questions =  Question.where(:id=>qids).group_by(&:id)
         @result.answers.each do |ans|

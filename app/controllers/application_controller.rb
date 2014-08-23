@@ -34,14 +34,16 @@ class ApplicationController < ActionController::Base
   end
 
   def load_current_organization
-    @organizations = current_user.organizations
-    if params[:selected_org_id].present?
-      @current_organization = @organizations.where(id:params[:selected_org_id]).first
-      session[:selected_org_id] = params[:selected_org_id]
-    elsif session[:selected_org_id].present?
-      @current_organization = @organizations.where(id:session[:selected_org_id]).first
-    else
-      @current_organization = @organizations.first
+    if current_user
+      @organizations = current_user.organizations 
+      if params[:selected_org_id].present?
+        @current_organization = @organizations.where(id:params[:selected_org_id]).first
+        session[:selected_org_id] = params[:selected_org_id]
+      elsif session[:selected_org_id].present?
+        @current_organization = @organizations.where(id:session[:selected_org_id]).first
+      else
+        @current_organization = @organizations.first
+      end
     end
   end
 

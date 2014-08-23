@@ -1,9 +1,8 @@
 <%content_for :error_messages do  %> 
   <%= error_messages! @result%>
 <%end%> 
-<%= form_for @result, url:research_application_results_path(research_id:@research.id,application_id: @application.id) do |f| %>
+<%= form_for @result, url:research_results_path(research_id:@research.id) do |f| %>
   <%= f.hidden_field :research_id %>
-  <%= f.hidden_field :research_application_id %>
   <fieldset class="demographic_variables">
     <legend>Datos personales</legend>
     <div class="row">
@@ -35,7 +34,7 @@
           <td class = "survey-controll"><%= b.radio_button :value, 3,:class=>"survey_answer"%></td>
           <td class = "survey-controll"><%= b.radio_button :value, 4,:class=>"survey_answer"%></td>
           <td class = "survey-controll"><%= b.radio_button :value, 0,:class=>"survey_answer"%></td>
-          <td class = "survey-controll smart-phone"><%= b.select :value, @answers, class: "survey_answer_select form-control", prompt: "-"  %></td>
+          <td class = "survey-controll smart-phone"><%= b.select :value, @answers, class: "survey_answer_select form-control" %></td>
         </tr>
       <% end %>
     </table>

@@ -156,3 +156,23 @@ jQuery ->
   $(document).on "click","#cancel_modal_form_btn", (e) ->
     $("#modalView").modal('hide')
     e.preventDefault()
+  $(document).on "click", "#upload-btn", (e) ->
+    e.preventDefault()
+    $("#employees-file-field").click()
+  $(document).on "change", "#employees-file-field", (e) ->
+    $("#employees-file-form").submit()
+  $(document).on "click", ".minimize-btn", (e) ->
+    e.preventDefault()
+    open = $(@).data("open")
+    if open
+      $($(@).parent()).siblings(".fieldset-body").slideUp()
+      $(@).data("open",!open)
+      $(@).children("span").removeClass("fa-minus")
+      $(@).children("span").addClass("fa-plus")
+    else
+      $($(@).parent()).siblings(".fieldset-body").slideDown()
+      $(@).data("open",!open)
+      $(@).children("span").removeClass("fa-plus")
+      $(@).children("span").addClass("fa-minus")
+
+

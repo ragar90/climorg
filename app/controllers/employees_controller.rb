@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  before_action :set_research_and_organization
+  before_action :set_research
   before_action :set_employee, only: [:show, :edit, :update, :destroy]
 
   # GET /employees
@@ -10,7 +10,7 @@ class EmployeesController < ApplicationController
   # GET /employees/new
   def new
     @employee = Employee.new
-    @employee.organization_id = @organization.id
+    @employee.organization_id = current_organization.id
   end
 
   # POST /employees
@@ -40,7 +40,11 @@ class EmployeesController < ApplicationController
   end
 
   def massive_upload
-    
+    Employee.massive_assignation_to_research(params[:file], @research)
+    redirect_to :back
+  end
+
+  def upload_file_format
   end
 
   private
@@ -49,8 +53,8 @@ class EmployeesController < ApplicationController
       @employee = Employee.find(params[:id])
     end
 
-    def set_research_and_organization
-      @research = current_organization.researches.where(id: params[:research_id])
+    def set_research
+      @research = current_organization.researches.where(id: params[:research_id]).first
     end
 
     # Only allow a trusted parameter "white list" through.
