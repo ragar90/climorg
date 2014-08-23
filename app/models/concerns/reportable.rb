@@ -27,7 +27,7 @@ module Reportable
   end
 
   def filter_by_dimensions(options = {})
-    d = dimensions.where(id:options[:dimension_id]).first
+    d = dimensions.active.where(id:options[:dimension_id]).first
     if options[:questions]
       results = {dimension: d, results: filter_by_questions(options), chart: :bars}
     elsif options[:dimension_id]
@@ -43,7 +43,7 @@ module Reportable
         results = {:dimension=>d,:results=>likeable_results(results), chart: :pie}
       end
     else
-      dimensions = self.dimensions.group_by{|d| d.id}
+      dimensions = self.dimensions.active.group_by{|d| d.id}
       results = report(options[:variable_id],options[:query_value]).group("dimension_id, answer_value, result_id").select("dimension_id,answer_value, count(answer_value) as total_likeable, result_id").order("dimension_id, answer_value").group_by{|result| result.dimension_id}
       results.each_key do |key|
         results[key] = {:dimension=>dimensions[key].first,:results=>likeable_results(results[key])}

@@ -24,7 +24,7 @@ class Result < ActiveRecord::Base
     end
     
     if self.demographic_values.count == 0
-      self.research.demographic_variables.each do |variable|
+      self.research.demographic_variables.active.each do |variable|
         self.demographic_values << DemographicValue.new(demographic_variable_id: variable.id)
       end
     end

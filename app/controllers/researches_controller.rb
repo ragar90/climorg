@@ -58,7 +58,9 @@ class ResearchesController < ApplicationController
   def edit
     @research = current_organization.researches.find(params[:id])
     @grouped_questions = @research.grouped_questions
-    @dimensions = @research.dimensions
+    @dimensions = @research.dimensions.active
+    @demographic_variables = DemographicVariable.active
+    @active_dimensions = Dimension.active
     @employees = @research.employees
     if @research.is_confirmed?
       redirect_to researches_path, notice: 'Este estudio ya fue confirmado por lo que no se puede editar.'
@@ -108,7 +110,9 @@ class ResearchesController < ApplicationController
         format.json { head :no_content }
       else
         @grouped_questions = @research.grouped_questions
-        @dimensions = @research.dimensions
+        @dimensions = @research.dimensions.active
+        @demographic_variables = DemographicVariable.active
+        @active_dimensions = Dimension.active
         @current_state = @research.state || 0
         format.html { render action: "edit" }
         format.json { render json: @research.errors, status: :unprocessable_entity }
@@ -125,7 +129,7 @@ class ResearchesController < ApplicationController
         format.json { head :no_content }
       else
         @grouped_questions = @research.grouped_questions
-        @dimensions = @research.dimensions
+        @dimensions = @research.dimensions.active
         @employees = @research.employees if @research.use_virtual_application
         @current_state = @research.state
         format.html { render action: "edit", flash: "El Estudio no pudo confirmarse adecuadamente" }

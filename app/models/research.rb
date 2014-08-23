@@ -127,7 +127,7 @@ class Research < ActiveRecord::Base
 
   def variables_values
     query_values = 
-    self.demographic_variables.map do |v| 
+    self.demographic_variables.active.map do |v| 
       query_values = v.queryable_values.map { |value| DemographicQueryValue.new(condition_value:value.first,condition_value_label:value.last,variable_type: v.accepted_value) rescue DemographicQueryValue.new(variable_type: v.accepted_value)  }
       {id:v.id,queryable_values: query_values }
     end

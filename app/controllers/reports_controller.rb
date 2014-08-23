@@ -7,8 +7,8 @@ class ReportsController < ApplicationController
   	@report = Report.new
     @report.query = DemographicQueryValue.new
   	@questions = @research.questions.order(:ordinal)
-  	@dimensions = @research.dimensions
-  	@demographic_variables = @research.demographic_variables
+  	@dimensions = @research.dimensions.active
+  	@demographic_variables = @research.demographic_variables.active
   	@variable_types = {}
   	@demographic_variables.map{|v| [v.id,v.accepted_value,v.queryable_values]}.each do |var|
   		@variable_types[var.first.to_s.to_sym] = [var.second,var.last]
@@ -19,8 +19,8 @@ class ReportsController < ApplicationController
  		@report = Report.new(permited_params(:report))
     @title = @report.set_title(params)
     @questions = @research.questions.order(:ordinal)
-    @dimensions = @research.dimensions
-    @demographic_variables = @research.demographic_variables
+    @dimensions = @research.dimensions.active
+    @demographic_variables = @research.demographic_variables.active
     @variable_types = {}
     @demographic_variables.map{|v| [v.id,v.accepted_value,v.queryable_values]}.each do |var|
       @variable_types[var.first.to_s.to_sym] = [var.second,var.last]
