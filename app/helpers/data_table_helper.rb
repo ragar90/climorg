@@ -1,5 +1,5 @@
 module DataTableHelper
-	def datatable(collection, column_names, options, &block)
+	def datatable(collection, column_names, options={}, &block)
 		render partial: "/shared/datatable_load"
 		options[:searching] = false if options[:searching].nil?
 		options[:serverSide] = false if options[:serverSide].nil?

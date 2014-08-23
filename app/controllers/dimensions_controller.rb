@@ -2,7 +2,7 @@ class DimensionsController < ApplicationController
   # GET /dimensions
   # GET /dimensions.json
   def index
-    @dimensions = Dimension.all
+    @dimensions = current_user.dimensions
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class DimensionsController < ApplicationController
   # GET /dimensions/1
   # GET /dimensions/1.json
   def show
-    @dimension = Dimension.find(params[:id])
+    @dimension = current_user.dimensions.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +34,7 @@ class DimensionsController < ApplicationController
 
   # GET /dimensions/1/edit
   def edit
-    @dimension = Dimension.find(params[:id])
+    @dimension = current_user.dimensions.find(params[:id])
   end
 
   # POST /dimensions
@@ -57,7 +57,7 @@ class DimensionsController < ApplicationController
   # PUT /dimensions/1
   # PUT /dimensions/1.json
   def update
-    @dimension = Dimension.find(params[:id])
+    @dimension = current_user.dimensions.find(params[:id])
 
     respond_to do |format|
       if @dimension.update_attributes(permited_params(:dimension))
@@ -73,8 +73,9 @@ class DimensionsController < ApplicationController
   # DELETE /dimensions/1
   # DELETE /dimensions/1.json
   def destroy
-    @dimension = Dimension.find(params[:id])
-    @dimension.destroy
+    @dimension = current_user.dimensions.find(params[:id])
+    @dimension.is_active = false
+    @dimension.save
 
     respond_to do |format|
       format.html { redirect_to dimensions_url }

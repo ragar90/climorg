@@ -1,4 +1,5 @@
 class Dimension < ActiveRecord::Base
+  belongs_to :user
   has_many :questions
   has_many :dimension_settings
   has_many :researches, :through => :dimension_settings

@@ -2,7 +2,7 @@ class DemographicVariablesController < ApplicationController
   # GET /demographic_variables
   # GET /demographic_variables.json
   def index
-    @demographic_variables = DemographicVariable.all
+    @demographic_variables = current_user.demographic_variables
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class DemographicVariablesController < ApplicationController
   # GET /demographic_variables/1
   # GET /demographic_variables/1.json
   def show
-    @demographic_variable = DemographicVariable.find(params[:id])
+    @demographic_variable = current_user.demographic_variables.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,7 +34,7 @@ class DemographicVariablesController < ApplicationController
 
   # GET /demographic_variables/1/edit
   def edit
-    @demographic_variable = DemographicVariable.find(params[:id])
+    @demographic_variable = current_user.demographic_variables.find(params[:id])
   end
 
   # POST /demographic_variables
@@ -57,7 +57,7 @@ class DemographicVariablesController < ApplicationController
   # PUT /demographic_variables/1
   # PUT /demographic_variables/1.json
   def update
-    @demographic_variable = DemographicVariable.find(params[:id])
+    @demographic_variable = current_user.demographic_variables.find(params[:id])
 
     respond_to do |format|
       if @demographic_variable.update_attributes(permited_params(:demographic_variable))
@@ -73,8 +73,9 @@ class DemographicVariablesController < ApplicationController
   # DELETE /demographic_variables/1
   # DELETE /demographic_variables/1.json
   def destroy
-    @demographic_variable = DemographicVariable.find(params[:id])
-    @demographic_variable.destroy
+    @demographic_variable = current_user.demographic_variables.find(params[:id])
+    @demographic_variable.is_active = false
+    @demographic_variable.save
 
     respond_to do |format|
       format.html { redirect_to demographic_variables_url }
