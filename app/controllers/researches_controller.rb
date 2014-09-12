@@ -14,7 +14,7 @@ class ResearchesController < ApplicationController
   # GET /researches/1.json
   def show
     @research = current_organization.researches.find(params[:id])
-    @employees = @research.employees if @research.use_virtual_application
+    @evaluations = @research.evaluations.includes(:employee) if @research.use_virtual_application
     @demographic_reports = []
     variables = @research.variables_values
     i = 0
@@ -61,7 +61,7 @@ class ResearchesController < ApplicationController
     @dimensions = @research.dimensions.active
     @demographic_variables = DemographicVariable.active
     @active_dimensions = Dimension.active
-    @employees = @research.employees
+    @evaluations = @research.evaluations.includes(:employee)
     if @research.is_confirmed?
       redirect_to researches_path, notice: 'Este estudio ya fue confirmado por lo que no se puede editar.'
       return
@@ -130,7 +130,7 @@ class ResearchesController < ApplicationController
       else
         @grouped_questions = @research.grouped_questions
         @dimensions = @research.dimensions.active
-        @employees = @research.employees if @research.use_virtual_application
+        @evaluations = @research.evaluations.includes(:employee) if @research.use_virtual_application
         @current_state = @research.state
         format.html { render action: "edit", flash: "El Estudio no pudo confirmarse adecuadamente" }
         format.json { render json: @research.errors, status: :unprocessable_entity }

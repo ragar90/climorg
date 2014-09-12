@@ -65,9 +65,9 @@
           <%= link_to "#", class: "btn btn-success pull-right", style:"margin-bottom:10px;", id:"upload-btn" do %>
             <span class = "glyphicon glyphicon-cloud-upload"></span> Subir lista de Empleados
           <% end %>
-          <%= datatable @employees, [:name, :email], {} do |employee, column_names| %>
-            <td><%=employee.name%></td>
-            <td><%=employee.email%></td>
+          <%= datatable @evaluations, [:name, :email], {} do |evaluation, column_names| %>
+            <td><%=evaluation.employee.name%></td>
+            <td><%=evaluation.employee.email%></td>
           <% end %>
         </div>
       </fieldset>

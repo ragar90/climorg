@@ -17,17 +17,15 @@ class Employee < ActiveRecord::Base
 	  (2..spreadsheet.last_row).each do |i|
 	    row = Hash[[header, spreadsheet.row(i)].transpose]
 	    employee = self.new(row)
-		  employee.access_token = SecureRandom.hex(32)
 	    if employee.valid?
 		    employee.organization_id = research.organization_id
 	    	employee.save
 	    else
 	    	employee = self.where(email:spreadsheet.row(i).last).first
-		    employee.has_evaluated_research = false
 	    	employee.save
 	    end
 	    unless Evaluation.exists?(research_id: research.id, employee_id: employee.id)
-	    	research.evaluations << Evaluation.new(employee_id:employee.id)
+	    	research.evaluations << Evaluation.new(employee_id:employee.id, access_token: SecureRandom.hex(32), access_sent: Date.today)
 	    end
 	  end
   end

@@ -9,19 +9,27 @@
         <h4>Evaluaciones Realizadas por los empleados</h4>
       </header>
       <div class="panel-body" id = "new-research-form">
-        <%= datatable @employees, [:name, :email, :has_evaluated_research, "" ], {} do |employee, column_names| %>
-          <td><%=employee.name%></td>
-          <td><%=employee.email%></td>
+        <%= datatable @evaluations, [:name, :email, :has_evaluated_research, "" ], {} do |evaluation, column_names| %>
+          <td><%=evaluation.employee.name%></td>
+          <td><%=evaluation.employee.email%></td>
           <td>
-            <% if employee.has_evaluated_research %>
+            <% if evaluation.done %>
               <span class="label label-success">Si</span>
             <% else %>
               <span class="label label-danger">No</span>
             <% end %>
           </td>
           <td>
-            <%= link_to "#", class: "btn btn-primary"  do%>
-              <span class = "glyphicon glyphicon-envelope"></span> Enviar Recordatorio
+            <% if !evaluation.done and evaluation.access_sent < (Date.today -15.days)  %>
+              <%= link_to "#", class: "btn btn-info btn-xs"  do%>
+                <span class = "glyphicon glyphicon-envelope"></span> Enviar Recordatorio
+              <% end %>
+            <% end %>
+
+            <% if !evaluation.done and evaluation.access_token.nil? %>
+              <%= link_to "#", class: "btn btn-primary btn-xs"  do%>
+                <span class = "glyphicon glyphicon-repeat"></span> Reactivar Evaluacion
+              <% end %>
             <% end %>
           </td>
         <% end %>
