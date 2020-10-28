@@ -4,9 +4,9 @@ if Rails.env.development? or Rails.env.production? # Using Amazon S3 for Develop
 	config.cache_dir = 'uploads'
 	config.storage = :fog
 	config.fog_credentials = {
-		:provider => 'AWS', # required
-		:aws_access_key_id => '', # required
-		:aws_secret_access_key => ' ', # required
+    provider:              'AWS',                        # required
+    aws_access_key_id:     ENV['AWS_ACCESS_KEY'],        # required
+    aws_secret_access_key: ENV['AWS_SECRET_KEY'],        # required
 	}
 	config.fog_directory = 'climorg' # required
 	end

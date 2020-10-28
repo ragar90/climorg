@@ -1,15 +1,15 @@
 ruby "2.5.8"
 source 'https://rubygems.org'
-gem 'rails', '4.0.2'
+gem 'rails', '4.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'execjs'
 gem "therubyracer"
-gem 'bootstrap-sass', '~> 3.4.1'
-gem 'sass-rails',   '~> 4.0.0'
+gem 'bootstrap-sass', git: 'git@github.com:twbs/bootstrap-sass.git', tag: 'v3.2.0+2'
+gem 'sass-rails', '~> 5.0'
 gem 'compass-rails'
-gem 'pg'
+gem 'pg', '0.20.0'
 gem 'rails_12factor', group: :production
 gem 'prawn', '~> 1.0.0'
 gem 'coffee-rails', '~> 4.0.0'
@@ -17,8 +17,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'devise'
 gem 'jquery-rails'
 gem 'carrierwave'
-gem 'fog'
-gem "rmagick", :require => 'RMagick'
+gem "fog", '1.38.0'
+gem "mini_magick"
 gem 'roo'
 gem "iconv", "~> 1.0.3"
 
@@ -36,8 +36,16 @@ gem "iconv", "~> 1.0.3"
 
 
 group :development, :test do
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'meta_request'
-  gem 'railroady'
-end
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug'
+  gem 'rspec-rails', '~> 3.4'
+  gem 'rspec-mocks'
+  gem "factory_bot_rails", "~> 4.0"
+  gem 'dotenv-rails'
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem 'shoulda-matchers'
+  gem 'pry-rescue'
+end 
