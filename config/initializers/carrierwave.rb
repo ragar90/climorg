@@ -2,7 +2,7 @@ if Rails.env.development? or Rails.env.production? # Using Amazon S3 for Develop
 	CarrierWave.configure do |config|
 	config.root = Rails.root.join('tmp')
 	config.cache_dir = 'uploads'
-	config.storage = :fog
+	# config.storage = :fog
 	config.fog_credentials = {
     provider:              'AWS',                        # required
     aws_access_key_id:     ENV['AWS_ACCESS_KEY'],        # required

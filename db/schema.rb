@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "answers", force: true do |t|
+  create_table "answers", force: :cascade do |t|
     t.integer  "result_id"
     t.integer  "question_id"
     t.integer  "value"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.datetime "updated_at"
   end
 
-  create_table "companies", force: true do |t|
+  create_table "companies", force: :cascade do |t|
     t.string   "name"
     t.integer  "city_id"
     t.integer  "state_id"
@@ -33,21 +33,21 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.datetime "updated_at"
   end
 
-  create_table "countries", force: true do |t|
+  create_table "countries", force: :cascade do |t|
     t.string   "name"
     t.string   "iso"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "demographic_settings", force: true do |t|
+  create_table "demographic_settings", force: :cascade do |t|
     t.integer  "research_id"
     t.integer  "demographic_variable_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "demographic_values", force: true do |t|
+  create_table "demographic_values", force: :cascade do |t|
     t.integer  "demographic_variable_id"
     t.integer  "result_id"
     t.string   "value"
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.datetime "updated_at"
   end
 
-  create_table "demographic_variables", force: true do |t|
+  create_table "demographic_variables", force: :cascade do |t|
     t.string   "name"
     t.boolean  "is_default"
     t.string   "display_values"
@@ -66,14 +66,14 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.boolean  "is_active",      default: true
   end
 
-  create_table "dimension_settings", force: true do |t|
+  create_table "dimension_settings", force: :cascade do |t|
     t.integer  "research_id"
     t.integer  "dimension_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "dimensions", force: true do |t|
+  create_table "dimensions", force: :cascade do |t|
     t.string   "name"
     t.boolean  "is_default"
     t.datetime "created_at"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.boolean  "is_active",  default: true
   end
 
-  create_table "employees", force: true do |t|
+  create_table "employees", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
     t.boolean  "has_evaluated_research", default: false
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.datetime "updated_at"
   end
 
-  create_table "evaluations", force: true do |t|
+  create_table "evaluations", force: :cascade do |t|
     t.integer  "research_id"
     t.integer  "employee_id"
     t.boolean  "done",         default: false
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.date     "access_sent"
   end
 
-  create_table "organizations", force: true do |t|
+  create_table "organizations", force: :cascade do |t|
     t.string   "name"
     t.string   "logo"
     t.integer  "country_id"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.integer  "user_id"
   end
 
-  create_table "questions", force: true do |t|
+  create_table "questions", force: :cascade do |t|
     t.string   "description"
     t.integer  "dimension_id"
     t.datetime "created_at"
@@ -121,26 +121,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.boolean  "is_active",    default: true
   end
 
-  create_table "report_filters", force: true do |t|
-    t.integer  "report_id"
-    t.integer  "research_id"
-    t.string   "filtrable_type"
-    t.integer  "filtrable_id"
-    t.string   "filtrable_value"
-    t.string   "demographic_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "reports", force: true do |t|
-    t.string   "legend"
-    t.integer  "research_id"
-    t.string   "chart_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "researches", force: true do |t|
+  create_table "researches", force: :cascade do |t|
     t.string   "organization_name"
     t.datetime "start_date"
     t.datetime "end_date"
@@ -153,23 +134,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.boolean  "use_virtual_application", default: true
   end
 
-  create_table "result_reports", id: false, force: true do |t|
-    t.integer "research_id"
-    t.integer "result_id",                 default: 0, null: false
-    t.integer "result_correlative"
-    t.integer "question_id"
-    t.string  "question_description"
-    t.integer "answer_id",                 default: 0, null: false
-    t.integer "answer_value"
-    t.integer "question_ordinal"
-    t.integer "dimension_id"
-    t.string  "dimension_name"
-    t.string  "demographic_value"
-    t.integer "demographic_variable_id"
-    t.string  "demographic_variable_name"
-  end
-
-  create_table "results", force: true do |t|
+  create_table "results", force: :cascade do |t|
     t.integer  "research_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -177,7 +142,7 @@ ActiveRecord::Schema.define(version: 20140823230338) do
     t.integer  "evaluation_id"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "avatar"
     t.string   "name"
     t.string   "lastname"
