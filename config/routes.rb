@@ -7,7 +7,7 @@ ClimaOrg::Application.routes.draw do
   get "home/pricing"
   get "home/policy"
   get "researches" => "researches#index", as: :users_root
-  
+
   resources :organizations
   resources :researches do
     resources :results, :except=>[:show]

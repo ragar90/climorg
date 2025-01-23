@@ -41,7 +41,7 @@ class DimensionsController < ApplicationController
   # POST /dimensions.json
   def create
     @dimension = Dimension.new(permited_params(:dimension))
-
+    @dimension.user = current_user
     respond_to do |format|
       if @dimension.save
         json_object = params[:modal]=="true" ?  {:value=>@dimension.id,:display_value=>@dimension.name, :class=>"dimension"} : @dimension

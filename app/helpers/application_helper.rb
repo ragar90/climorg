@@ -1,4 +1,4 @@
-# encoding: utf-8  
+# encoding: utf-8
 module ApplicationHelper
 	def error_messages!(resource)
 	    return "" if resource.errors.messages.empty?
@@ -6,10 +6,13 @@ module ApplicationHelper
 	    messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
 	    errors_count = resource.errors.count
 	    resource.class.reflect_on_all_associations(:has_many).map(&:name).each do |assoc|
-	     resource.send(assoc).each do |nested_object|
-	       messages += nested_object.errors.full_messages.map { |msg| content_tag(:li, "#{msg}: #{nested_object.to_s}") }.join
-	       errors_count += nested_object.errors.count
-	     end
+				puts "#{resource.class.to_s} #{assoc}"
+				unless assoc.to_sym == :reports
+					resource.send(assoc).each do |nested_object|
+						messages += nested_object.errors.full_messages.map { |msg| content_tag(:li, "#{msg}: #{nested_object.to_s}") }.join
+						errors_count += nested_object.errors.count
+					end
+				end
 	    end
 	    sentence = I18n.t("errors.messages.not_saved",
 	                      :count => errors_count,
@@ -24,7 +27,7 @@ module ApplicationHelper
 		HTML
     html.html_safe
   end
-  
+
   def error_messages_for_demographic_values(resources)
     messages = ""
     errors_count = 0
@@ -42,6 +45,6 @@ module ApplicationHelper
 			<ul>#{messages}</ul>
 			</div>
 		HTML
-    html.html_safe   
+    html.html_safe
   end
 end

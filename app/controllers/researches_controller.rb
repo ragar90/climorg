@@ -79,6 +79,7 @@ class ResearchesController < ApplicationController
         format.html { redirect_to edit_research_path(id: @research.id), notice: 'Research was successfully created.' }
         format.json { render json: @research, status: :created, location: @research }
       else
+        @current_state = @research.state = 0
         format.html { render action: "new" }
         format.json { render json: @research.errors, status: :unprocessable_entity }
       end
@@ -149,7 +150,7 @@ class ResearchesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def survey
     @research = current_organization.researches.find(params[:id])
     respond_to do |format|
@@ -160,10 +161,10 @@ class ResearchesController < ApplicationController
       end
     end
   end
-  
-  private 
+
+  private
 
   def load_change_state
     @change_state = params[:change_state] == "true"
-  end 
+  end
 end

@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   	@layout = (params[:layout].nil? or params[:layout]==true) ? true : false
   end
 
-  
+
   def permited_params(resource)
     klass = resource.to_s.classify.constantize
     params.require(resource.to_sym).permit!
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
   def load_current_organization
     if current_user
-      @organizations = current_user.organizations 
+      @organizations = current_user.organizations
       if params[:selected_org_id].present?
         @current_organization = @organizations.where(id:params[:selected_org_id]).first
         session[:selected_org_id] = params[:selected_org_id]
@@ -51,7 +51,7 @@ class ApplicationController < ActionController::Base
     @current_organization
   end
   helper_method :current_organization
-  
+
   private
 
   def authenticate

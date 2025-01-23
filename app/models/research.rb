@@ -7,7 +7,6 @@ class Research < ActiveRecord::Base
   has_many :dimension_settings
   has_many :dimensions, :through => :dimension_settings
   has_many :reports
-  has_many :report_filters
   has_many :evaluations
   has_many :employees, through: :evaluations
 
@@ -17,14 +16,14 @@ class Research < ActiveRecord::Base
   accepts_nested_attributes_for :questions, allow_destroy: true
 
   before_create :set_correlative
-  
+
   scope :only_parents, -> {where(parent_id:nil)}
   scope :only_active, ->{where(is_conclude:false)}
   scope :results_group_by_answer, -> { results.joins(:answers).group("answers.value").select("count(value) as total_likeable, value")}
 
   include Reportable
-  
-  def start_and_end_date_consistency 
+
+  def start_and_end_date_consistency
     unless (!start_date.nil? and !end_date.nil?) and start_date < end_date
     	errors.add(:start_date, "No puede ser despues de la fecha de finalizacion")
     	errors.add(:end_date, "No puede ser antes de la fecha de inicio")
@@ -34,7 +33,7 @@ class Research < ActiveRecord::Base
   def test
     self.questions.where(is_active:true)
   end
-  
+
   def is_draft?
     self.state!=3
   end
@@ -55,11 +54,11 @@ class Research < ActiveRecord::Base
           i = 1
           self.questions.shuffle.each do |question|
             question.ordinal=i
-            saved = saved && question.save  
+            saved = saved && question.save
             i+=1
             break if !saved
           end
-          saved = saved && self.save 
+          saved = saved && self.save
           raise ActiveRecord::Rollback if !saved
         rescue
           ActiveRecord::Rollback
@@ -71,11 +70,11 @@ class Research < ActiveRecord::Base
       return false
     end
   end
-  
+
   def is_confirmed?
     self.state == 3
   end
-  
+
   def next_step?
      state_label(self.is_draft? ? self.state + 1 : nil)
   end
@@ -83,14 +82,14 @@ class Research < ActiveRecord::Base
   def current_state
     state_label(self.state)
   end
-  
+
   def state_label
     case state
       when 0 then "Creado"
       when 1 then "Configurado"
       when 2 then "Con Cuestionario"
       when 3 then "Confirmado"
-      else 
+      else
         "Ninguno"
     end
   end
@@ -100,7 +99,7 @@ class Research < ActiveRecord::Base
       when 1 then "warning"
       when 2 then "info"
       when 3 then "success"
-      else 
+      else
         ""
     end
   end
@@ -116,7 +115,7 @@ class Research < ActiveRecord::Base
   def formated_end_date
     self.end_date.strftime("%d/%m/%y")
   end
-  
+
   def survey
     self.test.order(:ordinal)
   end
@@ -126,8 +125,8 @@ class Research < ActiveRecord::Base
   end
 
   def variables_values
-    query_values = 
-    self.demographic_variables.active.map do |v| 
+    query_values =
+    self.demographic_variables.active.map do |v|
       query_values = v.queryable_values.map { |value| DemographicQueryValue.new(condition_value:value.first,condition_value_label:value.last,variable_type: v.accepted_value) rescue DemographicQueryValue.new(variable_type: v.accepted_value)  }
       {id:v.id,queryable_values: query_values }
     end

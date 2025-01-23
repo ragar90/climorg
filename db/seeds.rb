@@ -268,10 +268,14 @@ if Country.count == 0
     Country.create(country)
     process_counter+=1
     percent = ((process_counter/total) * 100).round(1)
-    display = process_char[process_display] 
+    display = process_char[process_display]
     process_display= (process_display == 5 ? 0 : (process_display + 1))
     print "\r\rCreating countries #{percent}% #{display}"
   end
   print "\n"
 end
 
+if Organization.count == 0
+  puts "Creating Organizations..."
+  Organization.create(name: "ClimaOrg", country_id: Country.first.id)
+end

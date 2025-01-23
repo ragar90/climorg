@@ -41,11 +41,11 @@ class DemographicVariablesController < ApplicationController
   # POST /demographic_variables.json
   def create
     @demographic_variable = DemographicVariable.new(permited_params(:demographic_variable))
-    
+    @demographic_variable.user = current_user
     respond_to do |format|
       if @demographic_variable.save
         json_object = params[:modal]=="true" ?  {:value=>@demographic_variable.id,:display_value=>@demographic_variable.name, :class=>"demographic_variable"} : @demographic_variable
-        format.html { redirect_to @demographic_variable, notice: 'Demographic variable was successfully created.' } 
+        format.html { redirect_to @demographic_variable, notice: 'Demographic variable was successfully created.' }
         format.json { render :json=> json_object.to_json, status: :created, location: @demographic_variable }
       else
         format.html { render action: "new", :layout=>@layout  }
