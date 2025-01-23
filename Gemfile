@@ -1,14 +1,13 @@
-ruby "2.5.8"
+ruby "2.6.10"
 source 'https://rubygems.org'
 gem 'rails', '4.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 gem 'execjs'
-gem "therubyracer"
-gem 'bootstrap-sass', git: 'git@github.com:twbs/bootstrap-sass.git', tag: 'v3.2.0+2'
+gem 'bootstrap-sass', git: 'https://github.com/twbs/bootstrap-sass.git', tag: 'v3.2.0+2'
 gem 'sass-rails', '~> 5.0'
-gem 'compass-rails'
+gem 'compass-rails', git: 'https://github.com/Compass/compass-rails.git'
 gem 'pg', '0.20.0'
 gem 'rails_12factor', group: :production
 gem 'prawn', '~> 1.0.0'
@@ -48,4 +47,4 @@ group :development, :test do
   gem "binding_of_caller"
   gem 'shoulda-matchers'
   gem 'pry-rescue'
-end 
+end
