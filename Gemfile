@@ -47,4 +47,5 @@ group :development, :test do
   gem "binding_of_caller"
   gem 'shoulda-matchers'
   gem 'pry-rescue'
+  gem 'faker'
 end

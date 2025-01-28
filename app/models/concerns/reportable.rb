@@ -1,16 +1,17 @@
 module Reportable
   extend ActiveSupport::Concern
-  
+
   def report(demographic_variable_id,demographic_query_value)
+    byebug
     demographic_variable_id ||=  self.demographic_variable_ids.first
     if demographic_query_value.nil? or demographic_query_value.condition_value.blank?
-      RawData.where("demographic_variable_id = ? and research_id = ?",demographic_variable_id, self.id)
+      RawData.where("research_id = ?", self.id)
     else
       params = demographic_query_value.to_qprm
       RawData.where("demographic_variable_id = ? and research_id = ? ",demographic_variable_id,self.id).where(params)
     end
   end
-  
+
   def total_perception(options={})
     if options[:variable_id] and options[:query_value].condition_value.blank?
       data = self.report(options[:variable_id],options[:query_value]).group("answer_value,demographic_value ").select("count(answer_value) as total_likeable, answer_value,demographic_value")
@@ -51,7 +52,7 @@ module Reportable
       {dimension: :collection,results: results, chart: :bars}
     end
   end
-  
+
   def filter_by_questions(options = {})
     unless options[:dimension_id]
       raise ArgumentError, 'You must provide a dimension in order to generate a question report'
@@ -75,13 +76,13 @@ module Reportable
       end
     end
   end
-  
+
   def filer_by_variables(options = {})
     options[:dimensions] ? filter_by_dimensions(options[:query]) : total_perception(options[:query])
   end
-  
+
   private
-  
+
   def likeable_results(ungroup_results)
     data = {:likeable=>0,:unlikable=>0, :indiferent=>0}
     ungroup_results.each do |result|
@@ -91,7 +92,7 @@ module Reportable
         data[:likeable]+= result.total_likeable
       else
         data[:indiferent]+= result.total_likeable
-      end 
+      end
     end
     data
   end

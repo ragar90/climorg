@@ -6,6 +6,7 @@ class Dimension < ActiveRecord::Base
   validates :name, :presence=>true
   validates :name, :uniqueness => { :case_sensitive => false }
   scope :active, -> {where(is_active:true)}
+  scope :defaults, -> { self.active.where(is_default:true) }
   include ReportValues
   def barchart_label
   	self.name.titleize

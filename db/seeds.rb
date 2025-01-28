@@ -275,7 +275,142 @@ if Country.count == 0
   print "\n"
 end
 
-if Organization.count == 0
+user = if User.count == 0
+  User.create(email: "admin@clim.org", password: "12345678", password_confirmation: "12345678")
+else
+  User.first
+end
+
+org = if Organization.count == 0
   puts "Creating Organizations..."
   Organization.create(name: "ClimaOrg", country_id: Country.first.id)
+else
+  Organization.first
+end
+
+if user.organizations.count == 0
+  user.organizations << org
+end
+
+if DemographicVariable.count == 0
+  puts "Creating Demographic Variables..."
+  DemographicVariable.create(
+    name: 'Edad',
+    is_default: true,
+    user_id: user.id,
+    display_values: '"edad1":"18-25","edad2":"25-30","edad3":"30-35","edad4":"35-50"'
+  )
+  DemographicVariable.create(
+    name: 'Sexo',
+    is_default: true,
+    user_id: user.id,
+    display_values: 'Masculino|Femenino',
+  )
+end
+
+if Dimension.count == 0
+  puts "Creating Dimensions..."
+  Dimension.create(name: 'Dimension 1', is_default: true, user_id: user.id)
+  Dimension.create(name: 'Dimension 2', is_default: true, user_id: user.id)
+  Dimension.create(name: 'Dimension 3', is_default: true, user_id: user.id)
+  Dimension.create(name: 'Dimension 4', is_default: true, user_id: user.id)
+  Dimension.create(name: 'Dimension 5', is_default: true, user_id: user.id)
+end
+
+
+
+
+def create_questions_for_research(research)
+  puts "Creating Questions..."
+  dimensions = research.dimensions
+  (1..10).each do |i|
+    Question.create(
+      research_id: research.id,
+      dimension_id: dimensions.sample.id,
+      description: Faker::Quote.yoda,
+      ordinal: i
+    )
+  end
+end
+
+def create_employees_for_research(research)
+  puts "Creating Employees..."
+  evaluations = (1..10).map do |i|
+    employee = Employee.create(
+      organization_id: research.organization_id,
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      has_evaluated_research: false
+    )
+    Evaluation.new(employee_id: employee.id, access_token: SecureRandom.hex(32), access_sent: Date.today)
+  end
+  research.evaluations << evaluations
+end
+
+if Research.count == 0
+  puts "Creating Researches..."
+  ActiveRecord::Base.transaction do
+    # Created Research
+    r1 = Research.create(
+      user_id: user.id,
+      organization_id: org.id,
+      use_virtual_application: true,
+      start_date: DateTime.now,
+      end_date: 3.month.from_now
+    )
+
+    # Configured Research
+    r2 = Research.create(
+      user_id: user.id,
+      organization_id: org.id,
+      use_virtual_application: true,
+      start_date: DateTime.now,
+      end_date: 3.month.from_now
+    )
+
+    r2.demographic_variables << DemographicVariable.defaults
+    r2.dimensions << Dimension.defaults
+    r2.state = 1
+    r2.save
+
+    # With Questionnaire
+    r3 = Research.create(
+      user_id: user.id,
+      organization_id: org.id,
+      use_virtual_application: true,
+      start_date: DateTime.now,
+      end_date: 3.month.from_now
+    )
+
+    r3.demographic_variables << DemographicVariable.defaults
+    r3.dimensions << Dimension.defaults
+
+    create_questions_for_research(r3)
+    create_employees_for_research(r3)
+    r3.state = 2
+    r3.save
+
+
+    # Confirm Research
+    r4 = Research.create(
+      user_id: user.id,
+      organization_id: org.id,
+      use_virtual_application: true,
+      start_date: DateTime.now,
+      end_date: 3.month.from_now
+    )
+
+    r4.demographic_variables << DemographicVariable.defaults
+    r4.dimensions << Dimension.defaults
+
+    create_questions_for_research(r4)
+    create_employees_for_research(r4)
+    r4.confirm!
+    rescue ActiveRecord::Rollback
+      puts "Error creating researches"
+      puts "#{r1.errors.full_messages.join("/n")}" unless r1.valid?
+      puts "#{r2.errors.full_messages.join("/n")}" unless r2.valid?
+      puts "#{r3.errors.full_messages.join("/n")}" unless r3.valid?
+      puts "#{r4.errors.full_messages.join("/n")}" unless r4.valid?
+  end
 end

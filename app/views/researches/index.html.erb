@@ -11,7 +11,7 @@
       <% @researches.each do |research| %>
         <div class="col-md-6">
           <!--result window-->
-          <%= gchart_window({object: research, window_type: (research.is_confirmed? ? :home : :info), data_method: research.total_perception[:results], chart_type: :pie, window_title: research.label}, {title: "Datos Globales de la percepcion de clima organizacional"}) %>
+          <%= gchart_window({object: research, window_type: (research.is_confirmed? ? :home : :info), data_method: research[:results], chart_type: :pie, window_title: research.label}, {title: "Datos Globales de la percepcion de clima organizacional"}) %>
           <!--result window-->
         </div>
       <% end %>

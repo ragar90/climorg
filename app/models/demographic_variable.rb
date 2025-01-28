@@ -6,6 +6,8 @@ class DemographicVariable < ActiveRecord::Base
   has_many :researches, :through => :demographic_settings
   validates :display_values, :presence => true, :demographic_type_format => true
   scope :active, -> {where(is_active:true)}
+  scope :defaults, -> { self.active.where(is_default:true) }
+  #Ex:- :default ,=>''
 
   def self.demographic_types
   	{:boolean => "Valor booleano", :hash => "Lista de valores"}
@@ -92,5 +94,5 @@ class DemographicVariable < ActiveRecord::Base
       end
     end
   end
-  
+
 end

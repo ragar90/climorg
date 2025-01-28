@@ -71,6 +71,11 @@
           <% end %>
         </div>
       </fieldset>
+      <%content_for :bulk_action do  %> 
+        <%= form_tag massive_creation_research_employees_path(research_id: @research.id), multipart: true, id: "employees-file-form" do %>
+          <%= file_field_tag :file, style: "display:none;", id:"employees-file-field" %>
+        <% end %>
+      <%end%>
     <% end %>
 
     <fieldset>
@@ -122,6 +127,4 @@
   </div>
 <% end %>
 
-<%#= form_tag massive_creation_research_employees_path(research_id: @research.id), multipart: true, id: "employees-file-form" do %>
-  <%#= file_field_tag :file, style: "display:none;", id:"employees-file-field" %>
-<%# end %>
+<%= yield(:bulk_action) %>

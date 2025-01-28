@@ -10,12 +10,10 @@ class Research < ActiveRecord::Base
   has_many :evaluations
   has_many :employees, through: :evaluations
 
-  validates :organization_name,:start_date, :presence => true
+  validates :organization, :start_date, :presence => true
   validate :start_and_end_date_consistency
 
   accepts_nested_attributes_for :questions, allow_destroy: true
-
-  before_create :set_correlative
 
   scope :only_parents, -> {where(parent_id:nil)}
   scope :only_active, ->{where(is_conclude:false)}
@@ -136,9 +134,7 @@ class Research < ActiveRecord::Base
     @grouped_questions ||= self.test.where(is_active:true).order(:ordinal).group_by(&:dimension_id)
   end
 
-  def set_correlative
-    if self.research_parent_id.prenset?
-      self.correlative = self.research_parent.researches_children.count + 1
-    end
+  def organization_name
+    self.organization.name
   end
 end
