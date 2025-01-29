@@ -23,7 +23,7 @@ class OrganizationsController < ApplicationController
   # POST /organizations
   def create
     @organization = Organization.new(organization_params)
-
+    @organization.user_id = current_user.id
     if @organization.save
       redirect_to @organization, notice: 'Organization was successfully created.'
     else
