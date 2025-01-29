@@ -6,6 +6,8 @@
  *  Made by István Ujj-Mészáros
  *  Under Apache License v2.0 License
  */
+const DEFAULT_INFO_TEXT = 'Showing all {0}';
+const DEFAULT_INFO_TEXT_EMPTY = 'Empty list';
 ;(function ($, window, document, undefined) {
   // Create the defaults once
   var pluginName = 'bootstrapDualListbox',
@@ -26,10 +28,14 @@
       showFilterInputs: true,                                                             // whether to show filter inputs
       nonSelectedFilter: '',                                                              // string, filter the non selected options
       selectedFilter: '',                                                                 // string, filter the selected options
-      infoText: 'Showing all {0}',                                                        // text when all options are visible / false for no info text
+      infoText: DEFAULT_INFO_TEXT,                                                        // text when all options are visible / false for no info text
       infoTextFiltered: '<span class="label label-warning">Filtered</span> {0} from {1}', // when not all of the options are visible due to the filter
-      infoTextEmpty: 'Empty list',                                                        // when there are no options present in the list
-      filterOnValues: false                                                               // filter by selector's values, boolean
+      infoTextEmpty: DEFAULT_INFO_TEXT_EMPTY,                                                        // when there are no options present in the list
+      filterOnValues: false,                                                               // filter by selector's values, boolean
+      infoText1: DEFAULT_INFO_TEXT,                                                               // filter by selector's values, boolean
+      infoText2: DEFAULT_INFO_TEXT,                                                               // filter by selector's values, boolean
+      infoTextEmpty1: DEFAULT_INFO_TEXT_EMPTY,                                                               // filter by selector's values, boolean
+      infoTextEmpty2: DEFAULT_INFO_TEXT_EMPTY,
     },
     // Selections are invisible on android if the containing select is styled with CSS
     // http://code.google.com/p/android/issues/detail?id=16922
@@ -88,28 +94,29 @@
       visible2 = dualListbox.elements.select2.find('option').length,
       all1 = dualListbox.element.find('option').length - dualListbox.selectedElements,
       all2 = dualListbox.selectedElements,
-      content = '';
+      contentInfo1 = '';
+      contentInfo2 = '';
 
     if (all1 === 0) {
-      content = dualListbox.settings.infoTextEmpty;
+      contentInfo1 = dualListbox.settings.infoTextEmpty1;
     } else if (visible1 === all1) {
-      content = formatString(dualListbox.settings.infoText, [visible1, all1]);
+      contentInfo1 = formatString(dualListbox.settings.infoText1, [visible1, all1]);
     } else {
-      content = formatString(dualListbox.settings.infoTextFiltered, [visible1, all1]);
+      contentInfo1 = formatString(dualListbox.settings.infoTextFiltered, [visible1, all1]);
     }
 
-    dualListbox.elements.info1.html(content);
+    dualListbox.elements.info1.html(contentInfo1);
     dualListbox.elements.box1.toggleClass('filtered', !(visible1 === all1 || all1 === 0));
 
     if (all2 === 0) {
-      content = dualListbox.settings.infoTextEmpty;
+      contentInfo2 = dualListbox.settings.infoTextEmpty2;
     } else if (visible2 === all2) {
-      content = formatString(dualListbox.settings.infoText, [visible2, all2]);
+      contentInfo2 = formatString(dualListbox.settings.infoText2, [visible2, all2]);
     } else {
-      content = formatString(dualListbox.settings.infoTextFiltered, [visible2, all2]);
+      contentInfo2 = formatString(dualListbox.settings.infoTextFiltered, [visible2, all2]);
     }
 
-    dualListbox.elements.info2.html(content);
+    dualListbox.elements.info2.html(contentInfo2);
     dualListbox.elements.box2.toggleClass('filtered', !(visible2 === all2 || all2 === 0));
   }
 

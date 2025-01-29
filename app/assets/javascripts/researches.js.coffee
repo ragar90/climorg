@@ -75,8 +75,18 @@ jQuery ->
   selected_dimensions = $("#research_dimension_ids").val()
   $("#questions-set").data("selected_dimensions",selected_dimensions)
   $(".datetime_select").datetimepicker(format: "DD/MM/YYYY", pickTime: false)
-  $("#research_dimension_ids").bootstrapDualListbox()
-  $("#research_demographic_variable_ids").bootstrapDualListbox()
+  $("#research_dimension_ids").bootstrapDualListbox({
+    infoText1: "Dimensiones excluidas", 
+    infoText2: "Dimensiones seleccionadas",
+    infoTextEmpty1: "No hay dimensiones disponibles",
+    infoTextEmpty2: "No hay dimensiones disponibles",
+  })
+  $("#research_demographic_variable_ids").bootstrapDualListbox({
+    infoText1: "Variables demograficas excluidas", 
+    infoText2: "Variables demograficas seleccionadas",
+    infoTextEmpty1: "No hay variables demograficas disponibles",
+    infoTextEmpty2: "No hay variables demograficas disponibles"
+  })
   unselected_ids = $("#research_dimension_ids").children("option:not(:selected)").map ->
     $(@).val()
   unselected_ids = jQuery.makeArray(unselected_ids)
