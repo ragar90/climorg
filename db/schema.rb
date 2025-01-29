@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20250127232813) do
+ActiveRecord::Schema.define(version: 20250129014007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(version: 20250127232813) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "dimension_variables", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "dimension_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "dimension_variables", ["dimension_id"], name: "index_dimension_variables_on_dimension_id", using: :btree
 
   create_table "dimensions", force: :cascade do |t|
     t.string   "name"
@@ -163,4 +172,5 @@ ActiveRecord::Schema.define(version: 20250127232813) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "dimension_variables", "dimensions"
 end

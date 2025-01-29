@@ -20,3 +20,4 @@
 //= require reports
 //= require researches
 //= require demographic_variables
+//= require dimensions
